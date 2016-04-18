@@ -1,0 +1,9 @@
+version: '2'
+services:
+    easymargining-mongodb:
+        container_name: easymargining-mongodb
+        image: mongo:3.2.3
+        # volumes:
+        #     - ~/volumes/jhipster/EasyMargining/mongodb/:/data/db/
+        ports:
+            - 27017:27017

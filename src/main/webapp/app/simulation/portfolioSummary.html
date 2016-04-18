@@ -1,0 +1,45 @@
+<div  class="row portfolioSummary">
+  <div class="col-md-1">
+    <i  wz-previous class="glyphicon glyphicon-menu-left"></i>
+  </div>
+  <div class="col-md-10">
+    <table>
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Desc</th>
+          <th>Maturity</th>
+          <th>Strike</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+        <tr>
+          <td>ORDX</td>
+          <td>Option/Call on</td>
+          <td>Dec-16</td>
+          <td>500</td>
+          <td>200</td>
+          <td>
+            <button class="transparentButton">Delete/modify</button>
+          </td>
+        </tr>
+        <tr>
+          <td>ORDX</td>
+          <td>Option/Call on</td>
+          <td>Dec-16</td>
+          <td>500</td>
+          <td>200</td>
+          <td>
+            <button class="transparentButton">Delete/modify</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  <div class="col-md-10 col-md-offset-1 bigLineSpace">
+    <button ng-click="$parent.$parent.isAdd=1" class="btn addPositionButton col-md-3">+ Add Option</button>
+    <button ng-click="$parent.$parent.isAdd=2" class="btn addPositionButton col-md-3">+ Add Futures</button>
+    <input type="submit" wz-next class="resultButton col-md-3 col-md-offset-2" value="Go to my results"/>
+  </div>
+</div>

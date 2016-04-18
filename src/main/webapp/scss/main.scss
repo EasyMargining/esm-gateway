@@ -1,0 +1,639 @@
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+.font-normal {
+  font-weight: normal;
+}
+
+.font-thin {
+  font-weight: 300;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.development {
+    position: absolute;
+    width: 149px;
+    height: 149px;
+    top: 0;
+    left: 0;
+    border: 0;
+    z-index: 1000;
+    background-image: url("../images/development_ribbon.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+.navbar-version {
+    font-size: 10px;
+    color: #ccc
+}
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+.hero-unit {
+    margin: 50px auto 0 auto;
+    width: 300px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    background-color: #eee;
+    border-radius: 6px;
+    padding: 60px;
+    h1 {
+        font-size: 60px;
+        line-height: 1;
+        letter-spacing: -1px;
+    }
+}
+
+.error {
+    color: white;
+    background-color: red;
+}
+
+.hipster {
+    display: inline-block;
+    width: 347px;
+    height: 497px;
+    background: url("../images/hipster.png") no-repeat center top;
+    background-size: contain;
+}
+
+.easymargining {
+    //display: inline-block;
+    //width: 647px;
+    height: 497px;
+    background: url("../images/easymargining.png") no-repeat center top;
+    background-size: contain;
+    background-color: #1199c4;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.text-white {
+  //color: white;
+  color: #fff;
+}
+
+.pad {
+    padding: 10px;
+}
+
+.break {
+    white-space: normal;
+    word-break:break-all;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+    .hipster {
+        background: url("../images/hipster2x.png") no-repeat center top;
+        background-size: contain;
+    }
+}
+
+/* make sure browsers use the pointer cursor for anchors, even with no href */
+a:hover {
+  cursor: pointer;
+}
+
+.hand {
+    cursor: pointer;
+}
+
+#threadDump .popover, #healthCheck .popover {
+    top: inherit;
+    display: block;
+    font-size: 10px;
+    max-width: 1024px;
+}
+
+#healthCheck .popover {
+    margin-left: -50px;
+}
+
+.health-details {
+    min-width: 400px;
+}
+
+.voffset  { margin-top: 2px; }
+.voffset1 { margin-top: 5px; }
+.voffset2 { margin-top: 10px; }
+.voffset3 { margin-top: 15px; }
+.voffset4 { margin-top: 30px; }
+.voffset5 { margin-top: 40px; }
+.voffset6 { margin-top: 60px; }
+.voffset7 { margin-top: 80px; }
+.voffset8 { margin-top: 100px; }
+.voffset9 { margin-top: 150px; }
+
+/* start Password strength bar style */
+ul#strength {
+    display:inline;
+    list-style:none;
+    margin:0;
+    margin-left:15px;
+    padding:0;
+    vertical-align:2px;
+}
+
+.point {
+    background:#DDD;
+    border-radius:2px;
+    display:inline-block;
+    height:5px;
+    margin-right:1px;
+    width:20px;
+    &:last {
+        margin:0 !important;
+    }
+}
+/* end Password strength bar style */
+/* Custom alerts for notification */
+
+.alerts {
+    .alert {
+        text-overflow: ellipsis;
+        pre{
+            background: none;
+            border: none;
+            font: inherit;
+            color: inherit;
+            padding: 0;
+            margin: 0;
+        }
+        .popover pre {
+            font-size: 10px;
+        }
+    }
+    .toast {
+        position: fixed;
+        width: 100%;
+        &.left {
+            left: 5px;
+        }
+        &.right {
+            right: 5px;
+        }
+        &.top {
+            top: 55px;
+        }
+        &.bottom {
+            bottom: 55px;
+        }
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .alerts .toast {
+        width: 50%;
+    }
+}
+
+/* end of Custom alerts for notification */
+
+/* entity tables helpers */
+
+/* Remove Bootstrap padding from the element
+   http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
+@mixin no-padding($side) {
+    @if $side == 'all' {
+        .no-padding {
+            padding: 0 !important;
+        }
+    } @else {
+        .no-padding-#{$side} {
+            padding-#{$side}: 0 !important;
+        }
+    }
+}
+@include no-padding("left");
+@include no-padding("right");
+@include no-padding("top");
+@include no-padding("bottom");
+@include no-padding("all");
+
+/* bootstrap 3 input-group 100% width
+   http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
+.width-min { width: 1% !important; }
+
+/* Makes toolbar not wrap on smaller screens
+   http://www.sketchingwithcss.com/samplechapter/cheatsheet.html#right */
+.flex-btn-group-container {
+   display: -webkit-flex;
+   display: flex;
+   -webkit-flex-direction: row;
+   flex-direction: row;
+   -webkit-justify-content: flex-end;
+   justify-content: flex-end;
+}
+
+.jh-table > {
+    tbody > tr > td {
+        /* Align text in td verifically (top aligned by Bootstrap) */
+        vertical-align: middle;
+    }
+    thead > tr > th > {
+        .glyphicon-sort, .glyphicon-sort-by-attributes, .glyphicon-sort-by-attributes-alt {
+            /* less visible sorting icons */
+            opacity: 0.5;
+            &:hover {
+                /* full visible sorting icons and pointer when mouse is over them */
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+    }
+
+  /* Animation */
+    .fadeInDown {
+        -webkit-animation-name: fadeInDown;
+        animation-name: fadeInDown;
+    }
+}
+/* end of entity tables helpers */
+
+/* ui bootstrap tweaks */
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+.datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
+.uib-datepicker-popup  > li > div.uib-datepicker > table .btn-default {
+    border: 0;
+}
+
+.datetime-picker-dropdown > li.date-picker-menu div > table:focus,
+.uib-datepicker-popup  > li > div.uib-datepicker > table:focus{
+    outline: none;
+}
+/* end of ui bootstrap tweaks */
+
+/* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.steps-indicator {
+  /* ---- steps quantity ---- */
+  right: 0;
+  position: absolute;
+  top: 0;
+  margin-bottom:10%;
+  left: 0;
+  margin: 0;
+  padding: 20px 0 0 0;
+  height: 30px;
+  list-style: none;
+  /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
+}
+.steps-indicator:before {
+  background-color: #23558C;
+  content: '';
+  position: absolute;
+  height: 1px;
+}
+
+.steps-indicator.steps-3:before {
+  left: calc(100% / 6);
+  right: calc(100% / 6);
+}
+
+.steps-indicator * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.steps-indicator li {
+  position: relative;
+  float: left;
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+  text-align: center;
+  line-height: 15px;
+}
+.steps-indicator li a {
+  color: #808080;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.steps-indicator li a:before {
+  position: absolute;
+  top: -13px;
+  left: calc(50% - 7px);
+  width: 26px;
+  height: 26px;
+  border-radius: 100%;
+  background-color: #D3DDE8;
+  content: '';
+  transition: 0.25s;
+}
+
+.steps-indicator li a:hover {
+  color: #4d4d4d;
+}
+
+.steps-indicator.steps-3 li {
+  width: calc(100% / 3);
+}
+
+.steps-indicator li.default {
+  pointer-events: none;
+}
+.steps-indicator li.default a:hover {
+  color: #808080;
+}
+.steps-indicator li.current,
+.steps-indicator li.editing {
+  pointer-events: none;
+}
+.steps-indicator li.current a:before, .steps-indicator li.editing a:before  {
+  top: -20px;
+  width: 40px;
+  height: 40px;
+  background-color: #23558C;
+}
+.steps-indicator li.done a:before {
+  background-color: #23558C;
+}
+
+/***************************************************************/
+/********************** SIMULATION *****************************/
+/***************************************************************/
+
+/*********************** DIV ********************************/
+
+#navigationBar {
+  text-align: center;
+  height: 100px;
+}
+
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+.portfolioSelection {
+  margin-top: 20%;
+}
+
+.portfolioSummary {
+  margin-top: 10%;
+}
+
+.container {
+  text-align: center;
+  font-family: Acid;
+  font-size: 24px;
+  color: #777777;
+}
+
+.bigLineSpace {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.lineSpace {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#OptionLabel {
+  display: inline-block;
+}
+
+#marketLink {
+  position: absolute;
+  right: 5%;
+  display: inline-block;
+}
+
+.optionChoice {
+  height: inherit;
+}
+
+.quantity {
+  display: inline-block;
+}
+
+.validField {
+  color: #35C45E;
+}
+
+.input-group.date {
+  margin-bottom: 25%;
+}
+
+
+/************************* INPUT ****************************/
+
+input {
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: #23558C;
+  background: transparent;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}
+
+.quantityInput {
+  margin-left: 10px;
+  width: 60px;
+}
+
+/************************ TABLE ******************************/
+
+table {
+  width: 100%;
+  text-align: center;
+  background: #F5F5F5;
+  border: 1px solid #23558C;
+  font-size: 17px;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+tr:nth-child(even) {
+  background-color: #FFFFFF;
+}
+
+tr:nth-child(odd) {
+  background-color: #f3f3f2;
+}
+
+th {
+  text-align: center;
+  font-weight: normal;
+}
+
+thead > tr:nth-child(1) {
+  text-align: center;
+  background: #23558C;
+  color: #FFFFFF;
+  height: 45px;
+}
+
+thead > tr:nth-child(2) {
+  text-align: center;
+  background: rgba(35, 85, 140, 0.50);
+  border: 1px solid #23558C;
+  color: #FFFFFF;
+  height: 40px;
+}
+
+thead > tr:nth-child(3) {
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: #23558C;
+  color: #777DA3;
+  height: 35px;
+}
+
+#marketTable tbody > tr > td:nth-child(4),
+#marketTable thead > td:nth-child(1) {
+    border-style: solid;
+  border-width: 0px 1px 0px 0px !important;
+  border-color: #23558C;
+}
+
+td {
+  height: 35px;
+  padding-left: 0px;
+}
+
+.table-vcenter td {
+  vertical-align: middle!important;
+}
+
+
+/************************** BUTTONS ****************************/
+
+.btn:focus, .btn:active {
+  outline: none !important;
+}
+
+.transparentButton {
+  background: transparent;
+  border: none;
+}
+
+.resultButton {
+  border: 1px solid #23558C;
+  border-radius: 8px;
+  background: #f3f3f2;
+  color: #23558C;
+  font-size: 18px;
+  padding: 5px 10px 5px 10px;
+}
+
+.addPositionButton {
+  border: 1px solid #BCF7CD;
+  border-radius: 8px;
+  background: #BCF7CD;
+  color: #5FCA92;
+  font-size: 18px;
+  padding: 5px 10px 5px 10px;
+  margin: 0px 0px 0px 2%;
+}
+
+.typeOptionButton {
+  border: 1px solid #23558C;
+  border-radius: 18px;
+  padding: 0px 5px 0px 5px;
+  text-transform: uppercase;
+  color: #23558C;
+}
+
+.typeOptionButton:hover {
+  background: rgba(35, 85, 140, 0.50);
+  color: #FFFFFF;
+}
+
+.typeOptionButton:focus,
+.typeOptionButtonSelected {
+  background: #23558C;
+  color: #FFFFFF;
+}
+
+
+/***************************** LABEL ******************************/
+
+label {
+  text-align: center;
+  font-weight: normal;
+}
+
+.assetType {
+  text-align: center;
+  background: #23558C;
+  font-weight: normal;
+  font-size: 18px;
+  color: #FFFFFF;
+  padding: 5px 40px 5px 40px;
+  border: 1px solid #23558C;
+  border-radius: 18px;
+}
+
+.whiteLabel {
+  background: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 8px;
+  padding: 0px 10px 0px 10px;
+  color: #23558C;
+  font-weight: normal;
+}
+
+.spaceBetweenLabel {
+  width: 3%;
+}
+
+
+/*************************** ICON *********************************/
+
+.glyphicon-triangle-bottom {
+  color: #35C45E;
+}
+
+.glyphicon-shopping-cart {
+  color: #23558C;
+}
+
+.glyphicon-calendar {
+  color: #35C45E;
+}
+
+.glyphicon-menu-right, .glyphicon-menu-left {
+  cursor: pointer;
+}
+
+.glyphicon-menu-right:hover, .glyphicon-menu-left:hover {
+  color: #23558C;
+}

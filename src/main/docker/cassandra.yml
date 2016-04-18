@@ -1,0 +1,23 @@
+version: '2'
+services:
+    easymargining-cassandra:
+        container_name: easymargining-cassandra
+        build:
+            context: .
+            dockerfile: cassandra/Cassandra.Dockerfile
+        # volumes:
+        #     - ~/volumes/jhipster/EasyMargining/cassandra/:/var/lib/cassandra/data
+        ports:
+            - 7000:7000
+            - 7001:7001
+            - 7199:7199
+            - 9042:9042
+            - 9160:9160
+    easymargining-cassandra-node:
+        build:
+            context: .
+            dockerfile: cassandra/Cassandra.Dockerfile
+        links:
+            - easymargining-cassandra:seed
+        environment:
+            - CASSANDRA_SEEDS=seed

@@ -1,0 +1,218 @@
+<div class="row portfolioSummary">
+  <div class="col-md-1">
+    <i  wz-previous class="glyphicon glyphicon-menu-left"></i>
+  </div>
+  <div>
+    <div id="OptionLabel">
+      <div ng-show="$parent.$parent.isAdd==1">
+        <label class="assetType">OPTION</label>
+      </div>
+      <div ng-show="$parent.$parent.isAdd==2">
+        <label class="assetType">FUTURES</label>
+      </div>
+    </div>
+    <div id="marketLink">
+      <a ng-click="$parent.$parent.isAdd=0" class="glyphicon glyphicon-shopping-cart"></a>
+    </div>
+    <i class="glyphicon glyphicon-triangle-bottom"></i>
+
+    <div class="lineSpace">
+      <input class="productInput" type="text" placeholder="Add your product here" ng-model="codeProduct" />
+    </div>
+    <div ng-show="codeProduct=='converto'">
+      <table id="marketTable">
+        <thead>
+          <tr>
+            <th colspan="8">
+              <label>OPT ON COVESTRO</label>
+              <label class="spaceBetweenLabel"></label>
+              <label>CENTER 97.42</label>
+              <label class="spaceBetweenLabel"></label>
+              <label>NUMBER OF STRIKES FROM CENTER 5 or 5%</label>
+              <label class="spaceBetweenLabel"></label>
+              <button type="button" class="whiteLabel">
+                Product details
+              </button>
+            </th>
+          </tr>
+          <tr>
+            <th colspan="4">CALL</th>
+            <th colspan="4">PUT</th>
+          </tr>
+          <tr>
+            <th>Maturity</th>
+            <th>Strike</th>
+            <th>Last</th>
+            <th></th>
+            <th>Maturity</th>
+            <th>Strike</th>
+            <th>Last</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2015-02-24</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>2015-02-24</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="call1=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call1==1)}" ng-click="call1=1" ng-model="call1">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call1==2)}" ng-click="call1=2" ng-model="call1">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (call1 > 0)}" ng-style="{'visibility': (call1 > 0)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="put1=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put1==1)}" ng-click="put1=1" ng-model="put1">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put1==2)}" ng-click="put1=2" ng-model="put1">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (put1 > 0)}" ng-style="{'visibility': (put1)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="call2=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call2==1)}" ng-click="call2=1" ng-model="call2">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call2==2)}" ng-click="call2=2" ng-model="call2">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (call2 > 0)}" ng-style="{'visibility': (call2)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="put2=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put2==1)}" ng-click="put2=1" ng-model="put2">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put2==2)}" ng-click="put2=2" ng-model="put2">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (put2 > 0)}" ng-style="{'visibility': (put2)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="call3=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call3==1)}" ng-click="call3=1" ng-model="call3">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call3==2)}" ng-click="call3=2" ng-model="call3">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (call3 > 0)}" ng-style="{'visibility': (call3)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="put3=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put3==1)}" ng-click="put3=1" ng-model="put3">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put3==2)}" ng-click="put3=2" ng-model="put3">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (put3 > 0)}" ng-style="{'visibility': (put3)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2015-02-25</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>2015-02-25</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="call4=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call4==1)}" ng-click="call4=1" ng-model="call4">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call4==2)}" ng-click="call4=2" ng-model="call4">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (call4 > 0)}" ng-style="{'visibility': (call4)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="put4=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put4==1)}" ng-click="put4=1" ng-model="put4">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put4==2)}" ng-click="put4=2" ng-model="put4">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (put4 > 0)}" ng-style="{'visibility': (put4)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="call5=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call5==1)}" ng-click="call5=1" ng-model="call5">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (call5==2)}" ng-click="call5=2" ng-model="call5">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (call5 > 0)}" ng-style="{'visibility': (call5)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+            <td></td>
+            <td>12.80</td>
+            <td>12.80</td>
+            <td ng-init="put5=0">
+              <div class="optionChoice btn-group">
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put5==1)}" ng-click="put5=1" ng-model="put5">Short</button>
+                <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: (put5==2)}" ng-click="put5=2" ng-model="put5">Long</button>
+              </div>
+              <div class="quantity" ng-class="{'animated fadeInLeft': (put5 > 0)}" ng-style="{'visibility': (put5)?'visible':'hidden'}">
+                <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
+                <button id="addPosition" ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

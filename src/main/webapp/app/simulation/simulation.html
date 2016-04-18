@@ -1,0 +1,17 @@
+<div ng-cloak>
+    <div class="row">
+      <div class="col-md-12">
+          <wizard on-finish="finishedWizard()">
+            <wz-step title="step1">
+              <div ng-include="'app/simulation/portfolioSelection.html'"></div>
+            </wz-step>
+            <wz-step title="step2">
+              <div ng-include="'app/simulation/portfolioHandler.html'"></div>
+            </wz-step>
+            <wz-step title="step3">
+              <div ng-include="'app/simulation/marginCalculationResult.html'"></div>
+            </wz-step>
+          </wizard>
+        </div>
+    </div>
+</div>
