@@ -1,7 +1,16 @@
 <div  class="row portfolioSelection">
   <div class="col-md-6 col-md-offset-3">
-    <input type="text" placeholder="Choose/Create your portfolio" ng-model="portfolioName">
-    <div class="glyphicon glyphicon-plus-sign" ng-class="{validField: (portfolioName.length >= 5)}"></div>
+
+      <datalist id="portfolioList">
+          <option value="portefeuille1">
+          <option value="portefeuille2">
+          <option value="portefeuille3">
+          <option value="myportfolio1">
+          <option value="myportfolio2">
+      </datalist>
+
+    <input type="text" list="portfolioList" placeholder="Choose/Create your portfolio" ng-model="portfolioName">
+    <div class="glyphicon glyphicon-ok-circle" ng-class="{validField: (portfolioName.length >= 5)}"></div>
     <div class="bigLineSpace"  ng-controller="DatePickerController">
       <p class="input-group">
         <input type="text"  uib-datepicker-popup ng-model="dt" is-open="popup.opened"  placeholder="Choose a valuation date (optionnal)" close-text="Close" />
