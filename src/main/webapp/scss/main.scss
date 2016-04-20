@@ -434,11 +434,7 @@ ul#strength {
 }
 
 .optionChoice {
-  height: inherit;
-}
-
-.quantity {
-  display: inline-block;
+  width: 100%;
 }
 
 .validField {
@@ -464,7 +460,6 @@ input:focus {
 }
 
 .quantityInput {
-  margin-left: 10px;
   width: 60px;
 }
 
@@ -578,6 +573,8 @@ td {
   padding: 0px 5px 0px 5px;
   text-transform: uppercase;
   color: #23558C;
+  width: 45%;
+  font-size: 12px;
 }
 
 .typeOptionButton:hover {
@@ -585,12 +582,14 @@ td {
   color: #FFFFFF;
 }
 
-.typeOptionButton:focus,
-.typeOptionButtonSelected {
+.typeOptionButton:focus {
   background: #23558C;
   color: #FFFFFF;
 }
 
+.width-90 {
+  width: 90% !important;
+}
 
 /***************************** LABEL ******************************/
 
