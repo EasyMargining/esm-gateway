@@ -51,10 +51,25 @@ This application was generated using JHipster, you can find documentation and he
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
+1. Take back the database and run mongod
+
+   mongod --port 27017 --dbpath "your/db/path"
+   
+2. [Node.js][]: We use Node to run a development web server and build the project.
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 
-After installing Node, you should be able to run the following command to install development tools (like
+3. Download the hipster-registry on github and run it (https://github.com/jhipster/jhipster-registry)
+
+4. Set the config to enable install development tools
+ 
+    npm config set registry https://registry.npmjs.org/
+    
+(OR  
+    npm config set registry "https://itbox-nexus-ext.fr.world.socgen/nexus-ext/content/repositories/ext-all-npm-group/"
+    npm config set cafile "path/to/all.pem")
+    
+    
+5. Now, you should be able to run the following command to install development tools (like
 [Bower][] and [BrowserSync][]). You will only need to run this command when dependencies change in package.json.
 
     npm install
@@ -62,6 +77,10 @@ After installing Node, you should be able to run the following command to instal
 We use [Gulp][] as our build system. Install the Gulp command-line tool globally with:
 
     npm install -g gulp
+
+If the node version is not the good want, write
+
+    npm rebuild node-sas
 
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
