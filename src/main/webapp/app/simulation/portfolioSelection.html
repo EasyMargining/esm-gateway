@@ -13,9 +13,11 @@
     <div class="glyphicon glyphicon-ok-circle" ng-class="{validField: (portfolioName.length >= 5)}"></div>
     <div class="bigLineSpace"  ng-controller="DatePickerController">
       <p class="input-group">
-        <input type="text"  uib-datepicker-popup ng-model="dt" is-open="popup.opened"  placeholder="Choose a valuation date (optionnal)" close-text="Close" />
+        <input type="text"  uib-datepicker-popup ng-model="dt" ng-click="open()" is-open="popup.opened"  placeholder="Choose a valuation date (optionnal)" close-text="Close" />
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default transparentButton" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+          <button type="button" class="btn btn-default transparentButton" ng-click="open()">
+              <i class="glyphicon glyphicon-calendar" ng-class="{validField: isValidDate()}"></i>
+          </button>
         </span>
       </p>
     </div>

@@ -35,20 +35,25 @@
     };
 
     function DatePickerController ($scope) {
-      $scope.today = function() {
-        $scope.dt = new Date();
-      };
 
-      $scope.clear = function() {
-        $scope.dt = null;
-      };
+        $scope.isValidDate = function() {
+            return ($scope.dt instanceof Date);
+        }
 
-      $scope.open = function() {
-        $scope.popup.opened = true;
-      };
+        $scope.today = function() {
+            $scope.dt = new Date();
+        };
 
-      $scope.popup = {
-        opened: false
-      };
+        $scope.clear = function() {
+            $scope.dt = null;
+        };
+
+        $scope.open = function() {
+            $scope.popup.opened = true;
+        };
+
+        $scope.popup = {
+            opened: false
+        };
     }
 })();
