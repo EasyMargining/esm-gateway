@@ -15,6 +15,12 @@
       $rootScope.isAdd = 0;
     }
 
+    $scope.numberNewPosition = 0;
+
+    $scope.addPosition = function() {
+      $scope.numberNewPosition++;
+    }
+
     $scope.selected = 0;
     $scope.center = 97;
     $scope.strikesNumber = 10;

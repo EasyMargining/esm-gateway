@@ -445,6 +445,21 @@ ul#strength {
   margin-bottom: 25%;
 }
 
+.littleCircle {
+  width: 14px;
+  background: #35C45E;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+  font-size: 13px;
+  text-align: center;
+  color: white;
+  vertical-align: center;
+  position: absolute;
+  top: -6px;
+  left: 15px;
+  z-index: 2;
+}
 
 /************************* INPUT ****************************/
 
