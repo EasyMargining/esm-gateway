@@ -6,17 +6,15 @@
         .controller('SimulationController', SimulationController)
         .controller('DatePickerController', DatePickerController);
 
-    SimulationController.$inject = ['$scope', 'Principal', 'LoginService'];
+    SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService'];
 
-    function SimulationController ($scope, Principal, LoginService ) {
+    function SimulationController ($scope, $rootScope, Principal, LoginService ) {
 
-        $scope.isAdd = 0;
-
-/*
-        $scope.resetIsAdd = function() {
-          $scope.isAdd = 0;
+        $rootScope.resetIsAdd = function() {
+            console.log("in resetIsAdd")
+            $rootScope.isAdd = 0;
         }
-*/
+
         var vm = this;
 
         vm.account = null;
