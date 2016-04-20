@@ -25,12 +25,20 @@
       <table id="marketTable" ng-init="currentPosition=''">
         <thead>
           <tr>
-            <th colspan="8">
+            <th colspan="8" ng-controller="SimulationController">
               <label>OPT ON COVESTRO</label>
               <label class="spaceBetweenLabel"></label>
-              <label>CENTER 97.42</label>
+              <label>CENTER</label>&nbsp;<input class="numberInput" type="number" ng-model="center" ng-change="adaptValues()"/>
               <label class="spaceBetweenLabel"></label>
-              <label>NUMBER OF STRIKES FROM CENTER 5 or 5%</label>
+              <label>
+                NUMBER OF STRIKES FROM CENTER
+                &nbsp;<input class="numberInput" type="number" ng-focus="selected=0"
+                             ng-class="{notSelectedInput: selected!=0}" ng-model="strikesNumber" ng-change="adaptValues()"/>
+                OR
+                &nbsp;<input class="percentInput" type="number" ng-focus="selected=1"
+                             ng-class="{notSelectedInput: selected!=1}" ng-model="strikesPercent" ng-change="adaptValues()"/>
+                %
+              </label>
               <label class="spaceBetweenLabel"></label>
               <button type="button" class="whiteLabel">
                 Product details

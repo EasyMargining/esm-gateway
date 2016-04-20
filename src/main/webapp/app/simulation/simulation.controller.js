@@ -1,59 +1,72 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('easyMarginingApp')
-        .controller('SimulationController', SimulationController)
-        .controller('DatePickerController', DatePickerController);
+  angular
+    .module('easyMarginingApp')
+    .controller('SimulationController', SimulationController)
+    .controller('DatePickerController', DatePickerController);
 
-    SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService'];
+  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService'];
 
-    function SimulationController ($scope, $rootScope, Principal, LoginService ) {
+  function SimulationController ($scope, $rootScope, Principal, LoginService ) {
 
-        $rootScope.resetIsAdd = function() {
-            console.log("in resetIsAdd")
-            $rootScope.isAdd = 0;
-        }
+    $rootScope.resetIsAdd = function() {
+      console.log("in resetIsAdd")
+      $rootScope.isAdd = 0;
+    }
 
-        var vm = this;
+    $scope.selected = 0;
+    $scope.center = 97;
+    $scope.strikesNumber = 10;
+    $scope.strikesPercent = 5.7;
 
-        vm.account = null;
-        vm.isAuthenticated = null;
-        vm.login = LoginService.open;
-        $scope.$on('authenticationSuccess', function() {
-            getAccount();
-        });
-
-        getAccount();
-
-        function getAccount() {
-            Principal.identity().then(function(account) {
-                vm.account = account;
-                vm.isAuthenticated = Principal.isAuthenticated;
-            });
-        }
+    $scope.adaptValues = function() {
+      if ($scope.selected === 0) {
+        $scope.strikesPercent = Math.round(($scope.strikesNumber / $scope.center) * 10000) / 100;
+      } else {
+        $scope.strikesNumber = Math.round($scope.center * $scope.strikesPercent) / 100;
+      }
     };
 
-    function DatePickerController ($scope) {
+    var vm = this;
 
-        $scope.isValidDate = function() {
-            return ($scope.dt instanceof Date);
-        }
+    vm.account = null;
+    vm.isAuthenticated = null;
+    vm.login = LoginService.open;
+    $scope.$on('authenticationSuccess', function() {
+      getAccount();
+    });
 
-        $scope.today = function() {
-            $scope.dt = new Date();
-        };
+    getAccount();
 
-        $scope.clear = function() {
-            $scope.dt = null;
-        };
-
-        $scope.open = function() {
-            $scope.popup.opened = true;
-        };
-
-        $scope.popup = {
-            opened: false
-        };
+    function getAccount() {
+      Principal.identity().then(function(account) {
+        vm.account = account;
+        vm.isAuthenticated = Principal.isAuthenticated;
+      });
     }
+  };
+
+  function DatePickerController ($scope) {
+
+    $scope.isValidDate = function() {
+      return ($scope.dt instanceof Date);
+    }
+
+    $scope.today = function() {
+      $scope.dt = new Date();
+    };
+
+    $scope.clear = function() {
+      $scope.dt = null;
+    };
+
+    $scope.open = function() {
+      $scope.popup.opened = true;
+    };
+
+    $scope.popup = {
+      opened: false
+    };
+  }
 })();

@@ -471,6 +471,20 @@ input:focus {
     width: auto;
 }
 
+.numberInput {
+  width: 60px;
+  font-weight: bold;
+}
+
+.percentInput {
+  width: 40px;
+  font-weight: bold;
+}
+
+.notSelectedInput {
+  opacity: 0.3;
+}
+
 /************************ TABLE ******************************/
 
 table {
@@ -478,7 +492,7 @@ table {
   text-align: center;
   background: #F5F5F5;
   border: 1px solid #23558C;
-  font-size: 17px;
+  font-size: 15px;
   color: black;
   margin-left: auto;
   margin-right: auto;
