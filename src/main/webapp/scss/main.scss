@@ -493,7 +493,8 @@ input:focus {
 }
 
 .quantityInput {
-  width: 50px;
+  width: 45px;
+  font-size: 17px;
 }
 
 .input-group {
@@ -525,7 +526,7 @@ table {
   text-align: center;
   background: #F5F5F5;
   border: 1px solid $myblue;
-  font-size: 15px;
+  font-size: 20px;
   color: black;
   margin-left: auto;
   margin-right: auto;
@@ -600,7 +601,7 @@ td {
   border-radius: 8px;
   background: #f3f3f2;
   color: $myblue;
-  font-size: 18px;
+  font-size: 20px;
   padding: 5px 10px 5px 10px;
 }
 
@@ -609,7 +610,7 @@ td {
   border-radius: 8px;
   background: $mylightgreen;
   color: #5FCA92;
-  font-size: 18px;
+  font-size: 20px;
   padding: 5px 10px 5px 10px;
   margin: 0px 0px 0px 2%;
 }
@@ -621,7 +622,7 @@ td {
   text-transform: uppercase;
   color: $myblue;
   width: 45%;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .typeOptionButton:hover {
@@ -653,7 +654,7 @@ label {
   text-align: center;
   background: $myblue;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 20px;
   color: #FFFFFF;
   padding: 5px 40px 5px 40px;
   border: 1px solid $myblue;
