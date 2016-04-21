@@ -63,7 +63,6 @@
     $scope.portfolioName = "";
 
     $scope.isValidDate = function() {
-      console.log(($scope.dt instanceof Date))
       return ($scope.dt instanceof Date);
     }
 

@@ -481,7 +481,7 @@ input:focus {
 }
 
 .quantityInput {
-  width: 60px;
+  width: 50px;
 }
 
 .input-group {
@@ -668,8 +668,8 @@ label {
   color: $myblue;
 }
 
-.glyphicon-plus-sign:focus {
-
+.glyphicon-plus-sign:focus, .glyphicon-plus-sign:hover{
+  color: $mygreen;
 }
 
 .glyphicon-menu-right, .glyphicon-menu-left {
