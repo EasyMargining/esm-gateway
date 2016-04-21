@@ -1,3 +1,8 @@
+/************* Variables couleur ******************/
+$mygreen: #35C45E;
+$mylightgreen: #BCF7CD;
+$myblue: #23558C;
+
 body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -307,7 +312,7 @@ ul#strength {
   /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
 }
 .steps-indicator:before {
-  background-color: #23558C;
+  background-color: $myblue;
   content: '';
   position: absolute;
   height: 1px;
@@ -374,10 +379,10 @@ ul#strength {
   top: -20px;
   width: 40px;
   height: 40px;
-  background-color: #23558C;
+  background-color: $myblue;
 }
 .steps-indicator li.done a:before {
-  background-color: #23558C;
+  background-color: $myblue;
 }
 
 /***************************************************************/
@@ -437,10 +442,6 @@ ul#strength {
   width: 100%;
 }
 
-.validField {
-  color: #35C45E;
-}
-
 .input-group.date {
   margin-bottom: 25%;
 }
@@ -452,7 +453,7 @@ ul#strength {
   border-radius: 9px;
   font-size: 13px;
   text-align: center;
-  color: #23558C;
+  color: $myblue;
   //text-shadow: -1px 0 #35C45E, 0 1px #35C45E, 1px 0 #35C45E, 0 -1px #35C45E;
   vertical-align: center;
   position: absolute;
@@ -461,12 +462,16 @@ ul#strength {
   z-index: 2;
 }
 
+.center {
+  text-align: center;
+}
+
 /************************* INPUT ****************************/
 
 input {
   border-style: solid;
   border-width: 0px 0px 1px 0px;
-  border-color: #23558C;
+  border-color: $myblue;
   background: transparent;
 }
 
@@ -506,7 +511,7 @@ table {
   width: 100%;
   text-align: center;
   background: #F5F5F5;
-  border: 1px solid #23558C;
+  border: 1px solid $myblue;
   font-size: 15px;
   color: black;
   margin-left: auto;
@@ -528,7 +533,7 @@ th {
 
 thead > tr:nth-child(1) {
   text-align: center;
-  background: #23558C;
+  background: $myblue;
   color: #FFFFFF;
   height: 45px;
 }
@@ -536,7 +541,7 @@ thead > tr:nth-child(1) {
 thead > tr:nth-child(2) {
   text-align: center;
   background: rgba(35, 85, 140, 0.50);
-  border: 1px solid #23558C;
+  border: 1px solid $myblue;
   color: #FFFFFF;
   height: 40px;
 }
@@ -544,7 +549,7 @@ thead > tr:nth-child(2) {
 thead > tr:nth-child(3) {
   border-style: solid;
   border-width: 0px 0px 1px 0px;
-  border-color: #23558C;
+  border-color: $myblue;
   color: #777DA3;
   height: 35px;
 }
@@ -553,7 +558,7 @@ thead > tr:nth-child(3) {
 #marketTable thead > td:nth-child(1) {
     border-style: solid;
   border-width: 0px 1px 0px 0px !important;
-  border-color: #23558C;
+  border-color: $myblue;
 }
 
 td {
@@ -578,18 +583,18 @@ td {
 }
 
 .resultButton {
-  border: 1px solid #23558C;
+  border: 1px solid $myblue;
   border-radius: 8px;
   background: #f3f3f2;
-  color: #23558C;
+  color: $myblue;
   font-size: 18px;
   padding: 5px 10px 5px 10px;
 }
 
 .addPositionButton {
-  border: 1px solid #BCF7CD;
+  border: 1px solid $mylightgreen;
   border-radius: 8px;
-  background: #BCF7CD;
+  background: $mylightgreen;
   color: #5FCA92;
   font-size: 18px;
   padding: 5px 10px 5px 10px;
@@ -597,11 +602,11 @@ td {
 }
 
 .typeOptionButton {
-  border: 1px solid #23558C;
+  border: 1px solid $myblue;
   border-radius: 18px;
   padding: 0px 5px 0px 5px;
   text-transform: uppercase;
-  color: #23558C;
+  color: $myblue;
   width: 45%;
   font-size: 12px;
 }
@@ -612,7 +617,7 @@ td {
 }
 
 .typeOptionButton:focus {
-  background: #23558C;
+  background: $myblue;
   color: #FFFFFF;
 }
 
@@ -629,12 +634,12 @@ label {
 
 .assetType {
   text-align: center;
-  background: #23558C;
+  background: $myblue;
   font-weight: normal;
   font-size: 18px;
   color: #FFFFFF;
   padding: 5px 40px 5px 40px;
-  border: 1px solid #23558C;
+  border: 1px solid $myblue;
   border-radius: 18px;
 }
 
@@ -643,7 +648,7 @@ label {
   border: 1px solid #FFFFFF;
   border-radius: 8px;
   padding: 0px 10px 0px 10px;
-  color: #23558C;
+  color: $myblue;
   font-weight: normal;
 }
 
@@ -654,12 +659,12 @@ label {
 
 /*************************** ICON *********************************/
 
-.glyphicon-triangle-bottom {
-  color: #35C45E;
+.glyphicon-shopping-cart {
+  color: $myblue;
 }
 
-.glyphicon-shopping-cart {
-  color: #23558C;
+.glyphicon-plus-sign:focus {
+
 }
 
 .glyphicon-menu-right, .glyphicon-menu-left {
@@ -667,5 +672,10 @@ label {
 }
 
 .glyphicon-menu-right:hover, .glyphicon-menu-left:hover {
-  color: #23558C;
+  color: $myblue;
+}
+
+/************************* COLOR *********************************/
+.myGreen {
+  color: $mygreen;
 }

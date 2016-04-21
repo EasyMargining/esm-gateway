@@ -16,7 +16,7 @@
       <span class="littleCircle" ng-show="numberNewPosition > 0">{{numberNewPosition}}</span>
     </div>
     <div>
-      <i class="glyphicon glyphicon-triangle-bottom"></i>
+      <i class="glyphicon glyphicon-menu-down myGreen"></i>
      </div>
 
     <div class="lineSpace">
@@ -29,21 +29,19 @@
             <th colspan="8">
               <label>OPT ON COVESTRO</label>
               <label class="spaceBetweenLabel"></label>
-              <label>CENTER</label>&nbsp;<input class="numberInput" type="number" ng-model="center" ng-change="adaptValues()"/>
+              <label>CENTER</label>&nbsp;<input class="numberInput center" type="number" ng-model="center" ng-change="adaptValues()"/>
               <label class="spaceBetweenLabel"></label>
               <label>
                 NUMBER OF STRIKES FROM CENTER
-                &nbsp;<input class="numberInput" type="number" ng-focus="selected=0"
+                &nbsp;<input class="numberInput center" type="number" ng-focus="selected=0"
                              ng-class="{notSelectedInput: selected!=0}" ng-model="strikesNumber" ng-change="adaptValues()"/>
                 OR
-                &nbsp;<input class="percentInput" type="number" ng-focus="selected=1"
+                &nbsp;<input class="percentInput center" type="number" ng-focus="selected=1"
                              ng-class="{notSelectedInput: selected!=1}" ng-model="strikesPercent" ng-change="adaptValues()"/>
                 %
               </label>
               <label class="spaceBetweenLabel"></label>
-              <button type="button" class="whiteLabel">
-                Product details
-              </button>
+              <button class="transparentButton glyphicon glyphicon-question-sign"></button>
             </th>
           </tr>
           <tr>
@@ -84,7 +82,7 @@
               <div ng-show="(currentPosition === 'call1') && (call1 > 0)">
                 <div class="animated fadeInDown">
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -99,7 +97,7 @@
               <div ng-show="(currentPosition === 'put1') && (put1 > 0)">
                 <div class="animated fadeInDown">
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -116,7 +114,7 @@
               <div ng-show="(currentPosition === 'call2') && (call2 > 0)">
                 <div class="animated fadeInDown" >
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -131,7 +129,7 @@
               <div ng-show="(currentPosition === 'put2') && (put2 > 0)">
                 <div class="animated fadeInDown" >
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -148,7 +146,7 @@
               <div ng-show="(currentPosition === 'call3') && (call3 > 0)">
                 <div class="animated fadeInDown" >
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -163,7 +161,7 @@
               <div ng-show="(currentPosition === 'put3') && (put3 > 0)">
                 <div class="animated fadeInDown" >
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -190,7 +188,7 @@
               <div ng-show="(currentPosition === 'call4') && (call4 > 0)">
                 <div class="animated fadeInDown" >
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -205,7 +203,7 @@
               <div ng-show="(currentPosition === 'put4') && (put4 > 0)">
                 <div class="animated fadeInDown" >
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -222,7 +220,7 @@
               <div ng-show="(currentPosition === 'call5') && (call5 > 0)">
                 <div class="animated fadeInDown" >
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
@@ -237,7 +235,7 @@
               <div ng-show="(currentPosition === 'put5') && (put5 > 0)">
                 <div class="animated fadeInDown">
                   <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign"></button>
+                  <button  ng-click="addPosition()" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
                 </div>
               </div>
             </td>
