@@ -23,8 +23,6 @@
     </div>
   </div>
   <div class="col-md-1 col-md-offset-2">
-    <!--Not cleanest way to do it...-->
-    <i ng-show="!isValidDate() || !isValidPortfolioName()" class="glyphicon glyphicon-menu-right notClickable"></i>
     <i ng-show="isValidDate() && isValidPortfolioName()" wz-next class="glyphicon glyphicon-menu-right" ng-click="resetIsAdd()"></i>
   </div>
 </div>

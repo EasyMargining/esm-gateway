@@ -3,6 +3,18 @@ $mygreen: #35C45E;
 $mylightgreen: #BCF7CD;
 $myblue: #23558C;
 
+/************* Fonts *****************************/
+@font-face {
+  font-family: 'Acid';
+  src: url('../fonts/acid.otf') format("opentype");
+}
+
+@font-face {
+  font-family: 'Acid Bold';
+  font-weight: bold;
+  src: url('../fonts/acid_bold.otf') format("opentype");
+}
+
 body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -309,6 +321,7 @@ ul#strength {
   padding: 20px 0 0 0;
   height: 30px;
   list-style: none;
+  font-family: Acid;
   font-size: 20px;
   /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
 }
@@ -343,7 +356,6 @@ ul#strength {
   color: #808080;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: normal;
   transition: 0.25s;
   cursor: pointer;
 }
