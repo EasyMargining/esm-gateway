@@ -4,6 +4,7 @@
   angular
     .module('easyMarginingApp')
     .controller('SimulationController', SimulationController)
+    .controller('AddPositionController', AddPositionController)
     .controller('DatePickerController', DatePickerController);
 
   SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService'];
@@ -14,25 +15,6 @@
       console.log("in resetIsAdd")
       $rootScope.isAdd = 0;
     }
-
-    $scope.numberNewPosition = 0;
-
-    $scope.addPosition = function() {
-      $scope.numberNewPosition++;
-    }
-
-    $scope.selected = 0;
-    $scope.center = 97;
-    $scope.strikesNumber = 10;
-    $scope.strikesPercent = 5.7;
-
-    $scope.adaptValues = function() {
-      if ($scope.selected === 0) {
-        $scope.strikesPercent = Math.round(($scope.strikesNumber / $scope.center) * 10000) / 100;
-      } else {
-        $scope.strikesNumber = Math.round($scope.center * $scope.strikesPercent) / 100;
-      }
-    };
 
     var vm = this;
 
@@ -52,6 +34,27 @@
       });
     }
   };
+
+  function AddPositionController($scope) {
+    $scope.numberNewPosition = 0;
+
+    $scope.addPosition = function() {
+      $scope.numberNewPosition++;
+    }
+
+    $scope.selected = 0;
+    $scope.center = 97;
+    $scope.strikesNumber = 10;
+    $scope.strikesPercent = 5.7;
+
+    $scope.adaptValues = function() {
+      if ($scope.selected === 0) {
+        $scope.strikesPercent = Math.round(($scope.strikesNumber / $scope.center) * 10000) / 100;
+      } else {
+        $scope.strikesNumber = Math.round($scope.center * $scope.strikesPercent) / 100;
+      }
+    };
+  }
 
   function DatePickerController ($scope) {
 
