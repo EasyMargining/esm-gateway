@@ -446,14 +446,14 @@ ul#strength {
 }
 
 .littleCircle {
-  width: 14px;
-  background: #35C45E;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  border-radius: 7px;
+  width: 18px;
+  background: #86f78d;
+  border: 1px solid #35C45E;
+  border-radius: 9px;
   font-size: 13px;
   text-align: center;
-  color: white;
+  color: #23558C;
+  //text-shadow: -1px 0 #35C45E, 0 1px #35C45E, 1px 0 #35C45E, 0 -1px #35C45E;
   vertical-align: center;
   position: absolute;
   top: -6px;
