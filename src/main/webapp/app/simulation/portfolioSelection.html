@@ -1,4 +1,4 @@
-<div  class="row portfolioSelection">
+<div  class="row portfolioSelection" ng-controller="ParametersController">
   <div class="col-md-6 col-md-offset-3">
 
       <datalist id="portfolioList">
@@ -10,8 +10,8 @@
       </datalist>
 
     <input type="text" list="portfolioList" placeholder="Choose/Create your portfolio" ng-model="portfolioName">
-    <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: (portfolioName.length >= 5)}"></span>
-    <div class="bigLineSpace"  ng-controller="DatePickerController">
+    <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: isValidPortfolioName()}"></span>
+    <div class="bigLineSpace">
       <div class="input-group">
         <input type="text"  uib-datepicker-popup ng-model="dt" ng-click="open()" is-open="popup.opened"  placeholder="Choose a valuation date (optionnal)" close-text="Close" />
         <span class="input-group-btn">
@@ -23,6 +23,8 @@
     </div>
   </div>
   <div class="col-md-1 col-md-offset-2">
-    <i wz-next class="glyphicon glyphicon-menu-right" ng-click="resetIsAdd()"></i>
+    <!--Not cleanest way to do it...-->
+    <i ng-show="!isValidDate() || !isValidPortfolioName()" class="glyphicon glyphicon-menu-right notClickable"></i>
+    <i ng-show="isValidDate() && isValidPortfolioName()" wz-next class="glyphicon glyphicon-menu-right" ng-click="resetIsAdd()"></i>
   </div>
 </div>

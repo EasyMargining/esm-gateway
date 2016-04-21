@@ -5,9 +5,11 @@
     .module('easyMarginingApp')
     .controller('SimulationController', SimulationController)
     .controller('AddPositionController', AddPositionController)
-    .controller('DatePickerController', DatePickerController);
+    .controller('ParametersController', ParametersController);
 
   SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService'];
+  AddPositionController.$inject = ['$scope'];
+  ParametersController.$inject = ['$scope', 'WizardHandler'];
 
   function SimulationController ($scope, $rootScope, Principal, LoginService ) {
 
@@ -56,10 +58,17 @@
     };
   }
 
-  function DatePickerController ($scope) {
+  function ParametersController ($scope, WizardHandler) {
+
+    $scope.portfolioName = "";
 
     $scope.isValidDate = function() {
+      console.log(($scope.dt instanceof Date))
       return ($scope.dt instanceof Date);
+    }
+
+    $scope.isValidPortfolioName = function() {
+      return ($scope.portfolioName.length >= 5);
     }
 
     $scope.today = function() {

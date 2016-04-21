@@ -2,13 +2,13 @@
     <div class="row">
       <div class="col-md-12">
           <wizard on-finish="finishedWizard()">
-            <wz-step>
+            <wz-step wz-title="parameters">
               <div ng-include="'app/simulation/portfolioSelection.html'"></div>
             </wz-step>
-            <wz-step>
+            <wz-step wz-title="positions">
               <div ng-include="'app/simulation/portfolioHandler.html'"></div>
             </wz-step>
-            <wz-step>
+            <wz-step wz-title="results">
               <div ng-include="'app/simulation/marginCalculationResult.html'"></div>
             </wz-step>
           </wizard>

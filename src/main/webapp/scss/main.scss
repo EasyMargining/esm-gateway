@@ -309,6 +309,7 @@ ul#strength {
   padding: 20px 0 0 0;
   height: 30px;
   list-style: none;
+  font-size: 20px;
   /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
 }
 .steps-indicator:before {
@@ -333,15 +334,16 @@ ul#strength {
   float: left;
   margin: 0;
   padding: 0;
-  padding-top: 10px;
+  padding-top: 30px;
   text-align: center;
   line-height: 15px;
 }
+
 .steps-indicator li a {
   color: #808080;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: normal;
   transition: 0.25s;
   cursor: pointer;
 }
@@ -353,7 +355,6 @@ ul#strength {
   height: 26px;
   border-radius: 100%;
   background-color: #D3DDE8;
-  content: '';
   transition: 0.25s;
 }
 
@@ -623,6 +624,10 @@ td {
 
 .width-90 {
   width: 90% !important;
+}
+
+.notClickable, .notClickable:hover {
+  cursor: auto;
 }
 
 /***************************** LABEL ******************************/
