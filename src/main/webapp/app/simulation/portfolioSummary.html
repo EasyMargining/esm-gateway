@@ -14,24 +14,22 @@
           <th></th>
         </tr>
       </thead>
-        <tr>
-          <td>ORDX</td>
-          <td>Option/Call on LVMH</td>
-          <td>Dec-16</td>
-          <td>500</td>
-          <td>200</td>
+        <tr ng-repeat="position in positions">
+          <td>{{position.productId}}</td>
           <td>
-            <button class="transparentButton glyphicon glyphicon-question-sign"></button>
-            <button class="transparentButton glyphicon glyphicon-pencil"></button>
-            <button class="transparentButton glyphicon glyphicon-remove"></button>
+            <label ng-switch on="position.instrumentType">
+              <label ng-switch-when="O">Option/</label>
+              <label ng-switch on="position.optionType">
+                <label ng-switch-when="C">Call </label>
+                <label ng-switch-when="P">Put </label>
+              </label>
+              <label ng-switch-when="F">Futures</label>
+            </label>
+            on {{position.productId}}
           </td>
-        </tr>
-        <tr>
-          <td>ORDX</td>
-          <td>Option/Call on Google</td>
-          <td>Dec-16</td>
-          <td>500</td>
-          <td>200</td>
+          <td>{{position.expiryDate}}</td>
+          <td>{{position.exercisePrice}}</td>
+          <td>{{position.quantity}}</td>
           <td>
             <button class="transparentButton glyphicon glyphicon-question-sign"></button>
             <button class="transparentButton glyphicon glyphicon-pencil"></button>

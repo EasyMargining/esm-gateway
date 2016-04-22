@@ -8,6 +8,6 @@
   Portfolio.$inject = ['$resource'];
 
   function Portfolio ($resource) {
-    return $resource('http://127.0.0.1:8080/esmeurexreferential/api/portfolios', {});
+    return $resource('http://127.0.0.1:8080/esmeurexreferential/api/portfolios/byOwner/:owner', {owner: '@owner'});
   }
 })();

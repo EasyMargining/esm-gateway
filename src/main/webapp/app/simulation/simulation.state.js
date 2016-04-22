@@ -18,7 +18,7 @@
                 'content@': {
                     templateUrl: 'app/simulation/simulation.html',
                     controller: 'SimulationController',
-                    controllerAs: 'vm'
+                    controllerAs: 'simulationCtrl'
                 }
             },
             resolve: {

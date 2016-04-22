@@ -7,29 +7,39 @@
     .controller('AddPositionController', AddPositionController)
     .controller('ParametersController', ParametersController);
 
-  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User'];
+  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'Position'];
   AddPositionController.$inject = ['$scope'];
-  ParametersController.$inject = ['$scope', 'WizardHandler'];
+  ParametersController.$inject = ['$scope'];
 
-  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User) {
+  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, Position) {
 
     $rootScope.resetIsAdd = function() {
-      console.log("in resetIsAdd")
       $rootScope.isAdd = 0;
     }
 
+    $rootScope.loadPositions = function(portfolioName) {
+
+      var portfolioResource = $rootScope.portfolios.filter(function( obj ) {
+        return obj.name === portfolioName;
+      });
+
+      $rootScope.portfolio = portfolioResource[0];
+      $rootScope.resetIsAdd();
+
+      var positions = Position.query({portfolioId: $rootScope.portfolio.id}, function() {
+        $rootScope.positions = positions;
+        console.log($rootScope.positions)
+      });
+    };
+
     var account = Account.get({}, function() {
       var user = User.get({login: account.login}, function() {
-        $rootScope.user = user;
-        console.log($rootScope.user)
-        var portfolios = Portfolio.query({owner: $rootScope.user.id}, function() {
+        var portfolios = Portfolio.query({owner: user.id}, function() {
           $rootScope.portfolios = portfolios;
           console.log($rootScope.portfolios)
         });
       })
     });
-
-
 
     var vm = this;
 
@@ -71,16 +81,16 @@
     };
   }
 
-  function ParametersController ($scope, WizardHandler) {
+  function ParametersController ($scope) {
 
     $scope.portfolioName = "";
 
-    $scope.isValidDate = function() {
-      return ($scope.dt instanceof Date);
-    }
-
     $scope.isValidPortfolioName = function() {
       return ($scope.portfolioName.length >= 5);
+    }
+
+    $scope.isValidDate = function() {
+      return ($scope.dt instanceof Date);
     }
 
     $scope.today = function() {
