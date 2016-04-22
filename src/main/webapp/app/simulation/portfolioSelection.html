@@ -1,9 +1,9 @@
 <div  class="row portfolioSelection" ng-controller="ParametersController">
   <div class="col-md-6 col-md-offset-3">
 
-      <datalist id="portfolioList">
-        <option ng-repeat="portfolio in portfolios" ng-value="portfolio.name">
-      </datalist>
+    <datalist id="portfolioList">
+      <option ng-repeat="portfolio in portfolios" ng-value="portfolio.name">
+    </datalist>
 
     <input type="text" list="portfolioList" placeholder="Choose/Create your portfolio" ng-model="portfolioName">
     <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: isValidPortfolioName()}"></span>
@@ -12,7 +12,7 @@
         <input type="text"  uib-datepicker-popup ng-model="dt" ng-click="open()" is-open="popup.opened"  placeholder="Choose a valuation date (optionnal)" close-text="Close" />
         <span class="input-group-btn">
           <button type="button" class="btn btn-default transparentButton" ng-click="open()">
-              <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: isValidDate()}"></i>
+            <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: isValidDate()}"></i>
           </button>
         </span>
       </div>

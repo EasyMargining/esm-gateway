@@ -7,21 +7,29 @@
     .controller('AddPositionController', AddPositionController)
     .controller('ParametersController', ParametersController);
 
-  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio'];
+  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User'];
   AddPositionController.$inject = ['$scope'];
   ParametersController.$inject = ['$scope', 'WizardHandler'];
 
-  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio) {
+  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User) {
 
     $rootScope.resetIsAdd = function() {
       console.log("in resetIsAdd")
       $rootScope.isAdd = 0;
     }
 
-    var portfolios = Portfolio.query({owner:"user-3"}, function() {
-      $rootScope.portfolios = portfolios;
-      console.log($rootScope.portfolios)
+    var account = Account.get({}, function() {
+      var user = User.get({login: account.login}, function() {
+        $rootScope.user = user;
+        console.log($rootScope.user)
+        var portfolios = Portfolio.query({owner: $rootScope.user.id}, function() {
+          $rootScope.portfolios = portfolios;
+          console.log($rootScope.portfolios)
+        });
+      })
     });
+
+
 
     var vm = this;
 
