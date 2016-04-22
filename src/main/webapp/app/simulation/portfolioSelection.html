@@ -2,11 +2,7 @@
   <div class="col-md-6 col-md-offset-3">
 
       <datalist id="portfolioList">
-          <option value="portefeuille1">
-          <option value="portefeuille2">
-          <option value="portefeuille3">
-          <option value="myportfolio1">
-          <option value="myportfolio2">
+        <option ng-repeat="portfolio in portfolios" ng-value="portfolio.name">
       </datalist>
 
     <input type="text" list="portfolioList" placeholder="Choose/Create your portfolio" ng-model="portfolioName">
