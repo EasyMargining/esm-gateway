@@ -21,6 +21,10 @@ body {
     color: #333;
 }
 
+*:focus {
+  outline: none !important;
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
@@ -484,6 +488,10 @@ ul#strength {
   text-align: center;
 }
 
+.right {
+  text-align: right;
+}
+
 /************************* INPUT ****************************/
 
 input {
@@ -526,8 +534,7 @@ input:focus {
 
 .onFocusInput {
   border: 0px;
-  pointer-events: none !important;
-  tab-index: -1 !important;
+  pointer-events: none;
 }
 
 .onFocusInput:focus {

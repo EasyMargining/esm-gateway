@@ -23,13 +23,16 @@
         return obj.name === portfolioName;
       });
 
-      $rootScope.portfolio = portfolioResource[0];
-      $rootScope.resetIsAdd();
+      //To avoid useless call to the server
+      if (!$rootScope.portfolio || $rootScope.portfolio !== portfolioResource[0]) {
+        $rootScope.portfolio = portfolioResource[0];
+        $rootScope.resetIsAdd();
 
-      var positions = Position.query({portfolioId: $rootScope.portfolio.id}, function() {
-        $rootScope.positions = positions;
-        console.log($rootScope.positions)
-      });
+        var positions = Position.query({portfolioId: $rootScope.portfolio.id}, function () {
+          $rootScope.positions = positions;
+          console.log($rootScope.positions)
+        });
+      }
     };
 
     var account = Account.get({}, function() {

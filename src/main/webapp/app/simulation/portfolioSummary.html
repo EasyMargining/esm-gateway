@@ -17,20 +17,20 @@
         <tr ng-repeat="position in positions">
           <td>{{position.productId}}</td>
           <td>
-            <label ng-switch on="position.instrumentType">
-              <label ng-switch-when="O">Option /</label>
-              <label ng-switch on="position.optionType">
-                <label ng-switch-when="C">Call</label>
-                <label ng-switch-when="P">Put</label>
-              </label>
-              <label ng-switch-when="F">Futures</label>
-            </label>
+            <span ng-switch on="position.instrumentType">
+              <span ng-switch-when="O">Option /</span>
+              <span ng-switch on="position.optionType">
+                <span ng-switch-when="C">Call</span>
+                <span ng-switch-when="P">Put</span>
+              </span>
+              <span ng-switch-when="F">Futures</span>
+            </span>
             on {{position.productId}}
           </td>
           <td>{{position.expiryDate}}</td>
           <td>{{position.exercisePrice}}</td>
-          <td><input class="onFocusInput center" disabled="true" ng-model="position.quantity" focus-me="editionMode"/></td>
-          <td>
+          <td><input class="onFocusInput center" disabled="true" ng-model="position.quantity" focus-me="editionMode"  maxlength="6" size="6"/></td>
+          <td class="right">
             <button class="transparentButton glyphicon glyphicon-question-sign"></button>
             <button class="transparentButton glyphicon glyphicon-pencil" ng-click="editionMode=true"></button>
             <button class="transparentButton glyphicon glyphicon-remove"></button>
