@@ -7,11 +7,11 @@
     .controller('AddPositionController', AddPositionController)
     .controller('ParametersController', ParametersController);
 
-  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'Position'];
+  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'Positions', 'Position'];
   AddPositionController.$inject = ['$scope'];
   ParametersController.$inject = ['$scope'];
 
-  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, Position) {
+  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, Positions, Position) {
 
     $rootScope.resetIsAdd = function() {
       $rootScope.isAdd = 0;
@@ -28,12 +28,23 @@
         $rootScope.portfolio = portfolioResource[0];
         $rootScope.resetIsAdd();
 
-        var positions = Position.query({portfolioId: $rootScope.portfolio.id}, function () {
+        var positions = Positions.query({portfolioId: $rootScope.portfolio.id}, function () {
           $rootScope.positions = positions;
           console.log($rootScope.positions)
         });
       }
     };
+
+    $scope.updatePosition = function(id, quantity) {
+      console.log("id = " + id)
+      console.log("new quantity = " + quantity)
+      var updatedPosition = Position.get({ id: id}, function() {
+        updatedPosition.quantity = quantity;
+        updatedPosition.$update(function() {
+          //updated in the backend
+        });
+      });
+    }
 
     var account = Account.get({}, function() {
       var user = User.get({login: account.login}, function() {

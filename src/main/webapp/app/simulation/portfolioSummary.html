@@ -29,7 +29,8 @@
           </td>
           <td>{{position.expiryDate}}</td>
           <td>{{position.exercisePrice}}</td>
-          <td><input class="onFocusInput center" disabled="true" ng-model="position.quantity" focus-me="editionMode"  maxlength="6" size="6"/></td>
+          <td><input class="onFocusInput center" disabled="true" ng-model="position.quantity" focus-me="editionMode"
+                     maxlength="6" size="8" ng-blur="updatePosition(position.id, position.quantity)"/></td>
           <td class="right">
             <button class="transparentButton glyphicon glyphicon-question-sign"></button>
             <button class="transparentButton glyphicon glyphicon-pencil" ng-click="editionMode=true"></button>
