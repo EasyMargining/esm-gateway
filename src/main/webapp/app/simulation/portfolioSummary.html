@@ -3,7 +3,7 @@
     <i  wz-previous class="glyphicon glyphicon-menu-left"></i>
   </div>
   <div class="col-md-10">
-    <table>
+    <table ng-init="editionMode=false">
       <thead>
         <tr>
           <th>Product ID</th>
@@ -18,10 +18,10 @@
           <td>{{position.productId}}</td>
           <td>
             <label ng-switch on="position.instrumentType">
-              <label ng-switch-when="O">Option/</label>
+              <label ng-switch-when="O">Option /</label>
               <label ng-switch on="position.optionType">
-                <label ng-switch-when="C">Call </label>
-                <label ng-switch-when="P">Put </label>
+                <label ng-switch-when="C">Call</label>
+                <label ng-switch-when="P">Put</label>
               </label>
               <label ng-switch-when="F">Futures</label>
             </label>
@@ -29,10 +29,10 @@
           </td>
           <td>{{position.expiryDate}}</td>
           <td>{{position.exercisePrice}}</td>
-          <td>{{position.quantity}}</td>
+          <td><input class="onFocusInput center" disabled="true" ng-model="position.quantity" focus-me="editionMode"/></td>
           <td>
             <button class="transparentButton glyphicon glyphicon-question-sign"></button>
-            <button class="transparentButton glyphicon glyphicon-pencil"></button>
+            <button class="transparentButton glyphicon glyphicon-pencil" ng-click="editionMode=true"></button>
             <button class="transparentButton glyphicon glyphicon-remove"></button>
           </td>
         </tr>

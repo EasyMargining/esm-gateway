@@ -524,6 +524,16 @@ input:focus {
   opacity: 0.3;
 }
 
+.onFocusInput {
+  border: 0px;
+  pointer-events: none !important;
+  tab-index: -1 !important;
+}
+
+.onFocusInput:focus {
+  @extend input;
+}
+
 /************************ TABLE ******************************/
 
 table {
