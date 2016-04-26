@@ -5,18 +5,25 @@
     .module('easyMarginingApp')
     .controller('SimulationController', SimulationController)
     .controller('AddPositionController', AddPositionController)
-    .controller('ParametersController', ParametersController);
+    .controller('ParametersController', ParametersController)
 
-  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'Positions', 'Position'];
+  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'Positions', 'Position', 'ngDialog'];
   AddPositionController.$inject = ['$scope'];
   ParametersController.$inject = ['$scope'];
 
-  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, Positions, Position) {
+  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, Positions, Position, ngDialog) {
 
-    $rootScope.resetIsAdd = function() {
-      $rootScope.isAdd = 0;
-    }
+    /* GET THE PORTFOLIO LIST OF THE CLIENT CURRENTLY CONNECTED */
+    var account = Account.get({}, function() {
+      var user = User.get({login: account.login}, function() {
+        var portfolios = Portfolio.query({owner: user.id}, function() {
+          $rootScope.portfolios = portfolios;
+          console.log($rootScope.portfolios)
+        });
+      })
+    });
 
+    /* LOAD POSITIONS IN THE PORTFOLIO SELECTED */
     $rootScope.loadPositions = function(portfolioName) {
 
       var portfolioResource = $rootScope.portfolios.filter(function( obj ) {
@@ -35,6 +42,7 @@
       }
     };
 
+    /* UPDATE A POSITION */
     $scope.updatePosition = function(id, quantity) {
       console.log("id = " + id)
       console.log("new quantity = " + quantity)
@@ -46,17 +54,42 @@
       });
     }
 
-    var account = Account.get({}, function() {
-      var user = User.get({login: account.login}, function() {
-        var portfolios = Portfolio.query({owner: user.id}, function() {
-          $rootScope.portfolios = portfolios;
-          console.log($rootScope.portfolios)
+    /* DELETE DIALOG */
+    $scope.open = function (position) {
+      $scope.position = position
+      ngDialog.open({
+        template: 'app/simulation/confirmationModal.html',
+        className: 'ngdialog-theme-default',
+        scope: $scope
+      });
+    };
+
+    $scope.cancel = function() {
+      ngDialog.close();
+    }
+
+    $scope.delete = function(positionId) {
+      var deletedPosition = Position.get({ id: positionId}, function() {
+        console.log(deletedPosition)
+        deletedPosition.$delete(function() {
+          console.log(deletedPosition.productId + " deleted")
+          //To delete from the rootScope
+          $rootScope.positions = $rootScope.positions.filter(function(pos) {
+            return pos.id !== positionId;
+          });
+          ngDialog.close();
         });
-      })
-    });
+      });
+    }
+
+
+    $rootScope.resetIsAdd = function() {
+      $rootScope.isAdd = 0;
+    }
+
+  //TODO: Voir si ce code est utile
 
     var vm = this;
-
     vm.account = null;
     vm.isAuthenticated = null;
     vm.login = LoginService.open;

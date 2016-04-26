@@ -719,3 +719,12 @@ label {
 .myGreen {
   color: $mygreen;
 }
+
+/************************ DIALOG *********************************/
+.modal-header {
+   border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}

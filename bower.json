@@ -34,7 +34,8 @@
     "animate.css": "^3.5.1",
     "angular-wizard": "^0.6.1",
     "angular-animate": "^1.5.5",
-    "bootstrap-datepicker": "^1.6.0"
+    "bootstrap-datepicker": "^1.6.0",
+    "ng-dialog": "^0.6.0"
   },
   "devDependencies": {
     "angular-mocks": "1.5.2",

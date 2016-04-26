@@ -19,9 +19,12 @@
     return $resource('http://127.0.0.1:8080/esmeurexreferential/api/positions/:id',
       {id: "@_id"},
       {
-        update: {
-          method: 'PUT'
-        }
+        update: { method: 'PUT'},
+        delete: { method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          params: {id: '@id'} }
       });
   }
 })();
