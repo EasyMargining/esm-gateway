@@ -136,7 +136,7 @@
     $scope.$watch(
       function() { return $scope.typeAsset},
       function (newValue) {
-        var instrumentType = (newValue === 1) ? 'O' : (newValue === 2) ? 'F' : '';
+        var instrumentType = (newValue === 1) ? 'Option' : (newValue === 2) ? 'Future' : '';
         var productNameOrProductIdList = ProductsByInstrumentType.query({instrumentType: instrumentType}, function() {
           $scope.productNameOrProductIdList = productNameOrProductIdList;
           console.log($scope.productNameOrProductIdList)
