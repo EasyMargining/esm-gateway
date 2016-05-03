@@ -3,12 +3,13 @@
 
   angular
     .module('easyMarginingApp')
-    .factory('Positions', Positions)   //To get positions of a portfolio
+    .factory('PositionsByPortfolio', PositionsByPortfolio)   //To get positions of a portfolio
     .factory('Position', Position);    //To get (and update) a particular position
 
-  Positions.$inject = ['$resource'];
+  PositionsByPortfolio.$inject = ['$resource'];
+  Position.$inject = ['$resource'];
 
-  function Positions ($resource) {
+  function PositionsByPortfolio ($resource) {
     return $resource('http://127.0.0.1:8080/esmeurexreferential/api/positions/byPortfolio/:portfolioId',
       {portfolioId: "@portfolioId"});
   }

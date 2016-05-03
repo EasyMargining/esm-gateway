@@ -15,26 +15,27 @@
         </tr>
       </thead>
         <tr ng-repeat="position in positions">
-          <td>{{position.productId}}</td>
+          <td>{{position.product.productId}}</td>
           <td>
-            <span ng-switch on="position.instrumentType">
+            <span ng-switch on="position.product.instrumentType">
               <span ng-switch-when="O">Option /</span>
-              <span ng-switch on="position.optionType">
+              <span ng-switch on="position.product.optionType">
                 <span ng-switch-when="C">Call</span>
                 <span ng-switch-when="P">Put</span>
               </span>
               <span ng-switch-when="F">Futures</span>
             </span>
-            on {{position.productId}}
+            on {{position.product.productName}}
           </td>
-          <td>{{position.expiryDate}}</td>
-          <td>{{position.exercisePrice}}</td>
-          <td><input class="onFocusInput center" disabled="true" ng-model="position.quantity" focus-me="editionMode"
-                     maxlength="6" size="8" ng-blur="updatePosition(position.id, position.quantity)"/></td>
+          <td>{{position.product.maturityYear}}-{{position.product.maturityMonth}}-{{position.product.maturityDay}}</td>
+          <td>{{position.product.exercisePrice}}</td>
+          <td><input class="onFocusInput center" disabled="true" ng-model="position.position.quantity" focus-me="editionMode"
+                     maxlength="6" size="8" ng-blur="updatePosition(position.position.id, position.position.quantity)"/></td>
           <td class="right">
-            <button class="transparentButton glyphicon glyphicon-question-sign"></button>
+            <button type ="button" class="transparentButton glyphicon glyphicon-question-sign"
+                    ng-click="openDescriptionProductDialog(position.product)"></button>
             <button class="transparentButton glyphicon glyphicon-pencil" ng-click="editionMode=true"></button>
-            <button type="button" class="transparentButton glyphicon glyphicon-remove" ng-click="open(position)"></button>
+            <button type="button" class="transparentButton glyphicon glyphicon-remove" ng-click="openDeleteDialog(position)"></button>
           </td>
         </tr>
       </table>

@@ -7,11 +7,11 @@
     .controller('AddPositionController', AddPositionController)
     .controller('ParametersController', ParametersController)
 
-  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'Positions', 'Position', 'ngDialog'];
-  AddPositionController.$inject = ['$scope'];
+  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'PositionsByPortfolio', 'Position', 'Product', 'ngDialog', 'CurrencySign'];
+  AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'usSpinnerService'];
   ParametersController.$inject = ['$scope'];
 
-  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, Positions, Position, ngDialog) {
+  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, PositionsByPortfolio, Position, Product, ngDialog, CurrencySign) {
 
     /* GET THE PORTFOLIO LIST OF THE CLIENT CURRENTLY CONNECTED */
     var account = Account.get({}, function() {
@@ -22,6 +22,8 @@
         });
       })
     });
+
+    $rootScope.positions = [];
 
     /* LOAD POSITIONS IN THE PORTFOLIO SELECTED */
     $rootScope.loadPositions = function(portfolioName) {
@@ -35,9 +37,17 @@
         $rootScope.portfolio = portfolioResource[0];
         $rootScope.resetIsAdd();
 
-        var positions = Positions.query({portfolioId: $rootScope.portfolio.id}, function () {
-          $rootScope.positions = positions;
-          console.log($rootScope.positions)
+        var positions = PositionsByPortfolio.query({portfolioId: $rootScope.portfolio.id}, function () {
+          positions.forEach(function(position) {
+            var product = Product.get({id: position.productId}, function() {
+              var pos = {
+                position: position,
+                product: product
+              }
+              $rootScope.positions.push(pos)
+              console.log($rootScope.positions)
+            });
+          });
         });
       }
     };
@@ -55,7 +65,7 @@
     }
 
     /* DELETE DIALOG */
-    $scope.open = function (position) {
+    $scope.openDeleteDialog = function (position) {
       $scope.position = position
       ngDialog.open({
         template: 'app/simulation/confirmationModal.html',
@@ -63,6 +73,18 @@
         scope: $scope
       });
     };
+
+    /* DESCRIPTION PRODUCT DIALOG */
+    $scope.openDescriptionProductDialog = function (product) {
+      $scope.product = product;
+      $scope.moneySign = CurrencySign.getCurrencySign(product.currency);
+      ngDialog.open({
+        template: 'app/simulation/descriptionProductModal.html',
+        className: 'ngdialog-theme-default',
+        scope: $scope
+      });
+    };
+
 
     $scope.cancel = function() {
       ngDialog.close();
@@ -107,7 +129,59 @@
     }
   };
 
-  function AddPositionController($scope) {
+  function AddPositionController($scope, ProductsByInstrumentType, usSpinnerService) {
+
+    $scope.typeAsset = null;
+
+    $scope.$watch(
+      function() { return $scope.typeAsset},
+      function (newValue) {
+        var instrumentType = (newValue === 1) ? 'O' : (newValue === 2) ? 'F' : '';
+        var productNameOrProductIdList = ProductsByInstrumentType.query({instrumentType: instrumentType}, function() {
+          $scope.productNameOrProductIdList = productNameOrProductIdList;
+          console.log($scope.productNameOrProductIdList)
+        });
+      }
+    );
+
+    $scope.showTable = false;
+
+    /*********** HANDLER LOADING SPINNER ******************/
+    $scope.startSpin = function() {
+      if (!$scope.spinneractive) {
+        usSpinnerService.spin('spinner-1');
+      }
+    };
+
+    $scope.stopSpin = function() {
+      if ($scope.spinneractive) {
+        usSpinnerService.stop('spinner-1');
+      }
+    };
+    $scope.spinneractive = false;
+
+    $scope.$on('us-spinner:spin', function(event, key) {
+      $scope.spinneractive = true;
+    });
+
+    $scope.$on('us-spinner:stop', function(event, key) {
+      $scope.spinneractive = false;
+    });
+
+    $scope.getProductInformations = function(codeProduct) {
+      if ($scope.productNameOrProductIdList.indexOf(codeProduct) !== -1) {
+        $scope.startSpin();
+
+        //TODO : Requete pour recup tous les stike du produit ciblé
+
+
+        $scope.stopSpin();
+        $scope.showTable = true;
+      } else {
+        $scope.showTable = false;
+      }
+    }
+
     $scope.numberNewPosition = 0;
 
     $scope.addPosition = function() {

@@ -39,6 +39,8 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/angular-animate/angular-animate.js',
             'src/main/webapp/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
             'src/main/webapp/bower_components/ng-dialog/js/ngDialog.js',
+            'src/main/webapp/bower_components/spin.js/spin.js',
+            'src/main/webapp/bower_components/angular-spinner/angular-spinner.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

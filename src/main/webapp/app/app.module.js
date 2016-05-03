@@ -19,7 +19,8 @@
             'angular-loading-bar',
             'mgo-angular-wizard',
             'ngAnimate',
-            'ngDialog'
+            'ngDialog',
+            'angularSpinner'
         ])
         .run(run);
 

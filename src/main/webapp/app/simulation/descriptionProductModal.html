@@ -1,0 +1,57 @@
+<div class="modal-header"><h2>Product Description</h2></div>
+<div class="modal-body">
+  <ul>
+    <li>Product Id : {{product.productId}}</li>
+    <li>Product Name : {{product.productName}}</li>
+    <li>Effective Date : {{product.effectiveDate}}</li>
+    <li>Contract Expiration : {{product.contractYear}}-{{product.contractMonth}}</li>
+    <li>Strike : {{product.exercisePrice}} {{moneySign}}</li>
+    <li>Version Number : {{product.versionNumber}}</li>
+    <li>Instrument type :
+      <span ng-switch on="product.instrumentType">
+        <span ng-switch-when="O">Option /</span>
+        <span ng-switch on="product.optionType">
+          <span ng-switch-when="C">Call</span>
+          <span ng-switch-when="P">Put</span>
+        </span>
+        <span ng-switch-when="F">Futures</span>
+      </span>
+    </li>
+    <li>Product Settlement Type :
+      <span ng-switch on="product.productSettlementType">
+        <span ng-switch-when="C">Cash Settlement</span>
+        <span ng-switch-when="E">Physical Settlement</span>
+        <span ng-switch-when="D">Derivative</span>
+        <span ng-switch-when="N">Notional Settlement</span>
+        <span ng-switch-when="P">Payment-versus-Payment</span>
+        <span ng-switch-when="S">Stock</span>
+        <span ng-switch-when="T">Cascade</span>
+        <span ng-switch-when="A">Alternate</span>
+      </span>
+    </li>
+
+    <li ng-if="product.exerciseStyleFlag !== ''">Exercise Style :
+      <span ng-switch on="product.exerciseStyleFlag">
+        <span ng-switch-when="A">American</span>
+        <span ng-switch-when="E">European</span>
+      </span>
+    </li>
+    <li>Bloomberg Id : <a ng-rehf="{{product.bloomberUrl}}">{{product.bloombergId}}</a></li>
+
+    <li>Liquidation Group : {{product.liquidationGroup}}</li>
+    <li>Liquidity Class : {{product.liquidityClass}}</li>
+    <li>Margin Style :
+      <span ng-switch on="product.marginStyle">
+        <span ng-switch-when="F">Futures style</span>
+        <span ng-switch-when="T">Traditional</span>
+      </span>
+    </li>
+    <li>Settlement Price : {{product.settlementPrice}} {{moneySign}}</li>
+    <li>Version Number : {{product.versionNumber}}</li>
+    <li>Tick Size : {{product.tickSize}}</li>
+    <li>Tick Value : {{product.tickValue}}</li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <button class="btn" ng-click="cancel()">Quit</button>
+</div>
