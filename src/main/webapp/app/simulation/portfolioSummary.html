@@ -27,7 +27,7 @@
             </span>
             on {{position.product.productName}}
           </td>
-          <td>{{position.product.maturityYear}}-{{position.product.maturityMonth}}-{{position.product.maturityDay}}</td>
+          <td>{{position.product.maturityDate}}</td>
           <td>{{position.product.exercisePrice}}</td>
           <td><input class="onFocusInput center" disabled="true" ng-model="position.position.quantity" focus-me="editionMode"
                      maxlength="6" size="8" ng-blur="updatePosition(position.position.id, position.position.quantity)"/></td>

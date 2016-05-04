@@ -8,7 +8,7 @@
     .controller('ParametersController', ParametersController)
 
   SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'PositionsByPortfolio', 'Position', 'Product', 'ngDialog', 'CurrencySign'];
-  AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'usSpinnerService'];
+  AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService'];
   ParametersController.$inject = ['$scope'];
 
   function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, PositionsByPortfolio, Position, Product, ngDialog, CurrencySign) {
@@ -129,9 +129,22 @@
     }
   };
 
-  function AddPositionController($scope, ProductsByInstrumentType, usSpinnerService) {
+  function AddPositionController($scope, ProductsByInstrumentType, ProductInformation, usSpinnerService) {
 
     $scope.typeAsset = null;
+
+    $scope.currentPosition = "";
+
+    $scope.setCurrentPosition = function(_id, isShort) {
+      $scope.currentPosition = (isShort ? "S" : "L") + _id;
+      console.log($scope.currentPosition);
+    }
+
+    $scope.isPositionSelected = function(_id, isShort) {
+      console.log("in isPositionSelected");
+      return $scope.currentPosition === (isShort ? "S" : "L") + _id;
+    }
+
 
     $scope.$watch(
       function() { return $scope.typeAsset},
@@ -173,10 +186,12 @@
         $scope.startSpin();
 
         //TODO : Requete pour recup tous les stike du produit ciblé
-
-
-        $scope.stopSpin();
-        $scope.showTable = true;
+        var product = ProductInformation.get({productId: codeProduct}, function() {
+          $scope.product = product;
+          console.log($scope.product)
+          $scope.stopSpin();
+          $scope.showTable = true;
+        });
       } else {
         $scope.showTable = false;
       }

@@ -567,7 +567,7 @@ th {
   font-weight: normal;
 }
 
-thead > tr:nth-child(1) {
+thead > tr:nth-child(1), .topHeader {
   text-align: center;
   background: $myblue;
   color: #FFFFFF;
@@ -590,9 +590,9 @@ thead > tr:nth-child(3) {
   height: 35px;
 }
 
-#marketTable tbody > tr > td:nth-child(4),
-#marketTable thead > td:nth-child(1) {
-    border-style: solid;
+.marketTable tbody > tr > td:nth-child(4),
+.marketTable thead > td:nth-child(1) {
+  border-style: solid;
   border-width: 0px 1px 0px 0px !important;
   border-color: $myblue;
 }
