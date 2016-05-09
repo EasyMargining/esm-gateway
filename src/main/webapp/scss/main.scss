@@ -450,6 +450,10 @@ ul#strength {
   margin-bottom: 20px;
 }
 
+.spaceLineBottom {
+  margin-bottom: 20px;
+}
+
 #OptionLabel {
   display: inline-block;
 }
@@ -598,7 +602,7 @@ thead > tr:nth-child(3) {
 }
 
 td {
-  height: 35px;
+  min-height: 35px;
   padding-left: 0px;
 }
 
@@ -606,6 +610,55 @@ td {
   vertical-align: middle!important;
 }
 
+.header-fixed {
+  width: 100%
+}
+
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+  display: block;
+}
+
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+.header-fixed > tbody {
+  overflow-y: auto;
+  height: 400px;
+}
+
+.header-fixed > tbody > tr > td:nth-child(1),
+.header-fixed > thead > tr > th:nth-child(1) {
+  float: left;
+  width: 30% !important;
+}
+
+.header-fixed > tbody > tr > td:nth-child(2),
+.header-fixed > thead > tr > th:nth-child(2) {
+  float: left;
+  width: 15% !important;
+}
+
+.header-fixed > tbody > tr > td:nth-child(3),
+.header-fixed > thead > tr > th:nth-child(3) {
+  float: left;
+  width: 15% !important;
+}
+
+.header-fixed > tbody > tr > td:nth-child(4),
+.header-fixed > thead > tr > th:nth-child(4) {
+  float: left;
+  width: 40% !important;
+}
 
 /************************** BUTTONS ****************************/
 

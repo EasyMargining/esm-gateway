@@ -141,7 +141,6 @@
     }
 
     $scope.isPositionSelected = function(_id, isShort) {
-      console.log("in isPositionSelected");
       return $scope.currentPosition === (isShort ? "S" : "L") + _id;
     }
 
@@ -185,7 +184,6 @@
       if ($scope.productNameOrProductIdList.indexOf(codeProduct) !== -1) {
         $scope.startSpin();
 
-        //TODO : Requete pour recup tous les stike du produit ciblé
         var product = ProductInformation.get({productId: codeProduct}, function() {
           $scope.product = product;
           console.log($scope.product)
