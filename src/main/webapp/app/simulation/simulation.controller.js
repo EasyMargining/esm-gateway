@@ -75,7 +75,6 @@
     }
 
     $scope.$on('addPosition', function(event, data) {
-      console.log("new position")
       console.log(data)
       savePosition(data);
     });
@@ -149,7 +148,6 @@
         isShort: isShort,
         id: _id
       };
-      console.log($scope.currentPosition);
     }
 
     $scope.isPositionSelected = function(_id, isShort) {
@@ -201,7 +199,6 @@
         var instrumentType = (newValue === 1) ? 'Option' : (newValue === 2) ? 'Future' : '';
         var productNameOrProductIdList = ProductsByInstrumentType.query({instrumentType: instrumentType}, function() {
           $scope.productNameOrProductIdList = productNameOrProductIdList;
-          console.log($scope.productNameOrProductIdList)
         });
       }
     );
@@ -235,13 +232,42 @@
         $scope.startSpin();
 
         var product = ProductInformation.get({productId: codeProduct}, function() {
-          $scope.product = product;
-          console.log($scope.product)
+          $scope.allProduct = product;
+          $scope.displayedProduct = {};
+          angular.copy(product, $scope.displayedProduct);
+          console.log($scope.allProduct)
           $scope.stopSpin();
           $scope.showTable = true;
         });
       } else {
         $scope.showTable = false;
+      }
+    }
+
+    $scope.updateCallMaturity = function(callMaturity) {
+      if (callMaturity) {
+        $scope.displayedProduct.callPrices = {};
+        $scope.displayedProduct.callPrices[callMaturity] = $scope.allProduct.callPrices[callMaturity];
+      } else {
+        angular.copy($scope.allProduct.callPrices, $scope.displayedProduct.callPrices);
+      }
+    }
+
+    $scope.updatePutMaturity = function(putMaturity) {
+      if (putMaturity) {
+        $scope.displayedProduct.putPrices = {};
+        $scope.displayedProduct.putPrices[putMaturity] = $scope.allProduct.putPrices[putMaturity];
+      } else {
+        angular.copy($scope.allProduct.putPrices, $scope.displayedProduct.putPrices);
+      }
+    }
+
+    $scope.updateFuturesMaturity = function(futuresMaturity) {
+      if (futuresMaturity) {
+        $scope.displayedProduct.futuresPrices = {};
+        $scope.displayedProduct.futuresPrices[futuresMaturity] = $scope.allProduct.futuresPrices[futuresMaturity];
+      } else {
+        angular.copy($scope.allProduct.futuresPrices, $scope.displayedProduct.futuresPrices);
       }
     }
 

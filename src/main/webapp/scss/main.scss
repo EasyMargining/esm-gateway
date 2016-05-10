@@ -545,6 +545,27 @@ input:focus {
   @extend input;
 }
 
+.maturityInput {
+  color: #FFFFFF;
+  text-align: center !important;
+}
+
+.maturityInput::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
+
+.maturityInput:-moz-placeholder { /* Firefox 18- */
+  color: #FFFFFF;
+}
+
+.maturityInput::-moz-placeholder {  /* Firefox 19+ */
+  color: #FFFFFF;
+}
+
+.maturityInput:-ms-input-placeholder {
+  color: #FFFFFF;
+}
+
 /************************ TABLE ******************************/
 
 table {

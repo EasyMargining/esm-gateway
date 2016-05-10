@@ -15,7 +15,10 @@
         product: '=',
         setCurrentPosition: '&',
         isPositionSelected: '&',
-        addPosition: '&'
+        addPosition: '&',
+        updateCallMaturity: '&',
+        updatePutMaturity: '&',
+        updateFuturesMaturity: '&'
       },
       templateUrl : 'app/simulation/productTable.html'
     };

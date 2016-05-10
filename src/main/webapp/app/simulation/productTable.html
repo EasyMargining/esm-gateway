@@ -18,11 +18,18 @@
 
 <!------------------- FUTURES CASE --------------------------->
 
+<datalist id="futuresMaturities">
+  <option ng-repeat="(maturityDate, pricesTable) in product.futuresPrices" ng-value="maturityDate">
+</datalist>
+
 <div ng-show="product.futuresPrices" class="col-md-12 no-padding">
   <table class="marketTable header-fixed">
     <thead>
     <tr>
-      <th>Maturity</th>
+      <th>
+        <input class="maturityInput" type="text" list="futuresMaturities" placeholder="All Maturities" size="14" maxlength="14"
+               ng-model="futuresMaturity" ng-change="updateFuturesMaturity()(futuresMaturity)"/>
+      </th>
       <th>Last</th>
       <th></th>
     </tr>
@@ -56,6 +63,11 @@
 
 <!--------------------- OPTION CASE -------------------------->
 <!----------------------PUT  PART ---------------------------->
+
+<datalist id="putMaturities">
+  <option ng-repeat="(maturityDate, pricesTable) in product.putPrices" ng-value="maturityDate">
+</datalist>
+
 <div ng-show="product.putPrices" class="col-md-6 no-padding">
   <table class="marketTable header-fixed">
     <thead>
@@ -63,7 +75,10 @@
       <th colspan="4">PUT</th>
     </tr>
     <tr>
-      <th>Maturity</th>
+      <th>
+        <input class="maturityInput" type="text" list="putMaturities" placeholder="All Maturities" size="14" maxlength="14"
+               ng-model="putMaturity" ng-change="updatePutMaturity()(putMaturity)"/>
+      </th>
       <th>Strike</th>
       <th>Last</th>
       <th></th>
@@ -98,6 +113,11 @@
 </div>
 
 <!----------------------CALL PART ---------------------------->
+
+<datalist id="callMaturities">
+  <option ng-repeat="(maturityDate, pricesTable) in product.callPrices" ng-value="maturityDate">
+</datalist>
+
 <div ng-show="product.putPrices" class="col-md-6 no-padding">
   <table class="marketTable header-fixed">
     <thead>
@@ -105,7 +125,10 @@
       <th colspan="4">CALL</th>
     </tr>
     <tr>
-      <th>Maturity</th>
+      <th>
+        <input class="maturityInput" type="text" list="callMaturities" placeholder="All Maturities" size="14" maxlength="14"
+               ng-model="callMaturity" ng-change="updateCallMaturity()(callMaturity)"/>
+      </th>
       <th>Strike</th>
       <th>Last</th>
       <th></th>

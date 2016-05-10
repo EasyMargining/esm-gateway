@@ -31,8 +31,11 @@
     <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
 
     <div ng-show="showTable">
-      <choose-asset-table product="product" set-current-position="setCurrentPosition"
-                          is-position-selected="isPositionSelected" add-position="addPosition"></choose-asset-table>
+      <choose-asset-table product="displayedProduct" set-current-position="setCurrentPosition"
+                          is-position-selected="isPositionSelected" add-position="addPosition"
+                          update-call-maturity="updateCallMaturity" update-put-maturity="updatePutMaturity"
+                          update-futures-maturity="updateFuturesMaturity">
+      </choose-asset-table>
     </div>
   </div>
 </div>
