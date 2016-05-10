@@ -43,8 +43,8 @@
         </div>
         <div ng-show="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
           <div class="animated fadeInDown">
-            <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-            <button  ng-click="addPosition(currentPosition)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
+            <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" ng-model="quantity"/>
+            <button  ng-click="addPosition()(quantity)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
           </div>
         </div>
       </td>
@@ -87,8 +87,8 @@
         </div>
         <div ng-show="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
           <div class="animated fadeInDown">
-          <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-          <button  ng-click="addPosition(currentPosition)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
+          <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" ng-model="quantity" />
+          <button  ng-click="addPosition()(quantity)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
             </div>
         </div>
       </td>
@@ -129,8 +129,8 @@
         </div>
         <div ng-show="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
           <div class="animated fadeInDown">
-            <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" />
-            <button  ng-click="addPosition(currentPosition)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
+            <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" ng-model="quantity"/>
+            <button  ng-click="addPosition()(quantity)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
           </div>
         </div>
       </td>

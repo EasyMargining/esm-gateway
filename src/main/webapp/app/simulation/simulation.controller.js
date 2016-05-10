@@ -7,11 +7,28 @@
     .controller('AddPositionController', AddPositionController)
     .controller('ParametersController', ParametersController)
 
-  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'PositionsByPortfolio', 'Position', 'Product', 'ngDialog', 'CurrencySign'];
-  AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService'];
+  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'PositionsByPortfolio', 'Position', 'Product', 'ngDialog', 'CurrencySign', 'SharedVariables'];
+  AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'SharedVariables', 'Position'];
   ParametersController.$inject = ['$scope'];
 
-  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, PositionsByPortfolio, Position, Product, ngDialog, CurrencySign) {
+  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, PositionsByPortfolio, Position, Product, ngDialog, CurrencySign, SharedVariables) {
+
+    var vm = this;
+    vm.account = null;
+    vm.isAuthenticated = null;
+    vm.login = LoginService.open;
+    $scope.$on('authenticationSuccess', function() {
+      getAccount();
+    });
+
+    getAccount();
+
+    function getAccount() {
+      Principal.identity().then(function(account) {
+        vm.account = account;
+        vm.isAuthenticated = Principal.isAuthenticated;
+      });
+    }
 
     /* GET THE PORTFOLIO LIST OF THE CLIENT CURRENTLY CONNECTED */
     var account = Account.get({}, function() {
@@ -34,23 +51,34 @@
 
       //To avoid useless call to the server
       if (!$rootScope.portfolio || $rootScope.portfolio !== portfolioResource[0]) {
+        $rootScope.positions = [];
         $rootScope.portfolio = portfolioResource[0];
+        SharedVariables.setPortfolio($rootScope.portfolio);
         $rootScope.resetIsAdd();
 
         var positions = PositionsByPortfolio.query({portfolioId: $rootScope.portfolio.id}, function () {
           positions.forEach(function(position) {
-            var product = Product.get({id: position.productId}, function() {
-              var pos = {
-                position: position,
-                product: product
-              }
-              $rootScope.positions.push(pos)
-              console.log($rootScope.positions)
-            });
+           savePosition(position)
           });
         });
       }
     };
+
+    function savePosition(position) {
+      var product = Product.get({id: position.productId}, function() {
+        var pos = {
+          position: position,
+          product: product
+        }
+        $rootScope.positions.push(pos)
+      });
+    }
+
+    $scope.$on('addPosition', function(event, data) {
+      console.log("new position")
+      console.log(data)
+      savePosition(data);
+    });
 
     /* UPDATE A POSITION */
     $scope.updatePosition = function(id, quantity) {
@@ -108,42 +136,64 @@
     $rootScope.resetIsAdd = function() {
       $rootScope.isAdd = 0;
     }
-
-  //TODO: Voir si ce code est utile
-
-    var vm = this;
-    vm.account = null;
-    vm.isAuthenticated = null;
-    vm.login = LoginService.open;
-    $scope.$on('authenticationSuccess', function() {
-      getAccount();
-    });
-
-    getAccount();
-
-    function getAccount() {
-      Principal.identity().then(function(account) {
-        vm.account = account;
-        vm.isAuthenticated = Principal.isAuthenticated;
-      });
-    }
   };
 
-  function AddPositionController($scope, ProductsByInstrumentType, ProductInformation, usSpinnerService) {
+  function AddPositionController($scope, ProductsByInstrumentType, ProductInformation, usSpinnerService, SharedVariables, Position) {
 
     $scope.typeAsset = null;
 
-    $scope.currentPosition = "";
+    $scope.currentPosition = null;
 
     $scope.setCurrentPosition = function(_id, isShort) {
-      $scope.currentPosition = (isShort ? "S" : "L") + _id;
+      $scope.currentPosition = {
+        isShort: isShort,
+        id: _id
+      };
       console.log($scope.currentPosition);
     }
 
     $scope.isPositionSelected = function(_id, isShort) {
-      return $scope.currentPosition === (isShort ? "S" : "L") + _id;
+      return $scope.currentPosition && $scope.currentPosition.isShort === isShort
+        && $scope.currentPosition.id === _id;
     }
 
+    $scope.numberNewPosition = 0;
+    $scope.newPositions = [];
+
+    $scope.addPosition = function(quantity) {
+      //!isNaN(parseFloat(quantity)) --> Return true is quantity is a number
+      if (quantity && !isNaN(parseFloat(quantity)) && quantity > 0) {
+        $scope.newPositions.push({id : $scope.currentPosition.id,
+        quantity: ($scope.currentPosition.isShort ? -quantity : quantity)});
+        $scope.numberNewPosition++;
+      }
+    }
+
+    $scope.saveNewPositions = function() {
+      var newPos = [];
+      for (var i in $scope.newPositions) {
+        var position = $scope.newPositions[i];
+        var pos = new Position();
+        pos.portfolioId = SharedVariables.getPortfolio().id;
+        pos.productId = position.id;
+        pos.quantity = position.quantity;
+        pos.exchange = "eurex";
+        pos.state = "live";
+        pos.effectiveDate = "2016-05-10";
+        newPos.push(pos);
+      }
+      recursiveSave(newPos);
+    }
+
+    function recursiveSave(pos) {
+      if (pos.length > 0) {
+        var p = pos.pop();
+        Position.save(p, function () {
+          SharedVariables.addPosition(p);
+          recursiveSave(pos);
+        });
+      }
+    }
 
     $scope.$watch(
       function() { return $scope.typeAsset},
@@ -193,12 +243,6 @@
       } else {
         $scope.showTable = false;
       }
-    }
-
-    $scope.numberNewPosition = 0;
-
-    $scope.addPosition = function() {
-      $scope.numberNewPosition++;
     }
 
     $scope.selected = 0;

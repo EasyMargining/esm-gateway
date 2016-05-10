@@ -12,7 +12,7 @@
       </div>
     </div>
     <div id="marketLink">
-      <a ng-click="$root.isAdd=0" class="glyphicon glyphicon-shopping-cart"></a>
+      <a ng-click="$root.isAdd=0; saveNewPositions()" class="glyphicon glyphicon-shopping-cart"></a>
       <span class="littleCircle" ng-show="numberNewPosition > 0">{{numberNewPosition}}</span>
     </div>
     <div>
@@ -32,7 +32,7 @@
 
     <div ng-show="showTable">
       <choose-asset-table product="product" set-current-position="setCurrentPosition"
-                          is-position-selected="isPositionSelected"></choose-asset-table>
+                          is-position-selected="isPositionSelected" add-position="addPosition"></choose-asset-table>
     </div>
   </div>
 </div>

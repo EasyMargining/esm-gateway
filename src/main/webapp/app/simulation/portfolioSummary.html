@@ -18,12 +18,12 @@
           <td>{{position.product.productId}}</td>
           <td>
             <span ng-switch on="position.product.instrumentType">
-              <span ng-switch-when="O">Option /</span>
+              <span ng-switch-when="Option">Option /</span>
               <span ng-switch on="position.product.optionType">
-                <span ng-switch-when="C">Call</span>
-                <span ng-switch-when="P">Put</span>
+                <span ng-switch-when="CALL">Call</span>
+                <span ng-switch-when="PUT">Put</span>
               </span>
-              <span ng-switch-when="F">Futures</span>
+              <span ng-switch-when="Future">Futures</span>
             </span>
             on {{position.product.productName}}
           </td>

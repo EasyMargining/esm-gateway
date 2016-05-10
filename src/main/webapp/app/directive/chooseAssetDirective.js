@@ -14,7 +14,8 @@
       scope : {
         product: '=',
         setCurrentPosition: '&',
-        isPositionSelected: '&'
+        isPositionSelected: '&',
+        addPosition: '&'
       },
       templateUrl : 'app/simulation/productTable.html'
     };
