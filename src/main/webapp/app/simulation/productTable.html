@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <tbody class="scrollContent">
-    <tr ng-repeat-start="(maturityDate, pricesTable) in product.futuresPrices">
+    <tr class="maturityDate" ng-repeat-start="(maturityDate, pricesTable) in product.futuresPrices">
       <td>{{maturityDate}}</td>
       <td></td>
       <td></td>
@@ -70,7 +70,7 @@
     </tr>
     </thead>
     <tbody class="scrollContent">
-    <tr ng-repeat-start="(maturityDate, pricesTable) in product.putPrices">
+    <tr class="maturityDate" ng-repeat-start="(maturityDate, pricesTable) in product.putPrices">
       <td>{{maturityDate}}</td>
       <td></td>
       <td></td>
@@ -112,7 +112,7 @@
     </tr>
     </thead>
     <tbody class="scrollContent">
-    <tr ng-repeat-start="(maturityDate, pricesTable) in product.callPrices">
+    <tr  class="maturityDate" ng-repeat-start="(maturityDate, pricesTable) in product.callPrices">
       <td>{{maturityDate}}</td>
       <td></td>
       <td></td>
