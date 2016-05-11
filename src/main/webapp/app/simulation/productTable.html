@@ -2,14 +2,14 @@
   <label ng-if="product.futuresPrices">FUTURE {{product.productId}}</label>
   <label ng-hide="product.futuresPrices">OPTION {{product.productId}}</label>
   <label class="spaceBetweenLabel"></label>
-  <label>CENTER</label>&nbsp;<input class="numberInput center" type="number" ng-model="center" ng-change="adaptValues()"/>
+  <label>CENTER</label>&nbsp;<input class="numberInput center" type="number" ng-model="product.center" ng-change="adaptValues()"/>
   <span ng-hide="product.futuresPrices">
     <label>NUMBER OF STRIKES FROM CENTER &nbsp;
       <input class="numberInput center" type="number" ng-focus="selected=0"
-             ng-class="{notSelectedInput: selected!=0}" ng-model="strikesNumber" ng-change="adaptValues()"/>
+             ng-class="{notSelectedInput: selected!=0}" ng-model="product.strikesNumber" ng-change="adaptValues()"/>
       OR &nbsp;
       <input class="percentInput center" type="number" ng-focus="selected=1"
-             ng-class="{notSelectedInput: selected!=1}" ng-model="strikesPercent" ng-change="adaptValues()"/>
+             ng-class="{notSelectedInput: selected!=1}" ng-model="product.strikesPercent" ng-change="adaptValues()"/>
       % </label>
   </span>
   <label class="spaceBetweenLabel"></label>
@@ -23,7 +23,7 @@
     <thead>
     <tr class="productHeader">
       <th>
-        <select class="maturitySelect" ng-model="futuresMaturity" ng-change="updateAssetMaturity()(futuresMaturity, 0)">
+        <select class="maturitySelect" ng-model="product.futuresMaturityPrices">
           <option value="">All Maturities</option>
           <option ng-repeat="maturityDate in getAllMaturities()(0)" value="{{maturityDate}}">{{maturityDate}}</option>
         </select>
@@ -70,7 +70,7 @@
     </tr>
     <tr>
       <th>
-        <select class="maturitySelect" ng-model="putMaturity" ng-change="updateAssetMaturity()(putMaturity, 1)">
+        <select class="maturitySelect" ng-model="product.putMaturityPrices">
           <option value="">All Maturities</option>
           <option ng-repeat="maturityDate in getAllMaturities()(1)" value="{{maturityDate}}">{{maturityDate}}</option>
         </select>
@@ -118,7 +118,7 @@
     </tr>
     <tr>
       <th>
-        <select class="maturitySelect" ng-model="callMaturity" ng-change="updateAssetMaturity()(callMaturity, 2)">
+        <select class="maturitySelect" ng-model="product.callMaturityPrices">
           <option value="">All Maturities</option>
           <option ng-repeat="maturityDate in getAllMaturities()(2)" value="{{maturityDate}}">{{maturityDate}}</option>
         </select>

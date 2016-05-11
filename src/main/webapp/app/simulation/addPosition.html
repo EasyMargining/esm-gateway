@@ -1,4 +1,4 @@
-<div class="row portfolioSummary" ng-controller="AddPositionController" ng-model="typeAsset" ng-init="typeAsset=$root.isAdd">
+<div class="row portfolioSummary" ng-controller="AddPositionController" ng-model="instrumentType" ng-init="instrumentType=$root.isAdd">
   <div class="col-md-1">
     <i class="glyphicon glyphicon-menu-left" ng-click="$root.isAdd=0"></i>
   </div>
@@ -13,7 +13,7 @@
     </div>
     <div id="marketLink">
       <a ng-click="$root.isAdd=0; saveNewPositions()" class="glyphicon glyphicon-shopping-cart"></a>
-      <span class="littleCircle" ng-show="numberNewPosition > 0">{{numberNewPosition}}</span>
+      <span class="littleCircle" ng-show="newPositions.length > 0">{{newPositions.length}}</span>
     </div>
     <div>
       <i class="glyphicon glyphicon-menu-down myGreen"></i>

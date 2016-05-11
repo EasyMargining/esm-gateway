@@ -42,7 +42,10 @@
 
     $rootScope.positions = [];
 
-    /* LOAD POSITIONS IN THE PORTFOLIO SELECTED */
+    /**
+     * Load the positions in the portfolio currently selected
+     * @param portfolioName : the portfolio currently selected
+       */
     $rootScope.loadPositions = function(portfolioName) {
 
       var portfolioResource = $rootScope.portfolios.filter(function( obj ) {
@@ -131,7 +134,6 @@
       });
     }
 
-
     $rootScope.resetIsAdd = function() {
       $rootScope.isAdd = 0;
     }
@@ -139,9 +141,8 @@
 
   function AddPositionController($scope, ProductsByInstrumentType, ProductInformation, usSpinnerService, SharedVariables, Position) {
 
-    $scope.typeAsset = null;
-
-    $scope.currentPosition = null;
+    $scope.instrumentType = null;   //1 for Option, 2 for futures
+    $scope.currentPosition = null;  // last position opened by the user
 
     $scope.setCurrentPosition = function(_id, isShort) {
       $scope.currentPosition = {
@@ -155,18 +156,23 @@
         && $scope.currentPosition.id === _id;
     }
 
-    $scope.numberNewPosition = 0;
     $scope.newPositions = [];
 
+    /**
+     * Add the position (product and quantity) in the array $scope.newPositions
+     * @param quantity : the quantity enter by the user corresponding to the product in $scope.currentPosition
+       */
     $scope.addPosition = function(quantity) {
       //!isNaN(parseFloat(quantity)) --> Return true is quantity is a number
       if (quantity && !isNaN(parseFloat(quantity)) && quantity > 0) {
         $scope.newPositions.push({id : $scope.currentPosition.id,
         quantity: ($scope.currentPosition.isShort ? -quantity : quantity)});
-        $scope.numberNewPosition++;
       }
     }
 
+    /**
+     * Create the array containing the new positions as entity in order to persist them in db.
+     */
     $scope.saveNewPositions = function() {
       var newPos = [];
       for (var i in $scope.newPositions) {
@@ -183,6 +189,10 @@
       recursiveSave(newPos);
     }
 
+    /**
+     * Send a request to persist the new positions in pos
+     * @param pos : array of the new positions to persist
+       */
     function recursiveSave(pos) {
       if (pos.length > 0) {
         var p = pos.pop();
@@ -193,8 +203,11 @@
       }
     }
 
+    /**
+     * Watch and return the list of assets the page needs (Option or futures)
+     */
     $scope.$watch(
-      function() { return $scope.typeAsset},
+      function() { return $scope.instrumentType},
       function (newValue) {
         var instrumentType = (newValue === 1) ? 'Option' : (newValue === 2) ? 'Future' : '';
         var productNameOrProductIdList = ProductsByInstrumentType.query({instrumentType: instrumentType}, function() {
@@ -227,14 +240,69 @@
       $scope.spinneractive = false;
     });
 
+    /*******************************************************/
+
+      /**
+       * Function only use in option case to initialize the center.
+       * For the moment by default we init the center with the average of all the strikes
+       *
+       * @return center
+       */
+      function initCenter() {
+        var sum = 0;
+        var numberOfPrices = 0;
+        for (var maturity in $scope.allProduct.callPrices) {
+          $scope.allProduct.callPrices[maturity].forEach(function(obj) {
+            sum = sum + obj.exercisePrice;
+            numberOfPrices++;
+          });
+        }
+        return Math.round((sum / numberOfPrices));
+      }
+
+    $scope.displayedProduct = {
+      futuresPrices: null,
+      putPrices: null,
+      callPrices: null,
+      futuresMaturityPrices: null,
+      putMaturityPrices: null,
+      callMaturityPrices: null,
+      center: 0,
+      strikesNumber: 10,
+      strikesPercent: 10
+    }
+
+    /**
+     * Initialize the object $scope.allProduct and $scope.displayProduct
+     * + display the spinner during the operation
+     * @param codeProduct --> productId of a product
+     */
     $scope.getProductInformations = function(codeProduct) {
       if ($scope.productNameOrProductIdList.indexOf(codeProduct) !== -1) {
         $scope.startSpin();
 
         var product = ProductInformation.get({productId: codeProduct}, function() {
           $scope.allProduct = product;
-          $scope.displayedProduct = {};
-          angular.copy(product, $scope.displayedProduct);
+
+          $scope.displayedProduct.bloombergId = product.bloombergId;
+          $scope.displayedProduct.bloombergUrl = product.bloombergUrl;
+          $scope.displayedProduct.futuresPrices = angular.copy(product.futuresPrices);
+          $scope.displayedProduct.putPrices = angular.copy(product.putPrices);
+          $scope.displayedProduct.callPrices = angular.copy(product.callPrices);
+          $scope.displayedProduct.currency = product.currency;
+          $scope.displayedProduct.isin = product.isin;
+          $scope.displayedProduct.marginStyle = product.marginStyle;
+          $scope.displayedProduct.productId =  product.productId
+          $scope.displayedProduct.productName = product.productName
+          $scope.displayedProduct.tickSize = product.tickSize;
+          $scope.displayedProduct.tickValue = product.tickValue;
+          $scope.displayedProduct.futuresMaturityPrices = null;
+          $scope.displayedProduct.putMaturityPrices = null;
+          $scope.displayedProduct.callMaturityPrices = null;
+          $scope.displayedProduct.center = initCenter();
+          $scope.displayedProduct.strikesNumber = 10;
+          $scope.displayedProduct.strikesPercent = 10;
+
           console.log($scope.allProduct)
           $scope.stopSpin();
           $scope.showTable = true;
@@ -245,65 +313,91 @@
     }
 
     /**
-     * typeAsset : 0 : future, 1 : put, 2 : call
+     * Watch when future maturity is change by the user
      */
-    $scope.updateAssetMaturity = function(assetMaturity, typeAsset) {
+    $scope.$watch(
+      function() { return $scope.displayedProduct.futuresMaturityPrices},
+      function() {
+        if ($scope.allProduct) {
+          updateDisplayedProduct(null);
+        }
+      });
 
-      switch(typeAsset) {
-        case 0:
-          if (assetMaturity) {
-            $scope.displayedProduct.futuresPrices = {};
-            $scope.displayedProduct.futuresPrices[assetMaturity] = $scope.allProduct.futuresPrices[assetMaturity];
-          } else {
-            angular.copy($scope.allProduct.futuresPrices, $scope.displayedProduct.futuresPrices);
-          }
-          break;
-        case 1:
-          if (assetMaturity) {
+    /**
+     * Watch when put maturity is change by the user
+     */
+    $scope.$watch(
+      function() { return $scope.displayedProduct.putMaturityPrices},
+      function() {
+        if ($scope.allProduct) {
+          updateDisplayedProduct(true);
+        }
+      });
+
+    /**
+     * Watch when call maturity is change by the user
+     */
+    $scope.$watch(
+      function() { return $scope.displayedProduct.callMaturityPrices},
+      function() {
+        if ($scope.allProduct) {
+          updateDisplayedProduct(false);
+        }
+      });
+
+    /**
+     *
+     * @param isPut : true if the change if on putMaturity, false if it is on callMaturity (not used in other cases)
+       */
+    function updateDisplayedProduct(isPut) {
+      console.log($scope.instrumentType === 1);
+
+      /********** 1. select in all the prices the ones which satisfy the maturity date **********/
+      if ($scope.instrumentType === 1) {
+        if (isPut) {
+          if ($scope.displayedProduct.putMaturityPrices) {
             $scope.displayedProduct.putPrices = {};
-            $scope.displayedProduct.putPrices[assetMaturity] = $scope.allProduct.putPrices[assetMaturity];
+            $scope.displayedProduct.putPrices[$scope.displayedProduct.putMaturityPrices] = $scope.allProduct.putPrices[$scope.displayedProduct.putMaturityPrices];
           } else {
             angular.copy($scope.allProduct.putPrices, $scope.displayedProduct.putPrices);
           }
-          break;
-        case 2:
-          if (assetMaturity) {
+        } else {
+          if ($scope.displayedProduct.callMaturityPrices) {
             $scope.displayedProduct.callPrices = {};
-            $scope.displayedProduct.callPrices[assetMaturity] = $scope.allProduct.callPrices[assetMaturity];
+            $scope.displayedProduct.callPrices[$scope.displayedProduct.callMaturityPrices] = $scope.allProduct.callPrices[$scope.displayedProduct.callMaturityPrices];
           } else {
             angular.copy($scope.allProduct.callPrices, $scope.displayedProduct.callPrices);
           }
-          break;
-        default:
-          console.error("should never happen");
-      }
-    }
-
-    $scope.getAllMaturities = function(typeAsset) {
-        switch (typeAsset) {
-          case 0:
-            return Object.keys($scope.allProduct.futuresPrices);
-          case 1:
-            return Object.keys($scope.allProduct.putPrices);
-          case 2:
-            return Object.keys($scope.allProduct.callPrices);
-          default:
-            console.error("should never happen");
         }
-    }
-
-    $scope.selected = 0;
-    $scope.center = 97;
-    $scope.strikesNumber = 10;
-    $scope.strikesPercent = 5.7;
-
-    $scope.adaptValues = function() {
-      if ($scope.selected === 0) {
-        $scope.strikesPercent = Math.round(($scope.strikesNumber / $scope.center) * 10000) / 100;
       } else {
-        $scope.strikesNumber = Math.round($scope.center * $scope.strikesPercent) / 100;
+        if ($scope.displayedProduct.futuresMaturityPrices) {
+          $scope.displayedProduct.futuresPrices = {};
+          $scope.displayedProduct.futuresPrices[$scope.displayedProduct.futuresMaturityPrices] = $scope.allProduct.futuresPrices[$scope.displayedProduct.futuresMaturityPrices];
+        } else {
+          angular.copy($scope.allProduct.futuresPrices, $scope.displayedProduct.futuresPrices);
+        }
       }
+
+      /********** 2. select in all the prices remaining the ones which satisfy center and strike gap **********/
+      //TODO : Finish this part
     };
+
+    /**
+     *
+     * @param isPut : true if the change if on putMaturity, false if it is on callMaturity (not used in futures case)
+     * @returns {Array}
+       */
+    $scope.getAllMaturities = function(isPut) {
+      if ($scope.instrumentType === 1) {
+        if (isPut) {
+          return Object.keys($scope.allProduct.putPrices);
+        } else {
+          return Object.keys($scope.allProduct.callPrices);
+        }
+      } else {
+        return Object.keys($scope.allProduct.futuresPrices);
+      }
+    }
   }
 
   function ParametersController ($scope) {
