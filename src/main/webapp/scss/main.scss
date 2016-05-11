@@ -2,7 +2,7 @@
 $mygreen: #35C45E;
 $mylightgreen: #BCF7CD;
 $myblue: #23558C;
-$myblue2: rgba(35, 85, 140, 0.50);
+$myblue2: #8DA6C1;
 
 /************* Fonts *****************************/
 @font-face {
@@ -548,13 +548,12 @@ input:focus {
 
 /************************ SELECT ******************************/
 
-.maturitySelect{
+.maturitySelect {
   border-color: $myblue2;
   background-color: $myblue2;
   color: #FFFFFF;
   text-align: center !important;
 }
-
 
 /************************ TABLE ******************************/
 
@@ -589,27 +588,13 @@ thead > tr:nth-child(1), .topHeader {
   height: 45px;
 }
 
+.futuresTable thead > tr:nth-child(1),
 thead > tr:nth-child(2) {
   text-align: center;
-  background: $myblue2;
+  background: $myblue2 !important;
   border: 1px solid $myblue;
   color: #FFFFFF;
   height: 40px;
-}
-
-thead > tr:nth-child(3) {
-  border-style: solid;
-  border-width: 0px 0px 1px 0px;
-  border-color: $myblue;
-  color: #777DA3;
-  height: 35px;
-}
-
-.marketTable tbody > tr > td:nth-child(4),
-.marketTable thead > td:nth-child(1) {
-  border-style: solid;
-  border-width: 0px 1px 0px 0px !important;
-  border-color: $myblue;
 }
 
 td {

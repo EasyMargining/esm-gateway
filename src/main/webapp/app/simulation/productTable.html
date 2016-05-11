@@ -19,9 +19,9 @@
 <!------------------- FUTURES CASE --------------------------->
 
 <div ng-if="product.futuresPrices" class="col-md-12 no-padding">
-  <table class="marketTable header-fixed">
+  <table class="futuresTable header-fixed">
     <thead>
-    <tr>
+    <tr class="productHeader">
       <th>
         <select class="maturitySelect" ng-model="futuresMaturity" ng-change="updateAssetMaturity()(futuresMaturity, 0)">
           <option value="">All Maturities</option>
@@ -63,7 +63,7 @@
 <!----------------------PUT  PART ---------------------------->
 
 <div ng-if="product.putPrices" class="col-md-6 no-padding">
-  <table class="marketTable header-fixed">
+  <table class="header-fixed">
     <thead>
     <tr>
       <th colspan="4">PUT</th>
@@ -111,7 +111,7 @@
 <!----------------------CALL PART ---------------------------->
 
 <div ng-if="product.putPrices" class="col-md-6 no-padding">
-  <table class="marketTable header-fixed">
+  <table class="header-fixed">
     <thead>
     <tr>
       <th colspan="4">CALL</th>
