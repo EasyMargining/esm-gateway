@@ -244,31 +244,52 @@
       }
     }
 
-    $scope.updateCallMaturity = function(callMaturity) {
-      if (callMaturity) {
-        $scope.displayedProduct.callPrices = {};
-        $scope.displayedProduct.callPrices[callMaturity] = $scope.allProduct.callPrices[callMaturity];
-      } else {
-        angular.copy($scope.allProduct.callPrices, $scope.displayedProduct.callPrices);
+    /**
+     * typeAsset : 0 : future, 1 : put, 2 : call
+     */
+    $scope.updateAssetMaturity = function(assetMaturity, typeAsset) {
+
+      switch(typeAsset) {
+        case 0:
+          if (assetMaturity) {
+            $scope.displayedProduct.futuresPrices = {};
+            $scope.displayedProduct.futuresPrices[assetMaturity] = $scope.allProduct.futuresPrices[assetMaturity];
+          } else {
+            angular.copy($scope.allProduct.futuresPrices, $scope.displayedProduct.futuresPrices);
+          }
+          break;
+        case 1:
+          if (assetMaturity) {
+            $scope.displayedProduct.putPrices = {};
+            $scope.displayedProduct.putPrices[assetMaturity] = $scope.allProduct.putPrices[assetMaturity];
+          } else {
+            angular.copy($scope.allProduct.putPrices, $scope.displayedProduct.putPrices);
+          }
+          break;
+        case 2:
+          if (assetMaturity) {
+            $scope.displayedProduct.callPrices = {};
+            $scope.displayedProduct.callPrices[assetMaturity] = $scope.allProduct.callPrices[assetMaturity];
+          } else {
+            angular.copy($scope.allProduct.callPrices, $scope.displayedProduct.callPrices);
+          }
+          break;
+        default:
+          console.error("should never happen");
       }
     }
 
-    $scope.updatePutMaturity = function(putMaturity) {
-      if (putMaturity) {
-        $scope.displayedProduct.putPrices = {};
-        $scope.displayedProduct.putPrices[putMaturity] = $scope.allProduct.putPrices[putMaturity];
-      } else {
-        angular.copy($scope.allProduct.putPrices, $scope.displayedProduct.putPrices);
-      }
-    }
-
-    $scope.updateFuturesMaturity = function(futuresMaturity) {
-      if (futuresMaturity) {
-        $scope.displayedProduct.futuresPrices = {};
-        $scope.displayedProduct.futuresPrices[futuresMaturity] = $scope.allProduct.futuresPrices[futuresMaturity];
-      } else {
-        angular.copy($scope.allProduct.futuresPrices, $scope.displayedProduct.futuresPrices);
-      }
+    $scope.getAllMaturities = function(typeAsset) {
+        switch (typeAsset) {
+          case 0:
+            return Object.keys($scope.allProduct.futuresPrices);
+          case 1:
+            return Object.keys($scope.allProduct.putPrices);
+          case 2:
+            return Object.keys($scope.allProduct.callPrices);
+          default:
+            console.error("should never happen");
+        }
     }
 
     $scope.selected = 0;

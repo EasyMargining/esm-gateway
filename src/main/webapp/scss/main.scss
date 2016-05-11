@@ -2,6 +2,7 @@
 $mygreen: #35C45E;
 $mylightgreen: #BCF7CD;
 $myblue: #23558C;
+$myblue2: rgba(35, 85, 140, 0.50);
 
 /************* Fonts *****************************/
 @font-face {
@@ -545,26 +546,15 @@ input:focus {
   @extend input;
 }
 
-.maturityInput {
+/************************ SELECT ******************************/
+
+.maturitySelect{
+  border-color: $myblue2;
+  background-color: $myblue2;
   color: #FFFFFF;
   text-align: center !important;
 }
 
-.maturityInput::-webkit-input-placeholder {
-  color: #FFFFFF;
-}
-
-.maturityInput:-moz-placeholder { /* Firefox 18- */
-  color: #FFFFFF;
-}
-
-.maturityInput::-moz-placeholder {  /* Firefox 19+ */
-  color: #FFFFFF;
-}
-
-.maturityInput:-ms-input-placeholder {
-  color: #FFFFFF;
-}
 
 /************************ TABLE ******************************/
 
@@ -601,7 +591,7 @@ thead > tr:nth-child(1), .topHeader {
 
 thead > tr:nth-child(2) {
   text-align: center;
-  background: rgba(35, 85, 140, 0.50);
+  background: $myblue2;
   border: 1px solid $myblue;
   color: #FFFFFF;
   height: 40px;

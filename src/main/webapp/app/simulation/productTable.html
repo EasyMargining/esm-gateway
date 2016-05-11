@@ -1,5 +1,5 @@
 <div class="topHeader">
-  <label ng-show="product.futuresPrices">FUTURE {{product.productId}}</label>
+  <label ng-if="product.futuresPrices">FUTURE {{product.productId}}</label>
   <label ng-hide="product.futuresPrices">OPTION {{product.productId}}</label>
   <label class="spaceBetweenLabel"></label>
   <label>CENTER</label>&nbsp;<input class="numberInput center" type="number" ng-model="center" ng-change="adaptValues()"/>
@@ -18,17 +18,15 @@
 
 <!------------------- FUTURES CASE --------------------------->
 
-<datalist id="futuresMaturities">
-  <option ng-repeat="(maturityDate, pricesTable) in product.futuresPrices" ng-value="maturityDate">
-</datalist>
-
-<div ng-show="product.futuresPrices" class="col-md-12 no-padding">
+<div ng-if="product.futuresPrices" class="col-md-12 no-padding">
   <table class="marketTable header-fixed">
     <thead>
     <tr>
       <th>
-        <input class="maturityInput" type="text" list="futuresMaturities" placeholder="All Maturities" size="14" maxlength="14"
-               ng-model="futuresMaturity" ng-change="updateFuturesMaturity()(futuresMaturity)"/>
+        <select class="maturitySelect" ng-model="futuresMaturity" ng-change="updateAssetMaturity()(futuresMaturity, 0)">
+          <option value="">All Maturities</option>
+          <option ng-repeat="maturityDate in getAllMaturities()(0)" value="{{maturityDate}}">{{maturityDate}}</option>
+        </select>
       </th>
       <th>Last</th>
       <th></th>
@@ -48,7 +46,7 @@
           <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: isPositionSelected()(price._id, true)}" ng-click="setCurrentPosition()(price._id,true)">Short</button>
           <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: isPositionSelected()(price._id, false)}" ng-click="setCurrentPosition()(price._id,false)">Long</button>
         </div>
-        <div ng-show="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
+        <div ng-if="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
           <div class="animated fadeInDown">
             <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" ng-model="quantity"/>
             <button  ng-click="addPosition()(quantity)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
@@ -64,11 +62,7 @@
 <!--------------------- OPTION CASE -------------------------->
 <!----------------------PUT  PART ---------------------------->
 
-<datalist id="putMaturities">
-  <option ng-repeat="(maturityDate, pricesTable) in product.putPrices" ng-value="maturityDate">
-</datalist>
-
-<div ng-show="product.putPrices" class="col-md-6 no-padding">
+<div ng-if="product.putPrices" class="col-md-6 no-padding">
   <table class="marketTable header-fixed">
     <thead>
     <tr>
@@ -76,8 +70,10 @@
     </tr>
     <tr>
       <th>
-        <input class="maturityInput" type="text" list="putMaturities" placeholder="All Maturities" size="14" maxlength="14"
-               ng-model="putMaturity" ng-change="updatePutMaturity()(putMaturity)"/>
+        <select class="maturitySelect" ng-model="putMaturity" ng-change="updateAssetMaturity()(putMaturity, 1)">
+          <option value="">All Maturities</option>
+          <option ng-repeat="maturityDate in getAllMaturities()(1)" value="{{maturityDate}}">{{maturityDate}}</option>
+        </select>
       </th>
       <th>Strike</th>
       <th>Last</th>
@@ -100,7 +96,7 @@
           <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: isPositionSelected()(price._id, true)}" ng-click="setCurrentPosition()(price._id,true)">Short</button>
           <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: isPositionSelected()(price._id, false)}" ng-click="setCurrentPosition()(price._id,false)">Long</button>
         </div>
-        <div ng-show="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
+        <div ng-if="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
           <div class="animated fadeInDown">
           <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" ng-model="quantity" />
           <button  ng-click="addPosition()(quantity)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>
@@ -114,11 +110,7 @@
 
 <!----------------------CALL PART ---------------------------->
 
-<datalist id="callMaturities">
-  <option ng-repeat="(maturityDate, pricesTable) in product.callPrices" ng-value="maturityDate">
-</datalist>
-
-<div ng-show="product.putPrices" class="col-md-6 no-padding">
+<div ng-if="product.putPrices" class="col-md-6 no-padding">
   <table class="marketTable header-fixed">
     <thead>
     <tr>
@@ -126,8 +118,10 @@
     </tr>
     <tr>
       <th>
-        <input class="maturityInput" type="text" list="callMaturities" placeholder="All Maturities" size="14" maxlength="14"
-               ng-model="callMaturity" ng-change="updateCallMaturity()(callMaturity)"/>
+        <select class="maturitySelect" ng-model="callMaturity" ng-change="updateAssetMaturity()(callMaturity, 2)">
+          <option value="">All Maturities</option>
+          <option ng-repeat="maturityDate in getAllMaturities()(2)" value="{{maturityDate}}">{{maturityDate}}</option>
+        </select>
       </th>
       <th>Strike</th>
       <th>Last</th>
@@ -150,7 +144,7 @@
           <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: isPositionSelected()(price._id, true)}" ng-click="setCurrentPosition()(price._id,true)">Short</button>
           <button type="button" class="btn btn-default typeOptionButton" ng-class="{typeOptionButtonSelected: isPositionSelected()(price._id, false)}" ng-click="setCurrentPosition()(price._id,false)">Long</button>
         </div>
-        <div ng-show="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
+        <div ng-if="isPositionSelected()(price._id, false) || isPositionSelected()(price._id, true)">
           <div class="animated fadeInDown">
             <input class="quantityInput" type="text" maxlength="6" size="6" placeholder="quantity" ng-model="quantity"/>
             <button  ng-click="addPosition()(quantity)" class="btn transparentButton glyphicon glyphicon-plus-sign myGreen"></button>

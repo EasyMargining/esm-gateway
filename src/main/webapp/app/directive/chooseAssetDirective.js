@@ -16,9 +16,8 @@
         setCurrentPosition: '&',
         isPositionSelected: '&',
         addPosition: '&',
-        updateCallMaturity: '&',
-        updatePutMaturity: '&',
-        updateFuturesMaturity: '&'
+        updateAssetMaturity: '&',
+        getAllMaturities: '&'
       },
       templateUrl : 'app/simulation/productTable.html'
     };
