@@ -32,8 +32,7 @@
           <td><input class="onFocusInput center" disabled="true" ng-model="position.position.quantity" focus-me="editionMode"
                      maxlength="6" size="8" ng-blur="updatePosition(position.position.id, position.position.quantity)"/></td>
           <td class="right">
-            <button type ="button" class="transparentButton glyphicon glyphicon-question-sign"
-                    ng-click="openDescriptionProductDialog(position.product)"></button>
+            <description-product-dialog product="position.product" > </description-product-dialog>
             <button class="transparentButton glyphicon glyphicon-pencil" ng-click="editionMode=true"></button>
             <button type="button" class="transparentButton glyphicon glyphicon-remove" ng-click="openDeleteDialog(position)"></button>
           </td>

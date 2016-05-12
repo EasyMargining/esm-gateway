@@ -104,22 +104,6 @@
       });
     };
 
-    /* DESCRIPTION PRODUCT DIALOG */
-    $scope.openDescriptionProductDialog = function (product) {
-      $scope.product = product;
-      $scope.moneySign = CurrencySign.getCurrencySign(product.currency);
-      ngDialog.open({
-        template: 'app/simulation/descriptionProductModal.html',
-        className: 'ngdialog-theme-default',
-        scope: $scope
-      });
-    };
-
-
-    $scope.cancel = function() {
-      ngDialog.close();
-    }
-
     $scope.delete = function(positionId) {
       var deletedPosition = Position.get({ id: positionId}, function() {
         console.log(deletedPosition)
