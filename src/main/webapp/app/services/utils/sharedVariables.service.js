@@ -11,6 +11,7 @@
 
     var portfolio = null;
     var positions = [];
+    var effectiveDate = null;
 
     return {
       getPortfolio: function() {
@@ -28,6 +29,14 @@
       addPosition: function(pos) {
         positions.push(pos);
         $rootScope.$broadcast('addPosition',pos);
+      },
+
+      getEffectiveDate: function() {
+        return effectiveDate;
+      },
+
+      setEffectiveDate: function(date) {
+        effectiveDate = date;
       }
 
     }

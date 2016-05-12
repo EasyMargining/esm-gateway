@@ -632,28 +632,46 @@ td {
   height: 400px;
 }
 
-.header-fixed > tbody > tr > td:nth-child(1),
-.header-fixed > thead > tr > th:nth-child(1) {
+.optionTable > tbody > tr > td:nth-child(1),
+.optionTable > thead > tr > th:nth-child(1) {
   float: left;
   width: 30% !important;
 }
 
-.header-fixed > tbody > tr > td:nth-child(2),
-.header-fixed > thead > tr > th:nth-child(2) {
+.optionTable > tbody > tr > td:nth-child(2),
+.optionTable > thead > tr > th:nth-child(2) {
   float: left;
   width: 15% !important;
 }
 
-.header-fixed > tbody > tr > td:nth-child(3),
-.header-fixed > thead > tr > th:nth-child(3) {
+.optionTable > tbody > tr > td:nth-child(3),
+.optionTable > thead > tr > th:nth-child(3) {
   float: left;
   width: 15% !important;
 }
 
-.header-fixed > tbody > tr > td:nth-child(4),
-.header-fixed > thead > tr > th:nth-child(4) {
+.optionTable > tbody > tr > td:nth-child(4),
+.optionTable > thead > tr > th:nth-child(4) {
   float: left;
   width: 40% !important;
+}
+
+.futuresTable > tbody > tr > td:nth-child(1),
+.futuresTable > thead > tr > th:nth-child(1) {
+  float: left;
+  width: 35% !important;
+}
+
+.futuresTable > tbody > tr > td:nth-child(2),
+.futuresTable > thead > tr > th:nth-child(2) {
+  float: left;
+  width: 15% !important;
+}
+
+.futuresTable > tbody > tr > td:nth-child(3),
+.futuresTable > thead > tr > th:nth-child(3) {
+  float: left;
+  width: 50% !important;
 }
 
 .maturityDate {

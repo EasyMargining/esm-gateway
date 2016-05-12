@@ -9,7 +9,7 @@
     <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: isValidPortfolioName()}"></span>
     <div class="bigLineSpace">
       <div class="input-group">
-        <input type="text"  uib-datepicker-popup ng-model="dt" ng-click="open()" is-open="popup.opened"  placeholder="Choose a valuation date (optionnal)" close-text="Close" />
+        <input type="text"  uib-datepicker-popup ng-model="effectiveDate" ng-click="open()" is-open="popup.opened"  placeholder="Choose a valuation date (optionnal)" close-text="Close" />
         <span class="input-group-btn">
           <button type="button" class="btn btn-default transparentButton" ng-click="open()">
             <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: isValidDate()}"></i>

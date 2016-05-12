@@ -9,7 +9,7 @@
 
   SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'PositionsByPortfolio', 'Position', 'Product', 'ngDialog', 'CurrencySign', 'SharedVariables'];
   AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'SharedVariables', 'Position'];
-  ParametersController.$inject = ['$scope'];
+  ParametersController.$inject = ['$scope', 'SharedVariables'];
 
   function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, PositionsByPortfolio, Position, Product, ngDialog, CurrencySign, SharedVariables) {
 
@@ -465,7 +465,7 @@
     }
   }
 
-  function ParametersController ($scope) {
+  function ParametersController ($scope, SharedVariables) {
 
     $scope.portfolioName = "";
 
@@ -474,16 +474,23 @@
     }
 
     $scope.isValidDate = function() {
-      return ($scope.dt instanceof Date);
+      return ($scope.effectiveDate instanceof Date);
     }
 
     $scope.today = function() {
-      $scope.dt = new Date();
+      $scope.effectiveDate = new Date();
     };
 
     $scope.clear = function() {
-      $scope.dt = null;
+      $scope.effectiveDate = null;
     };
+
+    $scope.$watch(
+      function() {return $scope.effectiveDate;},
+      function(newValue) {
+        SharedVariables.setEffectiveDate(newValue);
+      }
+    );
 
     $scope.open = function() {
       $scope.popup.opened = true;
