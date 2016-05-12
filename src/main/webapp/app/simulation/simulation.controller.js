@@ -45,7 +45,7 @@
     /**
      * Load the positions in the portfolio currently selected
      * @param portfolioName : the portfolio currently selected
-       */
+     */
     $rootScope.loadPositions = function(portfolioName) {
 
       var portfolioResource = $rootScope.portfolios.filter(function( obj ) {
@@ -61,7 +61,7 @@
 
         var positions = PositionsByPortfolio.query({portfolioId: $rootScope.portfolio.id}, function () {
           positions.forEach(function(position) {
-           savePosition(position)
+            savePosition(position)
           });
         });
       }
@@ -161,12 +161,12 @@
     /**
      * Add the position (product and quantity) in the array $scope.newPositions
      * @param quantity : the quantity enter by the user corresponding to the product in $scope.currentPosition
-       */
+     */
     $scope.addPosition = function(quantity) {
       //!isNaN(parseFloat(quantity)) --> Return true is quantity is a number
       if (quantity && !isNaN(parseFloat(quantity)) && quantity > 0) {
         $scope.newPositions.push({id : $scope.currentPosition.id,
-        quantity: ($scope.currentPosition.isShort ? -quantity : quantity)});
+          quantity: ($scope.currentPosition.isShort ? -quantity : quantity)});
       }
     }
 
@@ -192,7 +192,7 @@
     /**
      * Send a request to persist the new positions in pos
      * @param pos : array of the new positions to persist
-       */
+     */
     function recursiveSave(pos) {
       if (pos.length > 0) {
         var p = pos.pop();
@@ -242,23 +242,23 @@
 
     /*******************************************************/
 
-      /**
-       * Function only use in option case to initialize the center.
-       * For the moment by default we init the center with the average of all the strikes
-       *
-       * @return center
-       */
-      function initCenter() {
-        var sum = 0;
-        var numberOfPrices = 0;
-        for (var maturity in $scope.allProduct.callPrices) {
-          $scope.allProduct.callPrices[maturity].forEach(function(obj) {
-            sum = sum + obj.exercisePrice;
-            numberOfPrices++;
-          });
-        }
-        return Math.round((sum / numberOfPrices));
+    /**
+     * Function only use in option case to initialize the center.
+     * For the moment by default we init the center with the average of all the strikes
+     *
+     * @return center
+     */
+    function initCenter() {
+      var sum = 0;
+      var numberOfPrices = 0;
+      for (var maturity in $scope.allProduct.callPrices) {
+        $scope.allProduct.callPrices[maturity].forEach(function(obj) {
+          sum = sum + obj.exercisePrice;
+          numberOfPrices++;
+        });
       }
+      return Math.round((sum / numberOfPrices));
+    }
 
     $scope.displayedProduct = {
       futuresPrices: null,
@@ -268,6 +268,7 @@
       putMaturityPrices: null,
       callMaturityPrices: null,
       center: 0,
+      strikeInterval: 0,
       strikesNumber: 10,
       strikesPercent: 10
     }
@@ -312,6 +313,8 @@
       }
     }
 
+
+    /*********** Watcher to update the products displayed in real time ************/
     /**
      * Watch when future maturity is change by the user
      */
@@ -319,7 +322,7 @@
       function() { return $scope.displayedProduct.futuresMaturityPrices},
       function() {
         if ($scope.allProduct) {
-          updateDisplayedProduct(null);
+          updateDisplayedProduct();
         }
       });
 
@@ -330,7 +333,7 @@
       function() { return $scope.displayedProduct.putMaturityPrices},
       function() {
         if ($scope.allProduct) {
-          updateDisplayedProduct(true);
+          updateDisplayedProduct();
         }
       });
 
@@ -341,52 +344,130 @@
       function() { return $scope.displayedProduct.callMaturityPrices},
       function() {
         if ($scope.allProduct) {
-          updateDisplayedProduct(false);
+          updateDisplayedProduct();
         }
       });
 
     /**
-     *
-     * @param isPut : true if the change if on putMaturity, false if it is on callMaturity (not used in other cases)
-       */
-    function updateDisplayedProduct(isPut) {
-      console.log($scope.instrumentType === 1);
+     * Watch when center is change by the user
+     */
+    $scope.$watch(
+      function() { return $scope.displayedProduct.center},
+      function() {
+        if ($scope.allProduct) {
+          updateDisplayedProduct();
+        }
+      });
 
-      /********** 1. select in all the prices the ones which satisfy the maturity date **********/
+    /**
+     * Watch when strikes number is change by the user
+     */
+    $scope.$watch(
+      function() { return $scope.displayedProduct.strikesNumber},
+      function() {
+        if ($scope.allProduct) {
+          updateDisplayedProduct();
+        }
+      });
+
+    /**
+     * Watch when strikes percent is change by the user
+     */
+    $scope.$watch(
+      function() { return $scope.displayedProduct.strikesPercent},
+      function() {
+        if ($scope.allProduct) {
+          updateDisplayedProduct();
+        }
+      });
+
+    /**
+     * Watch when the user switch between strikes per cent and strikes number
+     */
+    $scope.$watch(
+      function() { return $scope.displayedProduct.strikeInterval},
+      function() {
+        if ($scope.allProduct) {
+          updateDisplayedProduct();
+        }
+      });
+
+    /*********************** End watchers *********************************/
+
+    function updateDisplayedProductMaturity() {
       if ($scope.instrumentType === 1) {
-        if (isPut) {
-          if ($scope.displayedProduct.putMaturityPrices) {
-            $scope.displayedProduct.putPrices = {};
-            $scope.displayedProduct.putPrices[$scope.displayedProduct.putMaturityPrices] = $scope.allProduct.putPrices[$scope.displayedProduct.putMaturityPrices];
-          } else {
-            angular.copy($scope.allProduct.putPrices, $scope.displayedProduct.putPrices);
-          }
+        if ($scope.displayedProduct.putMaturityPrices) {
+          $scope.displayedProduct.putPrices = {};
+          $scope.displayedProduct.putPrices[$scope.displayedProduct.putMaturityPrices]
+            = angular.copy($scope.allProduct.putPrices[$scope.displayedProduct.putMaturityPrices]);
         } else {
-          if ($scope.displayedProduct.callMaturityPrices) {
-            $scope.displayedProduct.callPrices = {};
-            $scope.displayedProduct.callPrices[$scope.displayedProduct.callMaturityPrices] = $scope.allProduct.callPrices[$scope.displayedProduct.callMaturityPrices];
-          } else {
-            angular.copy($scope.allProduct.callPrices, $scope.displayedProduct.callPrices);
-          }
+          angular.copy($scope.allProduct.putPrices, $scope.displayedProduct.putPrices);
+        }
+        if ($scope.displayedProduct.callMaturityPrices) {
+          $scope.displayedProduct.callPrices = {};
+          $scope.displayedProduct.callPrices[$scope.displayedProduct.callMaturityPrices]
+            = angular.copy($scope.allProduct.callPrices[$scope.displayedProduct.callMaturityPrices]);
+        } else {
+          angular.copy($scope.allProduct.callPrices, $scope.displayedProduct.callPrices);
         }
       } else {
         if ($scope.displayedProduct.futuresMaturityPrices) {
           $scope.displayedProduct.futuresPrices = {};
-          $scope.displayedProduct.futuresPrices[$scope.displayedProduct.futuresMaturityPrices] = $scope.allProduct.futuresPrices[$scope.displayedProduct.futuresMaturityPrices];
+          $scope.displayedProduct.futuresPrices[$scope.displayedProduct.futuresMaturityPrices]
+            = angular.copy($scope.allProduct.futuresPrices[$scope.displayedProduct.futuresMaturityPrices]);
         } else {
           angular.copy($scope.allProduct.futuresPrices, $scope.displayedProduct.futuresPrices);
         }
       }
+    }
+
+    function updateDisplayedProductStrikes(delta) {
+      for (var putMaturity in $scope.displayedProduct.putPrices) {
+        var tabPut = $scope.displayedProduct.putPrices[putMaturity];
+        var index = tabPut.length - 1;
+        while (index >= 0) {
+          if (tabPut[index].exercisePrice < ($scope.displayedProduct.center - delta)
+            || tabPut[index].exercisePrice > ($scope.displayedProduct.center + delta)) {
+            tabPut.splice(index, 1);
+          }
+          index -= 1;
+        }
+      }
+      for (var callMaturity in $scope.displayedProduct.callPrices) {
+        var tabCall = $scope.displayedProduct.callPrices[callMaturity];
+        var index = tabCall.length - 1;
+        while (index >= 0) {
+          if (tabCall[index].exercisePrice < ($scope.displayedProduct.center - delta)
+            || tabCall[index].exercisePrice > ($scope.displayedProduct.center + delta)) {
+            tabCall.splice(index, 1);
+          }
+          index -= 1;
+        }
+      }
+
+    }
+
+    function updateDisplayedProduct() {
+
+      /********** 1. select in all the prices the ones which satisfy the maturity date **********/
+      updateDisplayedProductMaturity();
 
       /********** 2. select in all the prices remaining the ones which satisfy center and strike gap **********/
-      //TODO : Finish this part
+      if ($scope.instrumentType === 1) {
+        // If change by strike number
+        if ($scope.displayedProduct.strikeInterval == 1) {
+          updateDisplayedProductStrikes($scope.displayedProduct.strikesNumber);
+        } else if ($scope.displayedProduct.strikeInterval == 2) {
+          updateDisplayedProductStrikes($scope.displayedProduct.center * ($scope.displayedProduct.strikesPercent / 100));
+        }
+      }
     };
 
     /**
      *
      * @param isPut : true if the change if on putMaturity, false if it is on callMaturity (not used in futures case)
      * @returns {Array}
-       */
+     */
     $scope.getAllMaturities = function(isPut) {
       if ($scope.instrumentType === 1) {
         if (isPut) {
