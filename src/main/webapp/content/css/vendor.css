@@ -1,5 +1,6 @@
 @charset "UTF-8";
 /* Sass bower components will be injected here */
+/* bower:scss */
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -13982,3 +13983,7 @@ button.close {
     -ms-transform-origin: center bottom;
     -o-transform-origin: center bottom;
     transform-origin: center bottom; } }
+
+/* endinject */
+/* bower:sass */
+/* endinject */

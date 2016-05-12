@@ -15,7 +15,7 @@
             "refreshScope": "Microservice Refresh Scope",
             "configServer": "Microservice Config Server",
             "diskSpace": "Disk space",
-            "mail": "Email"
+            "mail": "Email",
             "mongo": "MongoDB"
         },
         "table": {

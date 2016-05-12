@@ -1,6 +1,4 @@
 package com.easymargining.security;
-
-import com.easymargining.domain.Authority;
 import com.easymargining.domain.User;
 import com.easymargining.repository.UserRepository;
 import org.slf4j.Logger;
@@ -31,7 +29,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
-        String lowercaseLogin = login.toLowerCase();
+        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userFromDatabase = userRepository.findOneByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {
             if (!user.getActivated()) {

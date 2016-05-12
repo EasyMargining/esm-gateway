@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.0.0",
+    "jhipsterVersion": "3.2.1",
     "baseName": "EasyMargining",
     "packageName": "com.easymargining",
     "packageFolder": "com/easymargining",
@@ -27,6 +27,8 @@
     "languages": [
       "en",
       "fr"
-    ]
+    ],
+    "enableSocialSignIn": false,
+    "jhiPrefix": "jhi"
   }
 }

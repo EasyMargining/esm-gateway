@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS gateway_ratelimiting (
     id text,
     time_unit text,

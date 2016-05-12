@@ -29,12 +29,14 @@
         }
 
         function login (credentials) {
-            var data = {
+            
+              var data = {
                 username: credentials.username,
                 password: credentials.password,
                 rememberMe: credentials.rememberMe
-            };
+              };
             return $http.post('api/authenticate', data).success(authenticateSuccess);
+
 
             function authenticateSuccess (data, status, headers) {
                 var bearerToken = headers('Authorization');
@@ -44,16 +46,16 @@
                     return jwt;
                 }
             }
+            
         }
 
         function loginWithToken(jwt, rememberMe) {
             var deferred = $q.defer();
 
-            if (jwt !== undefined) {
+            if (angular.isDefined(jwt)) {
                 this.storeAuthenticationToken(jwt, rememberMe);
                 deferred.resolve(jwt);
-            }
-            else {
+            } else {
                 deferred.reject();
             }
 

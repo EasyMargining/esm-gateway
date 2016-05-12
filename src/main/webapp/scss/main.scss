@@ -1,66 +1,62 @@
-/************* Variables couleur ******************/
-$mygreen: #35C45E;
-$mylightgreen: #BCF7CD;
-$myblue: #23558C;
-$myblue2: #8DA6C1;
-
-/************* Fonts *****************************/
-@font-face {
-  font-family: 'Acid';
-  src: url('../fonts/acid.otf') format("opentype");
-}
-
-@font-face {
-  font-family: 'Acid Bold';
-  font-weight: bold;
-  src: url('../fonts/acid_bold.otf') format("opentype");
-}
-
 body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
 }
 
-*:focus {
-  outline: none !important;
-}
-
+/* ==========================================================================
+Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
+========================================================================== */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
 
-.font-normal {
-  font-weight: normal;
-}
-
-.font-thin {
-  font-weight: 300;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-.development {
+/* ==========================================================================
+Developement Ribbon
+========================================================================== */
+.ribbon {
+    background-color: #a00;
+    box-shadow: 0 0 10px #888;
+    left: -3.5em;
+    moz-box-shadow: 0 0 10px #888;
+    moz-transform: rotate(-45deg);
+    ms-transform: rotate(-45deg);
+    o-transform: rotate(-45deg);
+    overflow: hidden;
     position: absolute;
-    width: 149px;
-    height: 149px;
-    top: 0;
-    left: 0;
-    border: 0;
-    z-index: 1000;
-    background-image: url("../images/development_ribbon.png");
-    background-position: center center;
-    background-repeat: no-repeat;
+    top: 40px;
+    transform: rotate(-45deg);
+    webkit-box-shadow: 0 0 10px #888;
+    webkit-transform: rotate(-45deg);
+    white-space: nowrap;
+    width: 15em;
+    z-index: 9999;
     pointer-events: none;
+    a {
+        border: 1px solid #faa;
+        color: #fff;
+        display: block;
+        font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        margin: 1px 0;
+        padding: 10px 50px;
+        text-align: center;
+        text-decoration: none;
+        text-shadow: 0 0 5px #444;
+        pointer-events: none;
+    }
 }
 
+/* ==========================================================================
+Version number in navbar
+========================================================================== */
 .navbar-version {
     font-size: 10px;
     color: #ccc
 }
 
+/* ==========================================================================
+Browser Upgrade Prompt
+========================================================================== */
 .browserupgrade {
     margin: 0.2em 0;
     background: #ccc;
@@ -68,6 +64,22 @@ body {
     padding: 0.2em 0;
 }
 
+/* ==========================================================================
+Logo styles
+========================================================================== */
+.navbar-brand {
+    &.logo {
+        padding: 5px 15px;
+        .logo-img {
+            height: 45px;
+            display: inline-block;
+        }
+    }
+}
+
+/* ==========================================================================
+Main page styles
+========================================================================== */
 .hero-unit {
     margin: 50px auto 0 auto;
     width: 300px;
@@ -82,19 +94,6 @@ body {
         line-height: 1;
         letter-spacing: -1px;
     }
-}
-
-.error {
-    color: white;
-    background-color: red;
-}
-
-.hipster {
-    display: inline-block;
-    width: 347px;
-    height: 497px;
-    background: url("../images/hipster.png") no-repeat center top;
-    background-size: contain;
 }
 
 .easymargining {
@@ -113,13 +112,12 @@ body {
   color: #fff;
 }
 
-.pad {
-    padding: 10px;
-}
-
-.break {
-    white-space: normal;
-    word-break:break-all;
+.hipster {
+    display: inline-block;
+    width: 347px;
+    height: 497px;
+    background: url("../images/hipster.png") no-repeat center top;
+    background-size: contain;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
@@ -136,7 +134,42 @@ only screen and (                min-resolution: 2dppx) {
     }
 }
 
-/* make sure browsers use the pointer cursor for anchors, even with no href */
+/* ==========================================================================
+Generic styles
+========================================================================== */
+.error {
+    color: white;
+    background-color: red;
+}
+
+.pad {
+    padding: 10px;
+}
+
+.break {
+    white-space: normal;
+    word-break:break-all;
+}
+
+.voffset  { margin-top: 2px; }
+.voffset1 { margin-top: 5px; }
+.voffset2 { margin-top: 10px; }
+.voffset3 { margin-top: 15px; }
+.voffset4 { margin-top: 30px; }
+.voffset5 { margin-top: 40px; }
+.voffset6 { margin-top: 60px; }
+.voffset7 { margin-top: 80px; }
+.voffset8 { margin-top: 100px; }
+.voffset9 { margin-top: 150px; }
+
+.readonly {
+    background-color: #eee;
+    opacity: 1;
+}
+
+/* ==========================================================================
+make sure browsers use the pointer cursor for anchors, even with no href
+========================================================================== */
 a:hover {
   cursor: pointer;
 }
@@ -145,6 +178,9 @@ a:hover {
     cursor: pointer;
 }
 
+/* ==========================================================================
+Metrics and Health styles
+========================================================================== */
 #threadDump .popover, #healthCheck .popover {
     top: inherit;
     display: block;
@@ -160,18 +196,9 @@ a:hover {
     min-width: 400px;
 }
 
-.voffset  { margin-top: 2px; }
-.voffset1 { margin-top: 5px; }
-.voffset2 { margin-top: 10px; }
-.voffset3 { margin-top: 15px; }
-.voffset4 { margin-top: 30px; }
-.voffset5 { margin-top: 40px; }
-.voffset6 { margin-top: 60px; }
-.voffset7 { margin-top: 80px; }
-.voffset8 { margin-top: 100px; }
-.voffset9 { margin-top: 150px; }
-
-/* start Password strength bar style */
+/* ==========================================================================
+start Password strength bar style
+========================================================================== */
 ul#strength {
     display:inline;
     list-style:none;
@@ -192,9 +219,10 @@ ul#strength {
         margin:0 !important;
     }
 }
-/* end Password strength bar style */
-/* Custom alerts for notification */
 
+/* ==========================================================================
+Custom alerts for notification
+========================================================================== */
 .alerts {
     .alert {
         text-overflow: ellipsis;
@@ -234,9 +262,9 @@ ul#strength {
     }
 }
 
-/* end of Custom alerts for notification */
-
-/* entity tables helpers */
+/* ==========================================================================
+entity tables helpers
+========================================================================== */
 
 /* Remove Bootstrap padding from the element
    http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
@@ -288,16 +316,33 @@ ul#strength {
             }
         }
     }
+}
 
-  /* Animation */
-    .fadeInDown {
-        -webkit-animation-name: fadeInDown;
-        animation-name: fadeInDown;
+/* ==========================================================================
+entity detail page css
+========================================================================== */
+.dl-horizontal.jh-entity-details > {
+    dd {
+        margin-bottom: 15px;
     }
 }
-/* end of entity tables helpers */
 
-/* ui bootstrap tweaks */
+@media screen and (min-width: 768px) {
+    .dl-horizontal.jh-entity-details > {
+        dt {
+            margin-bottom: 15px;
+        }
+        dd {
+            border-bottom: 1px solid #eee;
+            padding-left: 180px;
+            margin-left: 0;
+        }
+    }
+}
+
+/* ==========================================================================
+ui bootstrap tweaks
+========================================================================== */
 .nav, .pagination, .carousel, .panel-title a {
     cursor: pointer;
 }
@@ -308,477 +353,9 @@ ul#strength {
 }
 
 .datetime-picker-dropdown > li.date-picker-menu div > table:focus,
-.uib-datepicker-popup  > li > div.uib-datepicker > table:focus{
+.uib-datepicker-popup  > li > div.uib-datepicker > table:focus {
     outline: none;
 }
-/* end of ui bootstrap tweaks */
+
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
-
-.steps-indicator {
-  /* ---- steps quantity ---- */
-  right: 0;
-  position: absolute;
-  top: 0;
-  margin-bottom:10%;
-  left: 0;
-  margin: 0;
-  padding: 20px 0 0 0;
-  height: 30px;
-  list-style: none;
-  font-family: Acid;
-  font-size: 20px;
-  /* --- http://www.paulirish.com/2012/box-sizing-border-box-ftw/ ---- */
-}
-.steps-indicator:before {
-  background-color: $myblue;
-  content: '';
-  position: absolute;
-  height: 1px;
-}
-
-.steps-indicator.steps-3:before {
-  left: calc(100% / 6);
-  right: calc(100% / 6);
-}
-
-.steps-indicator * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.steps-indicator li {
-  position: relative;
-  float: left;
-  margin: 0;
-  padding: 0;
-  padding-top: 30px;
-  text-align: center;
-  line-height: 15px;
-}
-
-.steps-indicator li a {
-  color: #808080;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: 0.25s;
-  cursor: pointer;
-}
-.steps-indicator li a:before {
-  position: absolute;
-  top: -13px;
-  left: calc(50% - 7px);
-  width: 26px;
-  height: 26px;
-  border-radius: 100%;
-  background-color: #D3DDE8;
-  transition: 0.25s;
-}
-
-.steps-indicator li a:hover {
-  color: #4d4d4d;
-}
-
-.steps-indicator.steps-3 li {
-  width: calc(100% / 3);
-}
-
-.steps-indicator li.default {
-  pointer-events: none;
-}
-.steps-indicator li.default a:hover {
-  color: #808080;
-}
-.steps-indicator li.current,
-.steps-indicator li.editing {
-  pointer-events: none;
-}
-.steps-indicator li.current a:before, .steps-indicator li.editing a:before  {
-  top: -20px;
-  width: 40px;
-  height: 40px;
-  background-color: $myblue;
-}
-.steps-indicator li.done a:before {
-  background-color: $myblue;
-}
-
-/********** For calendar font-size ***********************/
-.btn-sm, .btn-group-sm > .btn {
-  font-size: 16px;
-}
-
-/***************************************************************/
-/********************** SIMULATION *****************************/
-/***************************************************************/
-
-/*********************** DIV ********************************/
-
-#navigationBar {
-  text-align: center;
-  height: 100px;
-}
-
-.vcenter {
-  display: inline-block;
-  vertical-align: middle;
-  float: none;
-}
-
-.portfolioSelection {
-  margin-top: 20%;
-}
-
-.portfolioSummary {
-  margin-top: 10%;
-}
-
-.container {
-  text-align: center;
-  font-family: Acid;
-  font-size: 24px;
-  color: #777777;
-}
-
-.bigLineSpace {
-  margin-top: 40px;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.lineSpace {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.spaceLineBottom {
-  margin-bottom: 20px;
-}
-
-#OptionLabel {
-  display: inline-block;
-}
-
-#marketLink {
-  position: absolute;
-  right: 5%;
-  display: inline-block;
-}
-
-.optionChoice {
-  width: 100%;
-}
-
-.input-group.date {
-  margin-bottom: 25%;
-}
-
-.littleCircle {
-  width: 18px;
-  background: #86f78d;
-  border: 1px solid #35C45E;
-  border-radius: 9px;
-  font-size: 13px;
-  text-align: center;
-  color: $myblue;
-  //text-shadow: -1px 0 #35C45E, 0 1px #35C45E, 1px 0 #35C45E, 0 -1px #35C45E;
-  vertical-align: center;
-  position: absolute;
-  top: -6px;
-  left: 15px;
-  z-index: 2;
-}
-
-.center {
-  text-align: center;
-}
-
-.right {
-  text-align: right;
-}
-
-/************************* INPUT ****************************/
-
-input {
-  border-style: solid;
-  border-width: 0px 0px 1px 0px;
-  border-color: $myblue;
-  background: transparent;
-}
-
-input:focus {
-  outline: none;
-}
-
-.quantityInput {
-  width: 45px;
-  font-size: 17px;
-}
-
-.input-group {
-    margin: auto;
-}
-
-.input-group-btn {
-    width: auto;
-}
-
-.numberInput {
-  width: 60px;
-  font-weight: bold;
-}
-
-.percentInput {
-  width: 40px;
-  font-weight: bold;
-}
-
-.notSelectedInput {
-  opacity: 0.3;
-}
-
-.onFocusInput {
-  border: 0px;
-  pointer-events: none;
-}
-
-.onFocusInput:focus {
-  @extend input;
-}
-
-/************************ SELECT ******************************/
-
-.maturitySelect {
-  border-color: $myblue2;
-  background-color: $myblue2;
-  color: #FFFFFF;
-  text-align: center !important;
-}
-
-/************************ TABLE ******************************/
-
-table {
-  width: 100%;
-  text-align: center;
-  background: #F5F5F5;
-  border: 1px solid $myblue;
-  font-size: 20px;
-  color: black;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-tr:nth-child(even) {
-  background-color: #FFFFFF;
-}
-
-tr:nth-child(odd) {
-  background-color: #f3f3f2;
-}
-
-th {
-  text-align: center;
-  font-weight: normal;
-}
-
-thead > tr:nth-child(1), .topHeader {
-  text-align: center;
-  background: $myblue;
-  color: #FFFFFF;
-  height: 45px;
-}
-
-.futuresTable thead > tr:nth-child(1),
-thead > tr:nth-child(2) {
-  text-align: center;
-  background: $myblue2 !important;
-  border: 1px solid $myblue;
-  color: #FFFFFF;
-  height: 40px;
-}
-
-td {
-  min-height: 35px;
-  padding-left: 0px;
-}
-
-.table-vcenter td {
-  vertical-align: middle!important;
-}
-
-.header-fixed {
-  width: 100%
-}
-
-.header-fixed > thead,
-.header-fixed > tbody,
-.header-fixed > thead > tr,
-.header-fixed > tbody > tr,
-.header-fixed > thead > tr > th,
-.header-fixed > tbody > tr > td {
-  display: block;
-}
-
-.header-fixed > tbody > tr:after,
-.header-fixed > thead > tr:after {
-  content: ' ';
-  display: block;
-  visibility: hidden;
-  clear: both;
-}
-
-.header-fixed > tbody {
-  overflow-y: auto;
-  height: 400px;
-}
-
-.header-fixed > tbody > tr > td:nth-child(1),
-.header-fixed > thead > tr > th:nth-child(1) {
-  float: left;
-  width: 30% !important;
-}
-
-.header-fixed > tbody > tr > td:nth-child(2),
-.header-fixed > thead > tr > th:nth-child(2) {
-  float: left;
-  width: 15% !important;
-}
-
-.header-fixed > tbody > tr > td:nth-child(3),
-.header-fixed > thead > tr > th:nth-child(3) {
-  float: left;
-  width: 15% !important;
-}
-
-.header-fixed > tbody > tr > td:nth-child(4),
-.header-fixed > thead > tr > th:nth-child(4) {
-  float: left;
-  width: 40% !important;
-}
-
-.maturityDate {
-  background-color: rgba(211, 221, 232, 0.58) !important;
-}
-
-/************************** BUTTONS ****************************/
-
-.btn:focus, .btn:active {
-  outline: none !important;
-}
-
-.transparentButton {
-  background: transparent;
-  border: none;
-}
-
-.resultButton {
-  border: 1px solid $myblue;
-  border-radius: 8px;
-  background: #f3f3f2;
-  color: $myblue;
-  font-size: 20px;
-  padding: 5px 10px 5px 10px;
-}
-
-.addPositionButton {
-  border: 1px solid $mylightgreen;
-  border-radius: 8px;
-  background: $mylightgreen;
-  color: #5FCA92;
-  font-size: 20px;
-  padding: 5px 10px 5px 10px;
-  margin: 0px 0px 0px 2%;
-}
-
-.typeOptionButton {
-  border: 1px solid $myblue;
-  border-radius: 18px;
-  padding: 0px 5px 0px 5px;
-  text-transform: uppercase;
-  color: $myblue;
-  width: 45%;
-  font-size: 16px;
-}
-
-.typeOptionButton:hover {
-  background: rgba(35, 85, 140, 0.50);
-  color: #FFFFFF;
-}
-
-.typeOptionButtonSelected,
-.typeOptionButton:focus {
-  background: $myblue !important;
-  color: #FFFFFF;
-}
-
-.width-90 {
-  width: 90% !important;
-}
-
-.notClickable, .notClickable:hover {
-  cursor: auto;
-}
-
-/***************************** LABEL ******************************/
-
-label {
-  text-align: center;
-  font-weight: normal;
-}
-
-.assetType {
-  text-align: center;
-  background: $myblue;
-  font-weight: normal;
-  font-size: 20px;
-  color: #FFFFFF;
-  padding: 5px 40px 5px 40px;
-  border: 1px solid $myblue;
-  border-radius: 18px;
-}
-
-.whiteLabel {
-  background: #FFFFFF;
-  border: 1px solid #FFFFFF;
-  border-radius: 8px;
-  padding: 0px 10px 0px 10px;
-  color: $myblue;
-  font-weight: normal;
-}
-
-.spaceBetweenLabel {
-  width: 3%;
-}
-
-
-/*************************** ICON *********************************/
-
-.glyphicon-shopping-cart {
-  color: $myblue;
-}
-
-.glyphicon-plus-sign:focus, .glyphicon-plus-sign:hover{
-  color: $mygreen;
-}
-
-.glyphicon-menu-right, .glyphicon-menu-left {
-  cursor: pointer;
-}
-
-.glyphicon-menu-right:hover, .glyphicon-menu-left:hover {
-  color: $myblue;
-}
-
-/************************* COLOR *********************************/
-.myGreen {
-  color: $mygreen;
-}
-
-/************************ DIALOG *********************************/
-.modal-header {
-   border-bottom: none;
-}
-
-.modal-footer {
-  border-top: none;
-}
