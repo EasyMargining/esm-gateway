@@ -61,25 +61,35 @@
 
         var positions = PositionsByPortfolio.query({portfolioId: $rootScope.portfolio.id}, function () {
           positions.forEach(function(position) {
-            savePosition(position)
+            pushPosition(position)
           });
         });
       }
     };
 
-    function savePosition(position) {
-      var product = Product.get({id: position.productId}, function() {
+    function pushPosition(position) {
+
+      var samePos = $rootScope.positions.filter(function(pos) {
+        return pos.position.productId === position.productId;
+      });
+
+      if (samePos.length > 0) {
+       samePos[0].position.quantity += position.quantity;
+      } else {
         var pos = {
           position: position,
-          product: product
+          product: null
         }
         $rootScope.positions.push(pos)
-      });
+        var product = Product.get({id: position.productId}, function () {
+          pos.product = product;
+        });
+      }
     }
 
     $scope.$on('addPosition', function(event, data) {
       console.log(data)
-      savePosition(data);
+      pushPosition(data);
     });
 
     /* UPDATE A POSITION */
@@ -164,7 +174,7 @@
         var pos = new Position();
         pos.portfolioId = SharedVariables.getPortfolio().id;
         pos.productId = position.id;
-        pos.quantity = position.quantity;
+        pos.quantity = Number(position.quantity);
         pos.exchange = "eurex";
         pos.state = "live";
         pos.effectiveDate = "2016-05-10";
