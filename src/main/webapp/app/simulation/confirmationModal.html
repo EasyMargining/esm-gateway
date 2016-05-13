@@ -10,8 +10,8 @@
 </div>
 <div class="modal-footer">
   <span ng-switch on="typeModal">
-    <button class="btn btn-primary" ng-switch-when="1" ng-click="closePosition(position.productId)">Confirm</button>
-    <button class="btn btn-primary" ng-switch-when="2" ng-click="deletePosition(position.productId)">Confirm</button>
+    <button class="btn btn-primary" ng-switch-when="1" ng-click="closePosition(position.product.id)">Confirm</button>
+    <button class="btn btn-primary" ng-switch-when="2" ng-click="deletePosition(position.product.id)">Confirm</button>
     <span ng-switch-default>Should never happen</span>
   </span>
   <button class="btn" ng-click="cancel()">Cancel</button>

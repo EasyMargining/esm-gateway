@@ -11,7 +11,7 @@
 
     var portfolio = null;
     var positions = [];
-    var effectiveDate = null;
+    var valuationDate = null;
 
     return {
       getPortfolio: function() {
@@ -31,12 +31,12 @@
         $rootScope.$broadcast('addPosition',pos);
       },
 
-      getEffectiveDate: function() {
-        return effectiveDate;
+      getValuationDate: function() {
+        return valuationDate;
       },
 
-      setEffectiveDate: function(date) {
-        effectiveDate = date;
+      setValuationDate: function(date) {
+        valuationDate = date;
       }
 
     }

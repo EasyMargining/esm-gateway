@@ -54,7 +54,10 @@
 
       //To avoid useless call to the server
       if (!$rootScope.portfolio || $rootScope.portfolio !== portfolioResource[0]) {
-        $rootScope.positions = [];
+
+        $rootScope.positionsMap = new Map();
+        $rootScope.positionsFormated = [];
+
         $rootScope.portfolio = portfolioResource[0];
         SharedVariables.setPortfolio($rootScope.portfolio);
         $rootScope.resetIsAdd();
@@ -69,20 +72,40 @@
 
     function pushPosition(position) {
 
-      var samePos = $rootScope.positions.filter(function(pos) {
-        return pos.position.productId === position.productId;
+      console.log($rootScope.positionsFormated)
+
+      var samePos = $rootScope.positionsFormated.filter(function(pos) {
+        return pos.product.id === position.productId;
       });
 
       if (samePos.length > 0) {
-       samePos[0].position.quantity += position.quantity;
+        samePos[0].aggregatedQuantity += position.quantity;
+        samePos[0].descPositions.push({
+          id: position.id,
+          effectiveDate: position.effectiveDate,
+          exchange: position.exchange,
+          quantity: position.quantity
+        });
       } else {
-        var pos = {
-          position: position,
-          product: null
+        var positionFormated = {
+          aggregatedQuantity: position.quantity,
+          portfolioId: position.portfolioId,
+          product: {},
+          descPositions: []
         }
-        $rootScope.positions.push(pos)
+        positionFormated.product.id = position.productId;
+        positionFormated.descPositions.push({
+          id: position.id,
+          effectiveDate: position.effectiveDate,
+          exchange: position.exchange,
+          quantity: position.quantity
+        });
+
+        $rootScope.positionsMap.set(position.id, position);
+        $rootScope.positionsFormated.push(positionFormated);
+
         var product = Product.get({id: position.productId}, function () {
-          pos.product = product;
+          positionFormated.product = product;
         });
       }
     }
@@ -132,19 +155,28 @@
       });
     };
 
-    $scope.delete = function(positionId) {
-      //TODO : change this function
-      /*var deletedPosition = Position.get({ id: positionId}, function() {
-        console.log(deletedPosition)
-        deletedPosition.$delete(function() {
-          console.log(deletedPosition.productId + " deleted")
-          //To delete from the rootScope
-          $rootScope.positions = $rootScope.positions.filter(function(pos) {
-            return pos.id !== positionId;
-          });
-          ngDialog.close();
+    $scope.deletePosition = function(productId) {
+
+      var positionFormated = $rootScope.positionsFormated.filter(function(pos) {
+        return pos.product.id === productId;
+      });
+
+      var positionsToDelete = [];
+      for (var i in positionFormated[0].descPositions) {
+        positionsToDelete.push(angular.copy(positionFormated[0].descPositions[i].id));
+      }
+      recursiveDelete(positionsToDelete);
+      $rootScope.positionsFormated.splice($rootScope.positionsFormated.indexOf(positionFormated),1);
+      ngDialog.close();
+    }
+
+    function recursiveDelete(pos) {
+      if (pos.length > 0) {
+        var p = pos.pop();
+        Position.delete({id: p}, function () {
+          recursiveDelete(pos);
         });
-      });*/
+      }
     }
 
     $rootScope.resetIsAdd = function() {
@@ -503,21 +535,21 @@
     }
 
     $scope.isValidDate = function() {
-      return ($scope.effectiveDate instanceof Date);
+      return ($scope.valuationDate instanceof Date);
     }
 
     $scope.today = function() {
-      $scope.effectiveDate = new Date();
+      $scope.valuationDate = new Date();
     };
 
     $scope.clear = function() {
-      $scope.effectiveDate = null;
+      $scope.valuationDate = null;
     };
 
     $scope.$watch(
-      function() {return $scope.effectiveDate;},
+      function() {return $scope.valuationDate;},
       function(newValue) {
-        SharedVariables.setEffectiveDate(newValue);
+        SharedVariables.setValuationDate(newValue);
       }
     );
 
