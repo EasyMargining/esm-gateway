@@ -1,8 +1,18 @@
 <div class="modal-header"><h2>Confirmation</h2></div>
 <div class="modal-body">
-  Are you sure you want to delete this position on product {{position.product.productId}} ?
+  Are you sure you want to
+  <span ng-switch on="typeModal">
+      <span ng-switch-when="1"><b>Close</b></span>
+      <span ng-switch-when="2"><b>Delete</b></span>
+      <span ng-switch-default>Should never happen</span>
+  </span>
+  this position on product {{position.product.productId}} ?
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="delete(position.id)">Confirm</button>
+  <span ng-switch on="typeModal">
+    <button class="btn btn-primary" ng-switch-when="1" ng-click="closePosition(position.productId)">Confirm</button>
+    <button class="btn btn-primary" ng-switch-when="2" ng-click="deletePosition(position.productId)">Confirm</button>
+    <span ng-switch-default>Should never happen</span>
+  </span>
   <button class="btn" ng-click="cancel()">Cancel</button>
 </div>

@@ -92,21 +92,39 @@
       pushPosition(data);
     });
 
+
+    $scope.openClosePosition = function(position) {
+      $scope.position = position;
+      $scope.typeModal = 1;
+      ngDialog.open({
+        template: 'app/simulation/confirmationModal.html',
+        className: 'ngdialog-theme-default',
+        scope: $scope
+      });
+    };
+
+    $scope.closePosition = function(productId) {
+      //TODO : write this function
+    }
+
     /* UPDATE A POSITION */
     $scope.updatePosition = function(id, quantity) {
-      console.log("id = " + id)
+
+      //TODO : change this function
+      /*console.log("id = " + id)
       console.log("new quantity = " + quantity)
       var updatedPosition = Position.get({ id: id}, function() {
         updatedPosition.quantity = quantity;
         updatedPosition.$update(function() {
           //updated in the backend
         });
-      });
-    }
+      });*/
+    };
 
     /* DELETE DIALOG */
     $scope.openDeleteDialog = function (position) {
-      $scope.position = position
+      $scope.position = position;
+      $scope.typeModal = 2;
       ngDialog.open({
         template: 'app/simulation/confirmationModal.html',
         className: 'ngdialog-theme-default',
@@ -115,7 +133,8 @@
     };
 
     $scope.delete = function(positionId) {
-      var deletedPosition = Position.get({ id: positionId}, function() {
+      //TODO : change this function
+      /*var deletedPosition = Position.get({ id: positionId}, function() {
         console.log(deletedPosition)
         deletedPosition.$delete(function() {
           console.log(deletedPosition.productId + " deleted")
@@ -125,7 +144,7 @@
           });
           ngDialog.close();
         });
-      });
+      });*/
     }
 
     $rootScope.resetIsAdd = function() {

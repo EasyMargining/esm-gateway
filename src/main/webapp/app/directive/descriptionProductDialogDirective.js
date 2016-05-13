@@ -23,7 +23,7 @@
     }];
 
     var template = '<button type ="button" class="transparentButton glyphicon glyphicon-question-sign"' +
-      'ng-click="openDescriptionProductDialog(product)"></button>';
+      'ng-click="openDescriptionProductDialog(product)" title="get information on the product"></button>';
 
     return {
       restrict: 'EA',

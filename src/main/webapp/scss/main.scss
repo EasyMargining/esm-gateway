@@ -787,6 +787,14 @@ label {
   color: $myblue;
 }
 
+.icon-close-position {
+  background-image: url("../images/closePosition.png");
+  background-repeat: no-repeat;
+  height: 24px;
+  width: 24px;
+  margin: 3px 6px 3px 6px;
+}
+
 /************************* COLOR *********************************/
 .myGreen {
   color: $mygreen;
