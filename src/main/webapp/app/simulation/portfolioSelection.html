@@ -7,18 +7,30 @@
 
     <input type="text" list="portfolioList" placeholder="Portfolio name" ng-model="portfolioName">
     <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: isValidPortfolioName()}"></span>
-    <div class="bigLineSpace">
+    <div class="dateLineSpace">
       <div class="input-group">
-        <input type="text"  uib-datepicker-popup ng-model="valuationDate" ng-click="open()" is-open="popup.opened"  placeholder="Valuation date" close-text="Close" />
+        <input type="text"  uib-datepicker-popup ng-model="valuationDate" ng-click="open1()" is-open="popup1.opened"  placeholder="Valuation date" close-text="Close" />
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default transparentButton" ng-click="open()">
-            <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: isValidDate()}"></i>
+          <button type="button" class="btn btn-default transparentButton" ng-click="open1()">
+            <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: popup1.isValidDate()}"></i>
           </button>
         </span>
       </div>
     </div>
+
+    <span class="glyphicon glyphicon-link" ng-model="isLinked" ng-click="clickLink()" ng-class="{myBlue: isLinked}"></span>
+
+    <div class="input-group">
+      <input type="text" ng-disabled="isLinked" ng-class="{disabledInput : isLinked}" uib-datepicker-popup ng-model="positionDate" ng-click="open2()" is-open="popup2.opened"  placeholder="Position date" close-text="Close" />
+        <span class="input-group-btn">
+          <button ng-disabled="isLinked" type="button" class="btn btn-default transparentButton" ng-click="open2()">
+            <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: popup2.isValidDate()}"></i>
+          </button>
+        </span>
+    </div>
   </div>
+
   <div class="col-md-1 col-md-offset-2">
-    <i ng-show="isValidDate() && isValidPortfolioName()" wz-next class="glyphicon glyphicon-menu-right" ng-click="loadPositions(portfolioName)"></i>
+    <i ng-show="popup1.isValidDate() && popup2.isValidDate() && isValidPortfolioName()" wz-next class="glyphicon glyphicon-menu-right" ng-click="loadPositions(portfolioName)"></i>
   </div>
 </div>

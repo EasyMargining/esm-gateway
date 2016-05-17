@@ -12,6 +12,7 @@
     var portfolio = null;
     var positions = [];
     var valuationDate = null;
+    var positionDate = null;
 
     return {
       getPortfolio: function() {
@@ -37,6 +38,14 @@
 
       setValuationDate: function(date) {
         valuationDate = date;
+      },
+
+      getPositionDate: function() {
+        return positionDate;
+      },
+
+      setPositionDate: function(date) {
+        positionDate = date;
       }
 
     }

@@ -530,35 +530,72 @@
 
     $scope.portfolioName = "";
 
+    $scope.popup1 = {
+      opened: false
+    };
+
+    $scope.popup2 = {
+      opened: false
+    };
+
+    $scope.isLinked = true;
+
     $scope.isValidPortfolioName = function() {
       return ($scope.portfolioName.length >= 5);
     }
 
-    $scope.isValidDate = function() {
+    $scope.popup1.isValidDate = function() {
       return ($scope.valuationDate instanceof Date);
     }
 
-    $scope.today = function() {
+    $scope.popup2.isValidDate = function() {
+      return ($scope.positionDate instanceof Date);
+    }
+
+    $scope.popup1.today = function() {
       $scope.valuationDate = new Date();
     };
 
-    $scope.clear = function() {
+    $scope.popup2.today = function() {
+      $scope.positionDate = new Date();
+    };
+
+    $scope.popup1.clear = function() {
       $scope.valuationDate = null;
+    };
+
+    $scope.popup2.clear = function() {
+      $scope.positionDate = null;
     };
 
     $scope.$watch(
       function() {return $scope.valuationDate;},
       function(newValue) {
+        if ($scope.isLinked) {
+          $scope.positionDate = $scope.valuationDate;
+        }
         SharedVariables.setValuationDate(newValue);
       }
     );
 
-    $scope.open = function() {
-      $scope.popup.opened = true;
+    $scope.$watch(
+      function() {return $scope.positionDate;},
+      function(newValue) {
+        SharedVariables.setPositionDate(newValue);
+      }
+    );
+
+    $scope.open1 = function() {
+      $scope.popup1.opened = true;
     };
 
-    $scope.popup = {
-      opened: false
+    $scope.open2 = function() {
+      $scope.popup2.opened = true;
     };
+
+    $scope.clickLink = function() {
+      $scope.isLinked = !$scope.isLinked;
+      $scope.positionDate = $scope.valuationDate;
+    }
   }
 })();

@@ -451,6 +451,11 @@ ul#strength {
   margin-bottom: 20px;
 }
 
+.dateLineSpace {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
 .spaceLineBottom {
   margin-bottom: 20px;
 }
@@ -544,6 +549,10 @@ input:focus {
 
 .onFocusInput:focus {
   @extend input;
+}
+
+.disabledInput {
+  opacity: 0.5;
 }
 
 /************************ SELECT ******************************/
@@ -771,6 +780,10 @@ label {
 
 /*************************** ICON *********************************/
 
+.glyphicon {
+  color: #aab4be;
+}
+
 .glyphicon-shopping-cart {
   color: $myblue;
 }
@@ -798,6 +811,10 @@ label {
 /************************* COLOR *********************************/
 .myGreen {
   color: $mygreen;
+}
+
+.myBlue {
+  color: $myblue;
 }
 
 /************************ DIALOG *********************************/
