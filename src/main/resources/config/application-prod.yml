@@ -33,12 +33,12 @@ spring:
     data:
         mongodb:
             uri: mongodb://localhost:27017
-            database: EasyMargining
+            database: esm
         cassandra:
             contactPoints: localhost
             protocolVersion: V4
             compression: LZ4
-            keyspaceName: EasyMargining
+            keyspaceName: esm
             repositories:
                 enabled: false
     mail:
@@ -94,7 +94,7 @@ jhipster:
             enabled: false
             host: localhost
             port: 2003
-            prefix: EasyMargining
+            prefix: easymargining
         logs: # Reports Dropwizard metrics in the logs
             enabled: false
             reportFrequency: 60 # in seconds
