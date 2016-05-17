@@ -24,7 +24,7 @@ eureka:
 
 spring:
     autoconfigure:
-        exclude: org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration, org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration
+        exclude: org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration
     devtools:
         restart:
             enabled: true
@@ -36,7 +36,7 @@ spring:
             database: EasyMargining
         cassandra:
             contactPoints: localhost
-            protocolVersion: V2
+            protocolVersion: V4
             compression: LZ4
             keyspaceName: EasyMargining
             repositories:

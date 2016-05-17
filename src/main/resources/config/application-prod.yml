@@ -36,7 +36,7 @@ spring:
             database: EasyMargining
         cassandra:
             contactPoints: localhost
-            protocolVersion: V2
+            protocolVersion: V4
             compression: LZ4
             keyspaceName: EasyMargining
             repositories:

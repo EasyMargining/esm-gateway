@@ -1,0 +1,17 @@
+version: '2'
+services:
+    easymargining-mongodb:
+        container_name: easymargining-mongodb
+        image: mongo:3.2.3
+        ports:
+            - "27017:27017"
+        command: mongos --configdb easymargining-mongodb-config
+    easymargining-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    easymargining-mongodb-config:
+        image: mongo:3.2.3
+        container_name: easymargining-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db
