@@ -17,7 +17,7 @@
   Position.$inject = ['$resource'];
 
   function Position ($resource) {
-    return $resource('http://127.0.0.1:8080/esmeurexreferential/api/positions/:id',
+    return $resource('/esmeurexreferential/api/positions/:id',
       {id: "@_id"},
       {
         update: { method: 'PUT'},
