@@ -156,20 +156,23 @@
 
     /* UPDATE A POSITION */
     $scope.updatePosition = function(position) {
-
-      var pos = new Position();
-      pos.portfolioId = SharedVariables.getPortfolio().id;
-      pos.productId = position.product.id;
-      pos.quantity = position.aggregatedQuantity - $scope.newQuantity;
-      console.log("quantity new position")
-      console.log(pos.quantity)
-      pos.exchange = "eurex"; //TODO : Change that
-      pos.effectiveDate = $filter('date')( SharedVariables.getValuationDate(), "yyyy-MM-dd");
-
-      Position.save(pos, function () {
-        pushPosition(pos, false, true);
+      if (position.aggregatedQuantity === $scope.newQuantity) {
         ngDialog.close();
-      });
+      } else {
+        var pos = new Position();
+        pos.portfolioId = SharedVariables.getPortfolio().id;
+        pos.productId = position.product.id;
+        pos.quantity = position.aggregatedQuantity - $scope.newQuantity;
+        console.log("quantity new position")
+        console.log(pos.quantity)
+        pos.exchange = "eurex"; //TODO : Change that
+        pos.effectiveDate = $filter('date')(SharedVariables.getValuationDate(), "yyyy-MM-dd");
+
+        Position.save(pos, function () {
+          pushPosition(pos, false, true);
+          ngDialog.close();
+        });
+      }
     };
 
     /* DELETE DIALOG */
