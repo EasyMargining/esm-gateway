@@ -29,8 +29,8 @@
           </td>
           <td>{{position.product.maturityDate}}</td>
           <td>{{position.product.exercisePrice}}</td>
-          <td><input class="onFocusInput center" disabled="true" ng-model="position.aggregatedQuantity" focus-me="editionMode"
-                     maxlength="6" size="8" ng-blur="updatePosition('TODO')"/></td>
+          <td><input class="onFocusInput center" disabled="true" ng-focus="setNewQuantity(position.aggregatedQuantity)" ng-model="position.aggregatedQuantity" focus-me="editionMode"
+                     maxlength="6" size="8" ng-blur="updatePosition(position)"/></td>
           <td class="right">
             <button class="transparentButton icon-close-position" title="Close this position" ng-click="openClosePosition(position)"></button>
             <description-product-dialog product="position.product" > </description-product-dialog>

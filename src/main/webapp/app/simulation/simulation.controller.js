@@ -40,8 +40,6 @@
       })
     });
 
-    $rootScope.positions = [];
-
     /**
      * Load the positions in the portfolio currently selected
      * @param portfolioName : the portfolio currently selected
@@ -64,21 +62,29 @@
         {portfolioId: $rootScope.portfolio.id, valuationDate: valuationDateFormated},
         function () {
           positions.forEach(function(position) {
-            pushPosition(position, false)
+            pushPosition(position, false, false);
           });
         }
       );
     };
 
-    function pushPosition(position, isAdd) {
+    /**
+     * Push the position in $rootScope.positionsFormated
+     * @param position : the position to push
+     * @param isAdd : true if this position is new, false otherwise
+       */
+    function pushPosition(position, isAdd, isUpdate) {
 
       var samePos = $rootScope.positionsFormated.filter(function(pos) {
         return pos.product.id === position.productId;
       });
 
       if (!isAdd || SharedVariables.getPositionDate() <= SharedVariables.getValuationDate()) {
+        // If a position on the same productId is already contained in $rootScope.positionsFormated
         if (samePos.length > 0) {
-          samePos[0].aggregatedQuantity += position.quantity;
+          if (!isUpdate) {
+            samePos[0].aggregatedQuantity += parseInt(position.quantity);
+          }
           samePos[0].descPositions.push({
             id: position.id,
             effectiveDate: position.effectiveDate,
@@ -87,7 +93,7 @@
           });
         } else {
           var positionFormated = {
-            aggregatedQuantity: position.quantity,
+            aggregatedQuantity: parseInt(position.quantity),
             portfolioId: position.portfolioId,
             product: {},
             descPositions: []
@@ -97,7 +103,7 @@
             id: position.id,
             effectiveDate: position.effectiveDate,
             exchange: position.exchange,
-            quantity: position.quantity
+            quantity: parseInt(position.quantity)
           });
 
           $rootScope.positionsFormated.push(positionFormated);
@@ -111,36 +117,59 @@
 
     $scope.$on('addPosition', function(event, data) {
       console.log(data)
-      pushPosition(data, true);
+      pushPosition(data, true, false);
     });
 
 
     $scope.openClosePosition = function(position) {
-      $scope.position = position;
-      $scope.typeModal = 1;
-      ngDialog.open({
-        template: 'app/simulation/confirmationModal.html',
-        className: 'ngdialog-theme-default',
-        scope: $scope
+      if (position.aggregatedQuantity != 0) {
+        $scope.position = position;
+        $scope.typeModal = 1;
+        ngDialog.open({
+          template: 'app/simulation/confirmationModal.html',
+          className: 'ngdialog-theme-default',
+          scope: $scope
+        });
+      }
+    };
+
+    $scope.closePosition = function(position) {
+      var pos = new Position();
+      pos.portfolioId = SharedVariables.getPortfolio().id;
+      pos.productId = position.product.id;
+      pos.quantity = -position.aggregatedQuantity;
+      pos.exchange = "eurex"; //TODO : Change that
+      pos.effectiveDate = $filter('date')( SharedVariables.getValuationDate(), "yyyy-MM-dd");
+
+      Position.save(pos, function () {
+        pushPosition(pos, true, false);
+        ngDialog.close();
       });
     };
 
-    $scope.closePosition = function(productId) {
-      //TODO : write this function
+
+    $scope.newQuantity = 0;
+    $scope.setNewQuantity = function(aggregatedQuantity) {
+      $scope.newQuantity = aggregatedQuantity;
+      console.log($scope.newQuantity)
     }
 
     /* UPDATE A POSITION */
-    $scope.updatePosition = function(id, quantity) {
+    $scope.updatePosition = function(position) {
 
-      //TODO : change this function
-      /*console.log("id = " + id)
-      console.log("new quantity = " + quantity)
-      var updatedPosition = Position.get({ id: id}, function() {
-        updatedPosition.quantity = quantity;
-        updatedPosition.$update(function() {
-          //updated in the backend
-        });
-      });*/
+      var pos = new Position();
+      pos.portfolioId = SharedVariables.getPortfolio().id;
+      pos.productId = position.product.id;
+      pos.quantity = position.aggregatedQuantity - $scope.newQuantity;
+      console.log("quantity new position")
+      console.log(pos.quantity)
+      pos.exchange = "eurex"; //TODO : Change that
+      pos.effectiveDate = $filter('date')( SharedVariables.getValuationDate(), "yyyy-MM-dd");
+
+      Position.save(pos, function () {
+        pushPosition(pos, false, true);
+        ngDialog.close();
+      });
     };
 
     /* DELETE DIALOG */
@@ -154,6 +183,7 @@
       });
     };
 
+    //TODO : Modify this function (NEED TO KNOW WHAT NEED TO BE DELETED)
     $scope.deletePosition = function(productId) {
 
       var positionFormated = $rootScope.positionsFormated.filter(function(pos) {
@@ -209,7 +239,7 @@
     $scope.addPosition = function(quantity) {
       //!isNaN(parseFloat(quantity)) --> Return true is quantity is a number
       if (quantity && !isNaN(parseFloat(quantity)) && quantity > 0) {
-        $scope.newPositions.push({id : $scope.currentPosition.id,
+        $scope.newPositions.push({productId : $scope.currentPosition.id,
           quantity: ($scope.currentPosition.isShort ? -quantity : quantity)});
       }
     }
@@ -223,10 +253,9 @@
         var position = $scope.newPositions[i];
         var pos = new Position();
         pos.portfolioId = SharedVariables.getPortfolio().id;
-        pos.productId = position.id;
+        pos.productId = position.productId;
         pos.quantity = Number(position.quantity);
         pos.exchange = "eurex";
-        pos.state = "live";
         pos.effectiveDate = SharedVariables.getPositionDate();
         newPos.push(pos);
       }

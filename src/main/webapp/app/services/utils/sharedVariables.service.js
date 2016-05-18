@@ -10,7 +10,6 @@
   function SharedVariables ($rootScope) {
 
     var portfolio = null;
-    var positions = [];
     var valuationDate = null;
     var positionDate = null;
 
@@ -23,12 +22,7 @@
         portfolio = p;
       },
 
-      getPositions: function() {
-        return positions;
-      },
-
       addPosition: function(pos) {
-        positions.push(pos);
         $rootScope.$broadcast('addPosition',pos);
       },
 
