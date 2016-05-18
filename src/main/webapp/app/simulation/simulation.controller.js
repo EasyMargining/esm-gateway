@@ -7,11 +7,11 @@
     .controller('AddPositionController', AddPositionController)
     .controller('ParametersController', ParametersController)
 
-  SimulationController.$inject = ['$scope', '$rootScope', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'PositionsByPortfolio', 'Position', 'Product', 'ngDialog', 'CurrencySign', 'SharedVariables'];
+  SimulationController.$inject = ['$scope', '$rootScope', '$filter', 'Principal', 'LoginService', 'Portfolio', 'Account', 'User', 'PositionsByPortfolio', 'Position', 'Product', 'ngDialog', 'CurrencySign', 'SharedVariables'];
   AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'SharedVariables', 'Position'];
   ParametersController.$inject = ['$scope', 'SharedVariables'];
 
-  function SimulationController ($scope, $rootScope, Principal, LoginService, Portfolio, Account, User, PositionsByPortfolio, Position, Product, ngDialog, CurrencySign, SharedVariables) {
+  function SimulationController ($scope, $rootScope, $filter, Principal, LoginService, Portfolio, Account, User, PositionsByPortfolio, Position, Product, ngDialog, CurrencySign, SharedVariables) {
 
     var vm = this;
     vm.account = null;
@@ -52,67 +52,66 @@
         return obj.name === portfolioName;
       });
 
-      //To avoid useless call to the server
-      if (!$rootScope.portfolio || $rootScope.portfolio !== portfolioResource[0]) {
+      $rootScope.positionsFormated = [];
 
-        $rootScope.positionsMap = new Map();
-        $rootScope.positionsFormated = [];
+      $rootScope.portfolio = portfolioResource[0];
+      SharedVariables.setPortfolio($rootScope.portfolio);
+      $rootScope.resetIsAdd();
 
-        $rootScope.portfolio = portfolioResource[0];
-        SharedVariables.setPortfolio($rootScope.portfolio);
-        $rootScope.resetIsAdd();
+      var valuationDateFormated = $filter('date')( SharedVariables.getValuationDate(), "yyyy-MM-dd");
 
-        var positions = PositionsByPortfolio.query({portfolioId: $rootScope.portfolio.id}, function () {
+      var positions = PositionsByPortfolio.query(
+        {portfolioId: $rootScope.portfolio.id, valuationDate: valuationDateFormated},
+        function () {
           positions.forEach(function(position) {
-            pushPosition(position)
+            pushPosition(position, false)
           });
-        });
-      }
+        }
+      );
     };
 
-    function pushPosition(position) {
-
-      console.log($rootScope.positionsFormated)
+    function pushPosition(position, isAdd) {
 
       var samePos = $rootScope.positionsFormated.filter(function(pos) {
         return pos.product.id === position.productId;
       });
 
-      if (samePos.length > 0) {
-        samePos[0].aggregatedQuantity += position.quantity;
-        samePos[0].descPositions.push({
-          id: position.id,
-          effectiveDate: position.effectiveDate,
-          exchange: position.exchange,
-          quantity: position.quantity
-        });
-      } else {
-        var positionFormated = {
-          aggregatedQuantity: position.quantity,
-          portfolioId: position.portfolioId,
-          product: {},
-          descPositions: []
+      if (!isAdd || SharedVariables.getPositionDate() <= SharedVariables.getValuationDate()) {
+        if (samePos.length > 0) {
+          samePos[0].aggregatedQuantity += position.quantity;
+          samePos[0].descPositions.push({
+            id: position.id,
+            effectiveDate: position.effectiveDate,
+            exchange: position.exchange,
+            quantity: position.quantity
+          });
+        } else {
+          var positionFormated = {
+            aggregatedQuantity: position.quantity,
+            portfolioId: position.portfolioId,
+            product: {},
+            descPositions: []
+          }
+          positionFormated.product.id = position.productId;
+          positionFormated.descPositions.push({
+            id: position.id,
+            effectiveDate: position.effectiveDate,
+            exchange: position.exchange,
+            quantity: position.quantity
+          });
+
+          $rootScope.positionsFormated.push(positionFormated);
+
+          var product = Product.get({id: position.productId}, function () {
+            positionFormated.product = product;
+          });
         }
-        positionFormated.product.id = position.productId;
-        positionFormated.descPositions.push({
-          id: position.id,
-          effectiveDate: position.effectiveDate,
-          exchange: position.exchange,
-          quantity: position.quantity
-        });
-
-        $rootScope.positionsMap.set(position.id, position);
-        $rootScope.positionsFormated.push(positionFormated);
-
-        var product = Product.get({id: position.productId}, function () {
-          positionFormated.product = product;
-        });
       }
     }
 
     $scope.$on('addPosition', function(event, data) {
       console.log(data)
-      pushPosition(data);
+      pushPosition(data, true);
     });
 
 
@@ -228,7 +227,7 @@
         pos.quantity = Number(position.quantity);
         pos.exchange = "eurex";
         pos.state = "live";
-        pos.effectiveDate = "2016-05-10";
+        pos.effectiveDate = SharedVariables.getPositionDate();
         newPos.push(pos);
       }
       recursiveSave(newPos);
