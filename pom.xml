@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.easymargining</groupId>
-    <artifactId>easymargining</artifactId>
+    <artifactId>easy-margining</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>EasyMargining</name>

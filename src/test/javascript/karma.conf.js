@@ -53,7 +53,6 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/ng-dialog/js/ngDialog.js',
             'src/main/webapp/bower_components/angular-spinner/angular-spinner.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
-            'src/main/webapp/bower_components/angular-scenario/angular-scenario.js',
             // endbower
             'src/main/webapp/app/app.module.js',
             'src/main/webapp/app/app.state.js',
