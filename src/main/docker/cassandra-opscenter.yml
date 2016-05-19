@@ -11,6 +11,8 @@ services:
         build:
             context: .
             dockerfile: cassandra/Cassandra-OpsCenter.Dockerfile
+        environment:
+            - CASSANDRA_CONTACT_POINT=easymargining-cassandra
         # volumes:
         #     - ~/volumes/jhipster/EasyMargining/cassandra/:/var/lib/cassandra/data
         links:

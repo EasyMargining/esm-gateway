@@ -13,8 +13,13 @@
 eureka:
     client:
         enabled: false
+    instance:
+        appname: EasyMargining
+        instanceId: EasyMargining:${spring.application.instance_id:${random.value}}
 
 spring:
+    application:
+        name: EasyMargining
     autoconfigure:
         exclude: org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration, org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration
     data:
@@ -25,7 +30,7 @@ spring:
         cassandra:
             contactPoints: localhost
             port: 9142
-            protocolVersion: V2
+            protocolVersion: V4
             compression: NONE
             keyspaceName: cassandra_unit_keyspace
             repositories:
@@ -61,9 +66,9 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: jwt-secret-key
-                # Token is valid 30 minutes
-                tokenValidityInSeconds: 1800
+                secret: 2a727d6ad523775a1d0f861f4d060a1198f1af3e
+                # Token is valid 24 hours
+                tokenValidityInSeconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
     swagger:
@@ -76,3 +81,4 @@ jhipster:
         contactEmail:
         license:
         licenseUrl:
+        enabled: false

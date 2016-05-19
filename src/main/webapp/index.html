@@ -27,13 +27,15 @@
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak></div>
+    <page-ribbon></page-ribbon>
     <div ui-view="navbar" ng-cloak></div>
     <div class="container">
-        <div class="well" ui-view="content"></div>
+        <div class="well" ui-view="content">
+            <!-- Angular views -->
+        </div>
 
         <div class="footer" ng-cloak>
-            <!--<p translate="footer">This is your footer</p>-->
+            <p translate="footer">This is your footer</p>
         </div>
     </div>
 
@@ -50,6 +52,12 @@
     <!-- build:js app/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/messageformat/messageformat.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/sockjs-client/dist/sockjs.js"></script>
+    <script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
+    <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -61,24 +69,18 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-translate/angular-translate.js"></script>
-    <script src="bower_components/messageformat/messageformat.js"></script>
     <script src="bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js"></script>
     <script src="bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js"></script>
     <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
-    <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-    <script src="bower_components/sockjs-client/dist/sockjs.js"></script>
-    <script src="bower_components/stomp-websocket/lib/stomp.min.js"></script>
     <script src="bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
-    <script src="bower_components/spin.js/spin.js"></script>
     <script src="bower_components/angular-spinner/angular-spinner.js"></script>
-    <!-- endbower -->
+    <!-- endinject -->
     <!-- endbuild -->
 
     <!-- build:js app/app.js  -->
@@ -91,6 +93,7 @@
     <script src="app/account/password/password.state.js"></script>
     <script src="app/account/password/password.controller.js"></script>
     <script src="app/account/password/password-strength-bar.directive.js"></script>
+    <script src="app/services/profiles/page-ribbon.directive.js"></script>
     <script src="app/services/position/position.service.js"></script>
     <script src="app/services/portfolio/portfolio.service.js"></script>
     <script src="app/services/utils/utils.service.js"></script>
@@ -112,7 +115,15 @@
     <script src="app/services/auth/auth.jwt.service.js"></script>
     <script src="app/services/auth/activate.service.js"></script>
     <script src="app/services/auth/account.service.js"></script>
+    <script src="app/layouts/navbar/navbar.controller.js"></script>
+    <script src="app/layouts/navbar/active-menu.directive.js"></script>
+    <script src="app/layouts/navbar/active-link.directive.js"></script>
     <script src="app/layouts/error/error.state.js"></script>
+    <script src="app/home/home.state.js"></script>
+    <script src="app/home/home.controller.js"></script>
+    <script src="app/entities/entity.state.js"></script>
+    <script src="app/directive/utilsDirective.js"></script>
+    <script src="app/directive/chooseAssetDirective.js"></script>
     <script src="app/blocks/config/translation.config.js"></script>
     <script src="app/blocks/config/translation-storage.provider.js"></script>
     <script src="app/blocks/config/localstorage.config.js"></script>
@@ -125,8 +136,8 @@
     <script src="app/blocks/interceptor/auth-expired.interceptor.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>
-    <script src="app/components/util/sort.directive.js"></script>
     <script src="app/components/util/sort-by.directive.js"></script>
+    <script src="app/components/util/sort.directive.js"></script>
     <script src="app/components/util/parse-links.service.js"></script>
     <script src="app/components/util/pagination-util.service.js"></script>
     <script src="app/components/util/jhi-item-count.directive.js"></script>
@@ -148,14 +159,43 @@
     <script src="app/components/form/pagination.constants.js"></script>
     <script src="app/components/form/minbytes.directive.js"></script>
     <script src="app/components/form/maxbytes.directive.js"></script>
+    <script src="app/components/language/language.service.js"></script>
+    <script src="app/components/language/language.filter.js"></script>
+    <script src="app/components/language/language.controller.js"></script>
+    <script src="app/components/language/language.constants.js"></script>
+    <script src="app/components/form/uib-pagination.config.js"></script>
+    <script src="app/components/form/uib-pager.config.js"></script>
+    <script src="app/components/form/show-validation.directive.js"></script>
+    <script src="app/components/form/pagination.constants.js"></script>
+    <script src="app/components/form/minbytes.directive.js"></script>
+    <script src="app/components/form/maxbytes.directive.js"></script>
+    <script src="app/components/alert/alert-error.directive.js"></script>
     <script src="app/components/alert/alert.service.js"></script>
     <script src="app/components/alert/alert.directive.js"></script>
     <script src="app/components/alert/alert-error.directive.js"></script>
     <script src="app/admin/user-management/user-management.state.js"></script>
     <script src="app/admin/user-management/user-management.controller.js"></script>
+    <script src="app/blocks/interceptor/notification.interceptor.js"></script>
+    <script src="app/blocks/interceptor/errorhandler.interceptor.js"></script>
+    <script src="app/blocks/interceptor/auth-expired.interceptor.js"></script>
+    <script src="app/blocks/interceptor/auth.interceptor.js"></script>
+    <script src="app/blocks/handlers/translation.handler.js"></script>
+    <script src="app/blocks/handlers/state.handler.js"></script>
+    <script src="app/blocks/config/uib-pagination.config.js"></script>
+    <script src="app/blocks/config/uib-pager.config.js"></script>
+    <script src="app/blocks/config/translation-storage.provider.js"></script>
+    <script src="app/blocks/config/translation.config.js"></script>
+    <script src="app/blocks/config/localstorage.config.js"></script>
+    <script src="app/blocks/config/http.config.js"></script>
+    <script src="app/blocks/config/compile.config.js"></script>
+    <script src="app/blocks/config/alert.config.js"></script>
+    <script src="app/app.state.js"></script>
+    <script src="app/app.constants.js"></script>
     <script src="app/admin/user-management/user-management-dialog.controller.js"></script>
     <script src="app/admin/user-management/user-management-detail.controller.js"></script>
     <script src="app/admin/user-management/user-management-delete-dialog.controller.js"></script>
+    <script src="app/admin/user-management/user-management.state.js"></script>
+    <script src="app/admin/user-management/user-management.controller.js"></script>
     <script src="app/admin/tracker/tracker.state.js"></script>
     <script src="app/admin/tracker/tracker.service.js"></script>
     <script src="app/admin/tracker/tracker.controller.js"></script>
@@ -180,6 +220,7 @@
     <script src="app/admin/audits/audits.state.js"></script>
     <script src="app/admin/audits/audits.service.js"></script>
     <script src="app/admin/audits/audits.controller.js"></script>
+    <script src="app/admin/admin.state.js"></script>
     <script src="app/account/settings/settings.state.js"></script>
     <script src="app/account/settings/settings.controller.js"></script>
     <script src="app/account/register/register.state.js"></script>
@@ -196,8 +237,6 @@
     <script src="app/directive/chooseAssetDirective.js"></script>
     <script src="app/admin/admin.state.js"></script>
     <script src="app/account/account.state.js"></script>
-    <script src="app/app.state.js"></script>
-    <script src="app/app.constants.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
 

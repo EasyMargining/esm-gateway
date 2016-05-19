@@ -9,12 +9,12 @@
   Product.$inject = ['$resource'];
 
   function Product ($resource) {
-    return $resource('http://127.0.0.1:8080/esmeurexreferential/api/products/:id',
+    return $resource('/esmeurexreferential/api/products/:id',
       {id: "@_id"});
   }
 
   function ProductsByInstrumentType ($resource) {
-    return $resource('http://127.0.0.1:8080/esmeurexreferential/api/products/byInstrumentType/:instrumentType',
+    return $resource('/esmeurexreferential/api/products/byInstrumentType/:instrumentType',
       {instrumentType: "@instrumentType"});
   }
 })();

@@ -22,10 +22,19 @@ ribbon:
 
 zuul:
 
+management:
+    context-path: /management
+    health:
+        mail:
+          enabled: false # When using the MailService, configure an SMTP server and set this to true
 
 spring:
     application:
         name: EasyMargining
+    profiles:
+        # The commented value for `active` can be replaced with valid spring profiles to load.
+        # This will be overwritten by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
+        active: #spring.profiles.active#
     messages:
         basename: i18n/messages
     mvc:
@@ -56,12 +65,6 @@ jhipster:
         #max-age: 1800
     mail:
         from: EasyMargining@localhost
-    security:
-        authentication:
-            jwt:
-                secret: 2a727d6ad523775a1d0f861f4d060a1198f1af3e
-                # Token is valid 24 hours
-                tokenValidityInSeconds: 86400
     swagger:
         title: EasyMargining API
         description: EasyMargining API documentation
@@ -72,3 +75,6 @@ jhipster:
         contactEmail:
         license:
         licenseUrl:
+    ribbon:
+        # comma seperated list of profiles to show a ribbon on the GUI
+        displayOnActiveProfiles: dev

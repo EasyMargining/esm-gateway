@@ -48,7 +48,7 @@
         "messages": {
             "info": {
                 "authenticated": "Si vous voulez vous <a class=\"alert-link\" href=\"\" ng-click=\"vm.login()\">connecter</a>, vous pouvez utiliser les comptes par défaut : <br/> - Administrateur (nom d'utilisateur=\"admin\" et mot de passe =\"admin\") <br/> - Utilisateur (nom d'utilisateur=\"user\" et mot de passe =\"user\").",
-                "register": "Vous n'avez pas encore de compte ? <a class=\"alert-link\" ui-sref=\"register\">Créer un compte</a>"
+                "register": "Vous n'avez pas encore de compte ? <a class=\"alert-link\" href=\"\" ng-click=\"vm.register()\">Créer un compte</a>"
             },
             "error": {
                 "dontmatch": "Le nouveau mot de passe et sa confirmation ne sont pas égaux!"
@@ -75,6 +75,9 @@
         },
         "field": {
             "id": "ID"
+        },
+        "ribbon": {
+            "dev":"Development"
         }
     },
     "entity": {
@@ -85,6 +88,7 @@
             "cancel": "Annuler",
             "edit": "Editer",
             "delete": "Supprimer",
+            "open": "Ouvrir",
             "save": "Sauvegarder",
             "view": "Voir"
         },
@@ -110,6 +114,7 @@
     },
     "error": {
         "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
         "NotNull": "Field {{fieldName}} cannot be empty!",
         "Size": "Field {{fieldName}} does not meet min/max size requirements!",
         "userexists": "Login name already used!",
