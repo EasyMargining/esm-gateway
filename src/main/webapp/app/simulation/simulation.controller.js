@@ -572,7 +572,7 @@
     $scope.isLinked = true;
 
     $scope.isValidPortfolioName = function() {
-      return ($scope.portfolioName.length >= 5);
+      return ($scope.portfolioName.length >= 1);
     }
 
     $scope.popup1.isValidDate = function() {
