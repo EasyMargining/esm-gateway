@@ -113,7 +113,7 @@
          * @returns true if the portfolio name is long enough
          */
         vm.isValidPortfolioName = function() {
-            return (vm.portfolioName.length >= 5);
+            return (vm.portfolioName.length >= 1);
         };
 
         // Open the validationDate popup
