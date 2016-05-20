@@ -1,36 +1,37 @@
-<div  class="row portfolioSelection" ng-controller="ParametersController">
+<div  class="row portfolioSelection" ng-controller="SelectionController as selectionCtrl">
   <div class="col-md-6 col-md-offset-3">
 
     <datalist id="portfolioList">
-      <option ng-repeat="portfolio in portfolios" ng-value="portfolio.name">
+        <option ng-repeat="portfolio in selectionCtrl.portfolios" ng-value="portfolio.name">
     </datalist>
 
-    <input type="text" list="portfolioList" placeholder="Portfolio name" ng-model="portfolioName">
-    <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: isValidPortfolioName()}"></span>
-    <div class="dateLineSpace">
-      <div class="input-group">
-        <input type="text"  uib-datepicker-popup ng-model="valuationDate" ng-click="open1()" is-open="popup1.opened"  placeholder="Valuation date" close-text="Close" />
+      <input type="text" list="portfolioList" placeholder="Portfolio name" ng-model="selectionCtrl.portfolioName">
+      <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: selectionCtrl.isValidPortfolioName()}"></span>
+      <div class="dateLineSpace">
+          <div class="input-group">
+              <input type="text"  uib-datepicker-popup ng-model="simulationCtrl.valuationDate" ng-click="selectionCtrl.openValidationDate()" is-open="selectionCtrl.popupValidationDate.opened"  placeholder="Valuation date" close-text="Close" />
         <span class="input-group-btn">
-          <button type="button" class="btn btn-default transparentButton" ng-click="open1()">
-            <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: popup1.isValidDate()}"></i>
+          <button type="button" class="btn btn-default transparentButton" ng-click="selectionCtrl.openValidationDate()">
+              <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: selectionCtrl.popupValidationDate.isValidDate()}"></i>
           </button>
         </span>
+          </div>
       </div>
-    </div>
 
-    <span class="glyphicon glyphicon-link" ng-model="isLinked" ng-click="clickLink()" ng-class="{myBlue: isLinked}"></span>
 
-    <div class="input-group">
-      <input type="text" ng-disabled="isLinked" ng-class="{disabledInput : isLinked}" uib-datepicker-popup ng-model="positionDate" ng-click="open2()" is-open="popup2.opened"  placeholder="Position date" close-text="Close" />
-        <span class="input-group-btn">
-          <button ng-disabled="isLinked" type="button" class="btn btn-default transparentButton" ng-click="open2()">
-            <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: popup2.isValidDate()}"></i>
-          </button>
-        </span>
-    </div>
+      <span class="glyphicon glyphicon-link" ng-model="selectionCtrl.isLinked" ng-click="selectionCtrl.clickLink()" ng-class="{myBlue: selectionCtrl.isLinked}"></span>
+
+      <div class="input-group">
+          <input type="text" ng-disabled="selectionCtrl.isLinked" ng-class="{disabledInput : selectionCtrl.isLinked}" uib-datepicker-popup ng-model="simulationCtrl.positionDate" ng-click="selectionCtrl.openPositionDate()" is-open="selectionCtrl.popupPositionDate.opened"  placeholder="Position date" close-text="Close" />
+             <span class="input-group-btn">
+               <button ng-disabled="selectionCtrl.isLinked" type="button" class="btn btn-default transparentButton" ng-click="selectionCtrl.openPositionDate()">
+                   <i class="glyphicon glyphicon-calendar" ng-class="{myGreen: selectionCtrl.popupPositionDate.isValidDate()}"></i>
+               </button>
+             </span>
+      </div>
   </div>
 
   <div class="col-md-1 col-md-offset-2">
-    <i ng-show="popup1.isValidDate() && popup2.isValidDate() && isValidPortfolioName()" wz-next class="glyphicon glyphicon-menu-right" ng-click="loadPositions(portfolioName)"></i>
+    <i ng-show="selectionCtrl.popupValidationDate.isValidDate() && selectionCtrl.popupPositionDate.isValidDate() && selectionCtrl.isValidPortfolioName()" wz-next class="glyphicon glyphicon-menu-right" ng-click="simulationCtrl.loadPositions(selectionCtrl.getPortfolio())"></i>
   </div>
 </div>

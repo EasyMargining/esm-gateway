@@ -1,39 +1,39 @@
-<div class="row portfolioSummary" ng-controller="AddPositionController" ng-model="instrumentType" ng-init="instrumentType=$root.isAdd">
+<div class="row portfolioSummary" ng-controller="AddPositionController as addPositionCtrl">
   <div class="col-md-1">
-    <i class="glyphicon glyphicon-menu-left" ng-click="$root.isAdd=0"></i>
+    <i class="glyphicon glyphicon-menu-left" ng-click="simulationCtrl.resetIsAdd()"></i>
   </div>
   <div class="col-md-10">
     <div id="OptionLabel">
-      <div ng-show="$parent.$parent.isAdd==1">
+      <div ng-show="simulationCtrl.isAdd==1">
         <label class="assetType">OPTION</label>
       </div>
-      <div ng-show="$parent.$parent.isAdd==2">
+      <div ng-show="simulationCtrl.isAdd==2">
         <label class="assetType">FUTURES</label>
       </div>
     </div>
     <div id="marketLink">
-      <a ng-click="$root.isAdd=0; saveNewPositions()" class="glyphicon glyphicon-shopping-cart"></a>
-      <span class="littleCircle" ng-show="newPositions.length > 0">{{newPositions.length}}</span>
+      <a ng-click="simulationCtrl.resetIsAdd(); addPositionCtrl.saveNewPositions()" class="glyphicon glyphicon-shopping-cart"></a>
+      <span class="littleCircle" ng-show="addPositionCtrl.newPositions.length > 0">{{addPositionCtrl.newPositions.length}}</span>
     </div>
     <div>
       <i class="glyphicon glyphicon-menu-down myGreen"></i>
     </div>
 
     <datalist id="assetList">
-      <option ng-repeat="productNameOrProductId in productNameOrProductIdList" ng-value="productNameOrProductId">
+      <option ng-repeat="productNameOrProductId in addPositionCtrl.productNameOrProductIdList" ng-value="productNameOrProductId">
     </datalist>
 
     <div class="spaceLineBottom">
       <input class="productInput" type="text" list="assetList" placeholder="Add your product here" ng-model="codeProduct"
-             ng-change="getProductInformations(codeProduct)"/>
+             ng-change="addPositionCtrl.getProductInformations(codeProduct)"/>
     </div>
 
     <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner-1"></span>
 
-    <div ng-if="showTable">
-      <choose-asset-table product="displayedProduct" set-current-position="setCurrentPosition"
-                          is-position-selected="isPositionSelected" add-position="addPosition"
-                          update-asset-maturity="updateAssetMaturity" get-all-maturities="getAllMaturities">
+    <div ng-if="addPositionCtrl.showTable">
+      <choose-asset-table product="addPositionCtrl.displayedProduct" set-current-position="addPositionCtrl.setCurrentPosition"
+                          is-position-selected="addPositionCtrl.isPositionSelected" add-position="addPositionCtrl.addPosition"
+                          update-asset-maturity="addPositionCtrl.updateAssetMaturity" get-all-maturities="addPositionCtrl.getAllMaturities">
       </choose-asset-table>
     </div>
   </div>

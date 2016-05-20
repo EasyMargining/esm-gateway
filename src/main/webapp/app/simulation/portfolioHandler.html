@@ -1,8 +1,8 @@
 <div class="row lineSpace">
-  <div ng-if="$root.isAdd > 0">
+  <div ng-if="simulationCtrl.isAdd > 0">
     <div data-ng-include="'app/simulation/addPosition.html'"></div>
   </div>
-   <div ng-if="$root.isAdd == 0">
+   <div ng-if="simulationCtrl.isAdd == 0">
     <div  data-ng-include="'app/simulation/portfolioSummary.html'"></div>
   </div>
 </div>
