@@ -14,7 +14,7 @@
   }
 
   function ProductsByInstrumentType ($resource) {
-    return $resource('/esmeurexreferential/api/products/byInstrumentType/:instrumentType',
+    return $resource('/esmeurexreferential/api/products/instrument-type/:instrumentType',
       {instrumentType: "@instrumentType"});
   }
 })();

@@ -10,7 +10,7 @@
   Position.$inject = ['$resource'];
 
   function PositionsByPortfolio ($resource) {
-    return $resource('/esmeurexreferential/api/positions/byPortfolio/:portfolioId/:valuationDate',
+    return $resource('/esmeurexreferential/api/positions/portfolio/:portfolioId/valuationDate/:valuationDate',
       {portfolioId: "@portfolioId", valuationDate: "@effectiveDate"});
   }
 
