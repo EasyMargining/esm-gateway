@@ -1,3 +1,7 @@
-<div class="row portfolioSummary">
+<div class="row portfolioSummary" ng-controller="MarginController as marginCtrl">
+    <div ng-repeat="result in simulationCtrl.marginResult">
+        imResult = {{result.imResult}}
+    </div>
+
     <input type="submit" wz-previous value="Page Precedente" />
 </div>

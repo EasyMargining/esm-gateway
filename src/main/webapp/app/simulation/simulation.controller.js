@@ -7,13 +7,15 @@
         .controller('SelectionController', SelectionController)
         .controller('SummaryController', SummaryController)
         .controller('AddPositionController', AddPositionController)
+        .controller('MarginController', MarginController);
 
-    SimulationController.$inject = ['$scope', '$filter', 'Principal', 'LoginService', 'PositionsByPortfolio', 'Product'];
+    SimulationController.$inject = ['$scope', '$filter', 'Principal', 'LoginService', 'PositionsByPortfolio', 'Product', 'MarginResult'];
     SelectionController.$inject = ['$scope', 'Account', 'User', 'Portfolio'];
     SummaryController.$inject = ['$scope', 'Position', 'ngDialog', '$filter'];
     AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'Position'];
+    MarginController.$inject = ['$scope'];
 
-    function SimulationController ($scope, $filter, Principal, LoginService, PositionsByPortfolio, Product) {
+    function SimulationController ($scope, $filter, Principal, LoginService, PositionsByPortfolio, Product, MarginResult) {
 
         var vm = this;
         vm.account = null;
@@ -88,6 +90,39 @@
                     vm.aggregatedPositions.push(position);
                 }
             }
+        };
+
+        vm.calculateMargin = function() {
+            var trades = [];
+
+            for (var i in vm.aggregatedPositions) {
+                var aggregatedPosition = vm.aggregatedPositions[i];
+                var trade = {
+                    "exercisePrice": aggregatedPosition.product.exercisePrice,
+                    "exerciseStyleFlag": aggregatedPosition.product.exerciseStyleFlag,
+                    "expiryDate": {
+                        "contractMonth": parseInt(aggregatedPosition.product.maturityDate.substring(5, 7)),
+                        "contractYear": parseInt(aggregatedPosition.product.maturityDate.substring(0, 4))
+                    },
+                    "instrumentType": aggregatedPosition.product.instrumentType,
+                    "optionType": aggregatedPosition.product.optionType[0],
+                    "portfolioId": aggregatedPosition.portfolioId,
+                    "productId": aggregatedPosition.product.productId,
+                    "productSettlementType": aggregatedPosition.product.productSettlementType,
+                    "quantity": aggregatedPosition.quantity,
+                    "versionNumber": aggregatedPosition.product.versionNumber.toString()
+                };
+                trades.push(trade);
+            }
+
+            console.log("trades")
+            console.log(trades);
+
+            var marginResult = MarginResult.save({}, trades, function() {
+                vm.marginResult = marginResult.portfolioMarginResults;
+                console.log("margin result")
+                console.log(vm.marginResult)
+            });
         };
     };
 
@@ -628,5 +663,11 @@
                 return Object.keys(vm.allProduct.futuresPrices);
             }
         }
+    }
+
+    function MarginController($scope) {
+
+        var vm = this;
+
     }
 })();

@@ -43,6 +43,7 @@
   <div class="col-md-10 col-md-offset-1 bigLineSpace">
     <button ng-click="simulationCtrl.isAdd=1" class="btn addPositionButton col-md-3">Add Option</button>
     <button ng-click="simulationCtrl.isAdd=2" class="btn addPositionButton col-md-3">Add Futures</button>
-    <input type="submit" wz-next class="resultButton col-md-3 col-md-offset-2" value="Go to my results"/>
+    <input type="submit" wz-next ng-click="simulationCtrl.calculateMargin()"
+           class="resultButton col-md-3 col-md-offset-2" value="Go to my results"/>
   </div>
 </div>
