@@ -8,7 +8,7 @@
   ProductInformation.$inject = ['$resource'];
 
   function ProductInformation ($resource) {
-    return $resource('/esmeurexreferential/api/products/product-information/:productId/effective-date/:effectiveDate',
-      {productId: "@productId", effectiveDate: "@effectiveDate"});
+    return $resource('/esmeurexreferential/api/products/product-information/:productIdentifier/effective-date/:effectiveDate',
+      {productIdentifier: "@productIdentifier", effectiveDate: "@effectiveDate"});
   }
 })();

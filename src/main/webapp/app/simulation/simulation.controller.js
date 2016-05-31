@@ -108,10 +108,10 @@
                     "instrumentType": aggregatedPosition.product.instrumentType,
                     "optionType": aggregatedPosition.product.optionType[0],
                     "portfolioId": aggregatedPosition.portfolioId,
-                    "productId": aggregatedPosition.product.productId,
+                    "productId": aggregatedPosition.product.productDefinitionId,
                     "productSettlementType": aggregatedPosition.product.productSettlementType,
                     "quantity": aggregatedPosition.quantity,
-                    "versionNumber": aggregatedPosition.product.versionNumber.toString()
+                    "versionNumber": "0"
                 };
                 trades.push(trade);
             }
@@ -395,8 +395,8 @@
             function() { return $scope.simulationCtrl.isAdd},
             function (newValue) {
                 var instrumentType = (newValue === 1) ? 'Option' : (newValue === 2) ? 'Future' : '';
-                var productNameOrProductIdList = ProductsByInstrumentType.query({instrumentType: instrumentType}, function() {
-                    vm.productNameOrProductIdList = productNameOrProductIdList;
+                var productNameOrProductDefinitionIdList = ProductsByInstrumentType.query({instrumentType: instrumentType}, function() {
+                    vm.productNameOrProductDefinitionIdList = productNameOrProductDefinitionIdList;
                 });
             }
         );
@@ -464,12 +464,12 @@
          * @param codeProduct --> productId of a product
          */
         vm.getProductInformations = function(codeProduct) {
-            if (vm.productNameOrProductIdList.indexOf(codeProduct) !== -1) {
+            if (vm.productNameOrProductDefinitionIdList.indexOf(codeProduct) !== -1) {
                 vm.startSpin();
 
                 var positionDateFormated = $filter('date')(  $scope.simulationCtrl.positionDate, "yyyy-MM-dd");
 
-                var product = ProductInformation.get({productId: codeProduct, effectiveDate : positionDateFormated}, function() {
+                var product = ProductInformation.get({productIdentifier: codeProduct, effectiveDate : positionDateFormated}, function() {
                     vm.allProduct = product;
                     vm.displayedProduct.bloombergId = product.bloombergId;
                     vm.displayedProduct.futuresPrices = angular.copy(product.futuresPrices);
@@ -478,8 +478,8 @@
                     vm.displayedProduct.currency = product.currency;
                     vm.displayedProduct.isin = product.isin;
                     vm.displayedProduct.marginStyle = product.marginStyle;
-                    vm.displayedProduct.productId =  product.productId
-                    vm.displayedProduct.productName = product.productName
+                    vm.displayedProduct.productDefinitionId =  product.productDefinitionId;
+                    vm.displayedProduct.productName = product.productName;
                     vm.displayedProduct.tickSize = product.tickSize;
                     vm.displayedProduct.tickValue = product.tickValue;
                     vm.displayedProduct.futuresMaturityPrices = null;
@@ -489,7 +489,6 @@
                     vm.displayedProduct.strikesNumber = 10;
                     vm.displayedProduct.strikesPercent = 10;
 
-                    console.log(vm.allProduct)
                     vm.stopSpin();
                     vm.showTable = true;
                 });
