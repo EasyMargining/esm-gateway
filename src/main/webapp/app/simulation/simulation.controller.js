@@ -12,7 +12,7 @@
     SimulationController.$inject = ['$scope', '$filter', 'Principal', 'LoginService', 'PositionsByPortfolio', 'Product', 'MarginResult'];
     SelectionController.$inject = ['$scope', 'Account', 'User', 'Portfolio'];
     SummaryController.$inject = ['$scope', 'Position', 'ngDialog', '$filter'];
-    AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'Position'];
+    AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'Position', '$filter'];
     MarginController.$inject = ['$scope'];
 
     function SimulationController ($scope, $filter, Principal, LoginService, PositionsByPortfolio, Product, MarginResult) {
@@ -63,6 +63,7 @@
                             position.product = product;
                         });
                         vm.aggregatedPositions.push(position);
+                        console.log(vm.aggregatedPositions)
                     });
                 }
             );
@@ -324,7 +325,7 @@
         */
     }
 
-    function AddPositionController($scope, ProductsByInstrumentType, ProductInformation, usSpinnerService, Position) {
+    function AddPositionController($scope, ProductsByInstrumentType, ProductInformation, usSpinnerService, Position, $filter) {
 
         var vm = this;
         vm.currentPosition = null;  // last position opened by the user
@@ -466,11 +467,11 @@
             if (vm.productNameOrProductIdList.indexOf(codeProduct) !== -1) {
                 vm.startSpin();
 
-                var product = ProductInformation.get({productId: codeProduct}, function() {
-                    vm.allProduct = product;
+                var positionDateFormated = $filter('date')(  $scope.simulationCtrl.positionDate, "yyyy-MM-dd");
 
+                var product = ProductInformation.get({productId: codeProduct, effectiveDate : positionDateFormated}, function() {
+                    vm.allProduct = product;
                     vm.displayedProduct.bloombergId = product.bloombergId;
-                    vm.displayedProduct.bloombergUrl = product.bloombergUrl;
                     vm.displayedProduct.futuresPrices = angular.copy(product.futuresPrices);
                     vm.displayedProduct.putPrices = angular.copy(product.putPrices);
                     vm.displayedProduct.callPrices = angular.copy(product.callPrices);

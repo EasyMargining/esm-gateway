@@ -15,18 +15,8 @@
         </tr>
       </thead>
         <tr ng-repeat="position in simulationCtrl.aggregatedPositions">
-          <td>{{position.product.productId}}</td>
-          <td>
-            <span ng-switch on="position.product.instrumentType">
-              <span ng-switch-when="Option">Option /</span>
-              <span ng-switch on="position.product.optionType">
-                <span ng-switch-when="CALL">Call</span>
-                <span ng-switch-when="PUT">Put</span>
-              </span>
-              <span ng-switch-when="Future">Futures</span>
-            </span>
-            on {{position.product.productName}}
-          </td>
+          <td>{{position.product.productDefinitionId}}</td>
+          <td>{{position.product.productName}}</td>
           <td>{{position.product.maturityDate}}</td>
           <td>{{position.product.exercisePrice}}</td>
           <td><input class="onFocusInput center" disabled="true" ng-focus="summaryCtrl.setOldQuantity(position.quantity)" ng-model="position.quantity" focus-me="editionMode"
