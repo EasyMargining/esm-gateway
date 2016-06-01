@@ -53,10 +53,17 @@
             vm.portfolio = portfolio;
             vm.aggregatedPositions = [];
             vm.resetIsAdd();
-            var valuationDateFormated = $filter('date')( vm.valuationDate, "yyyy-MM-dd");
+
+            vm.valuationDateFormated = $filter('date')( vm.valuationDate, "yyyy-MM-dd");
+            vm.positionDateFormated = $filter('date')( vm.positionDate, "yyyy-MM-dd");
+
+            // 'undo' the timezone offset
+            //TODO : verify that (working here but not sure that it is working in other timezone)
+            vm.valuationDate = new Date(Date.parse(vm.valuationDateFormated));
+            vm.positionDate = new Date(Date.parse(vm.positionDateFormated));
 
             var positions = PositionsByPortfolio.query(
-                {portfolioId: vm.portfolio.id, valuationDate: valuationDateFormated},
+                {portfolioId: vm.portfolio.id, valuationDate: vm.valuationDateFormated},
                 function () {
                     positions.forEach(function(position) {
                         var product = Product.get({id: position.productId}, function () {
@@ -193,9 +200,9 @@
         //When validationDate and positionDate are linked they must be the same
         $scope.$watch(
             function() {return $scope.simulationCtrl.valuationDate;},
-            function(newValue) {
+            function(valuationDate) {
                 if (vm.isLinked) {
-                    $scope.simulationCtrl.positionDate = $scope.simulationCtrl.valuationDate;
+                    $scope.simulationCtrl.positionDate = valuationDate;
                 }
             }
         );
@@ -245,7 +252,7 @@
             pos.productId = position.product.id;
             pos.quantity = -position.quantity;
             pos.exchange = "eurex"; //TODO : Change that
-            pos.effectiveDate = $filter('date')(  $scope.simulationCtrl.valuationDate, "yyyy-MM-dd");
+            pos.effectiveDate = $scope.simulationCtrl.valuationDateFormated;
 
             Position.save(pos, function () {
                 var samePos = $scope.simulationCtrl.aggregatedPositions.filter(function (p) {
@@ -276,7 +283,7 @@
                 console.log("quantity new position")
                 console.log(pos.quantity)
                 pos.exchange = "eurex"; //TODO : Change that
-                pos.effectiveDate = $filter('date')($scope.simulationCtrl.valuationDate, "yyyy-MM-dd");
+                pos.effectiveDate = $scope.simulationCtrl.valuationDateFormated;
 
                 Position.save(pos, function () {
                     ngDialog.close();
@@ -467,9 +474,7 @@
             if (vm.productNameOrProductDefinitionIdList.indexOf(codeProduct) !== -1) {
                 vm.startSpin();
 
-                var positionDateFormated = $filter('date')(  $scope.simulationCtrl.positionDate, "yyyy-MM-dd");
-
-                var product = ProductInformation.get({productIdentifier: codeProduct, effectiveDate : positionDateFormated}, function() {
+                var product = ProductInformation.get({productIdentifier: codeProduct, effectiveDate : $scope.simulationCtrl.positionDateFormated}, function() {
                     vm.allProduct = product;
                     vm.displayedProduct.bloombergId = product.bloombergId;
                     vm.displayedProduct.futuresPrices = angular.copy(product.futuresPrices);
