@@ -10,7 +10,7 @@
         .controller('MarginController', MarginController);
 
     SimulationController.$inject = ['$scope', '$filter', 'Principal', 'LoginService', 'PositionsByPortfolio', 'Product', 'MarginResult'];
-    SelectionController.$inject = ['$scope', 'Account', 'User', 'Portfolio'];
+    SelectionController.$inject = ['$scope', 'Account', 'User', 'Portfolio', 'ngDialog'];
     SummaryController.$inject = ['$scope', 'Position', 'ngDialog', '$filter'];
     AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'Position', '$filter'];
     MarginController.$inject = ['$scope'];
@@ -134,29 +134,57 @@
         };
     };
 
-    function SelectionController ($scope, Account, User, Portfolio) {
+    function SelectionController ($scope, Account, User, Portfolio, ngDialog) {
 
         var vm = this;
-        vm.portfolios = null;
+        vm.portfolios = [];
         vm.portfolioName = "";
         vm.isLinked = true; //if the valuationDate and the positionDate are the same
 
         // Get the portfolio list of the client currently connected
-        var account = Account.get({}, function() {
-            var user = User.get({login: account.login}, function() {
-                var portfolios = Portfolio.query({owner: user.id}, function() {
+        vm.account = Account.get({}, function() {
+            vm.user = User.get({login: vm.account.login}, function() {
+                var portfolios = Portfolio.query({owner: vm.user.id}, function() {
                     vm.portfolios = portfolios;
                     console.log(vm.portfolios)
                 });
             })
         });
 
+        vm.openAddPortfolio = function() {
+            ngDialog.open({
+                template: 'app/simulation/newPortfolioModal.html',
+                className: 'ngdialog-theme-default',
+                scope: $scope
+            });
+
+        };
+
+        vm.addPortfolio = function(newPortfolioName) {
+            var newPortfolio = new Portfolio();
+            newPortfolio.name = newPortfolioName;
+            newPortfolio.owner = vm.user.id;
+
+            Portfolio.save(newPortfolio, function () {
+                console.log("new portfolio saved " + newPortfolioName)
+                vm.portfolios.push(newPortfolio);
+                ngDialog.close();
+            });
+        }
+
+        vm.cancel = function() {
+            ngDialog.close();
+        }
+
         /**
          * Verify is the name of the portfolio is long enough
          * @returns true if the portfolio name is long enough
          */
         vm.isValidPortfolioName = function() {
-            return (vm.portfolioName.length >= 1);
+            var isValid = vm.portfolios.filter(function (portfolio) {
+                return portfolio.name === vm.portfolioName;
+            });
+            return isValid.length > 0;
         };
 
         // Open the validationDate popup

@@ -8,6 +8,9 @@
   Portfolio.$inject = ['$resource'];
 
   function Portfolio ($resource) {
-    return $resource('/esmeurexreferential/api/portfolios/owner/:owner', {owner: '@owner'});
+    return $resource('/esmeurexreferential/api/portfolios/owner/:owner', {owner: '@owner'}, {
+        query: {method: 'GET',isArray: true },
+        save: {method: 'POST', url: '/esmeurexreferential/api/portfolios/'}
+    });
   }
 })();

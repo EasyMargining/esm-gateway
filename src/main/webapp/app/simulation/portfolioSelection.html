@@ -6,7 +6,10 @@
     </datalist>
 
       <input type="text" list="portfolioList" placeholder="Portfolio name" ng-model="selectionCtrl.portfolioName">
-      <span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: selectionCtrl.isValidPortfolioName()}"></span>
+      <span class="glyphicon glyphicon-plus-sign add-portfolio-icon" ng-class="{myGreen: selectionCtrl.isValidPortfolioName()}"
+            title="Add a new portfolio" ng-click="selectionCtrl.openAddPortfolio()"></span>
+
+      <!--<span class="glyphicon glyphicon-ok-circle" ng-class="{myGreen: selectionCtrl.isValidPortfolioName()}"></span>-->
       <div class="dateLineSpace">
           <div class="input-group">
               <input type="text"  uib-datepicker-popup ng-model="simulationCtrl.valuationDate" ng-click="selectionCtrl.openValidationDate()" is-open="selectionCtrl.popupValidationDate.opened"  placeholder="Valuation date" close-text="Close" />

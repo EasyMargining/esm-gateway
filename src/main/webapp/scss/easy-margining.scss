@@ -529,7 +529,11 @@ label {
     color: $myblue;
 }
 
-.glyphicon-plus-sign:focus, .glyphicon-plus-sign:hover{
+.add-portfolio-icon {
+    cursor: pointer;
+}
+
+.add-position-icon:focus, .add-position-icon:hover{
     color: $mygreen;
 }
 
