@@ -1,34 +1,12 @@
 <div class="modal-header"><h2>Product Description</h2></div>
 <div class="modal-body">
   <ul>
-    <li>Product Id : {{product.productId}}</li>
+    <li>Product Id : {{product.productDefinitionId}}</li>
     <li>Product Name : {{product.productName}}</li>
     <li>Effective Date : {{product.effectiveDate}}</li>
-    <li>Maturity Date : {{product.maturityDate}}</li>
-    <li>Strike : {{product.exercisePrice}} {{moneySign}}</li>
     <li>Version Number : {{product.versionNumber}}</li>
-    <li>Instrument type :
-      <span ng-switch on="product.instrumentType">
-        <span ng-switch-when="O">Option /</span>
-        <span ng-switch on="product.optionType">
-          <span ng-switch-when="C">Call</span>
-          <span ng-switch-when="P">Put</span>
-        </span>
-        <span ng-switch-when="F">Futures</span>
-      </span>
-    </li>
-    <li>Product Settlement Type :
-      <span ng-switch on="product.productSettlementType">
-        <span ng-switch-when="C">Cash Settlement</span>
-        <span ng-switch-when="E">Physical Settlement</span>
-        <span ng-switch-when="D">Derivative</span>
-        <span ng-switch-when="N">Notional Settlement</span>
-        <span ng-switch-when="P">Payment-versus-Payment</span>
-        <span ng-switch-when="S">Stock</span>
-        <span ng-switch-when="T">Cascade</span>
-        <span ng-switch-when="A">Alternate</span>
-      </span>
-    </li>
+    <li>Instrument type : {{product.instrumentType}} </li>
+    <li>Product Settlement Type : {{product.settlementType}} </li>
 
     <li ng-if="product.exerciseStyleFlag !== ''">Exercise Style :
       <span ng-switch on="product.exerciseStyleFlag">
@@ -38,17 +16,16 @@
     </li>
     <li>Bloomberg Id : <a ng-rehf="{{product.bloomberUrl}}">{{product.bloombergId}}</a></li>
 
-    <li>Liquidation Group : {{product.liquidationGroup}}</li>
-    <li>Liquidity Class : {{product.liquidityClass}}</li>
     <li>Margin Style :
       <span ng-switch on="product.marginStyle">
         <span ng-switch-when="F">Futures style</span>
         <span ng-switch-when="T">Traditional</span>
       </span>
     </li>
-    <li>Settlement Price : {{product.settlementPrice}} {{moneySign}}</li>
     <li>Version Number : {{product.versionNumber}}</li>
     <li>Tick Size : {{product.tickSize}}</li>
     <li>Tick Value : {{product.tickValue}}</li>
+    <li>Trade Unit : {{product.tradeUnit}}</li>
+    <li>Min Block Size : {{product.minBlockSize}}</li>
   </ul>
 </div>

@@ -13,6 +13,10 @@
 
       $scope.openDescriptionProductDialog = function (product) {
         $scope.moneySign = CurrencySign.getCurrencySign(product.currency);
+
+          console.log("the scope")
+          console.log($scope)
+
         ngDialog.open({
           template: 'app/simulation/descriptionProductModal.html',
           className: 'ngdialog-theme-default',

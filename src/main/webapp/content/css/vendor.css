@@ -14481,7 +14481,10 @@ label {
 .glyphicon-shopping-cart {
   color: #23558C; }
 
-.glyphicon-plus-sign:focus, .glyphicon-plus-sign:hover {
+.add-portfolio-icon {
+  cursor: pointer; }
+
+.add-position-icon:focus, .add-position-icon:hover {
   color: #35C45E; }
 
 .glyphicon-menu-right, .glyphicon-menu-left {

@@ -430,9 +430,12 @@
             function() { return $scope.simulationCtrl.isAdd},
             function (newValue) {
                 var instrumentType = (newValue === 1) ? 'Option' : (newValue === 2) ? 'Future' : '';
-                var productNameOrProductDefinitionIdList = ProductsByInstrumentType.query({instrumentType: instrumentType}, function() {
-                    vm.productNameOrProductDefinitionIdList = productNameOrProductDefinitionIdList;
-                });
+                var productNameOrProductDefinitionIdList = ProductsByInstrumentType.query(
+                    {instrumentType: instrumentType, effectiveDate: $scope.simulationCtrl.positionDateFormated},
+                    function() {
+                        vm.productNameOrProductDefinitionIdList = productNameOrProductDefinitionIdList;
+                    }
+                );
             }
         );
 
@@ -515,9 +518,21 @@
                     vm.displayedProduct.productName = product.productName;
                     vm.displayedProduct.tickSize = product.tickSize;
                     vm.displayedProduct.tickValue = product.tickValue;
+                    vm.displayedProduct.effectiveDate = product.effectiveDate;
+                    vm.displayedProduct.versionNumber = product.versionNumber;
+                    vm.displayedProduct.instrumentType = product.instrumentType;
+                    vm.displayedProduct.settlementType = product.settlementType;
+                    vm.displayedProduct.exerciseStyleFlag = product.exerciseStyleFlag;
+                    vm.displayedProduct.tradeUnit = product.tradeUnit;
+                    vm.displayedProduct.minBlockSize = product.minBlockSize;
+
+
+
                     vm.displayedProduct.futuresMaturityPrices = null;
                     vm.displayedProduct.putMaturityPrices = null;
                     vm.displayedProduct.callMaturityPrices = null;
+
+
                     vm.displayedProduct.center = initCenter();
                     vm.displayedProduct.strikesNumber = 10;
                     vm.displayedProduct.strikesPercent = 10;

@@ -14,7 +14,7 @@
   }
 
   function ProductsByInstrumentType ($resource) {
-    return $resource('/esmeurexreferential/api/products/instrument-type/:instrumentType',
-      {instrumentType: "@instrumentType"});
+    return $resource('/esmeurexreferential/api/products/instrument-type/:instrumentType/effective-date/:effectiveDate',
+      {instrumentType: "@instrumentType", effectiveDate:"@effectiveDate"});
   }
 })();
