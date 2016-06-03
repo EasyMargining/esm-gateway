@@ -19,7 +19,7 @@
         </tr>
         <tr ng-repeat="position in simulationCtrl.aggregatedPositions">
           <td>{{position.product.productDefinitionId}}</td>
-          <td>{{position.product.productName}}</td>
+          <td>{{position.product.optionType}} {{position.product.productName}}</td>
           <td>{{position.product.maturityDate}}</td>
           <td>{{position.product.exercisePrice}}</td>
           <td><input class="onFocusInput center" disabled="true" ng-focus="summaryCtrl.setOldQuantity(position.quantity)" ng-model="position.quantity" focus-me="editionMode"

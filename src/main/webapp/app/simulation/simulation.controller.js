@@ -526,12 +526,9 @@
                     vm.displayedProduct.tradeUnit = product.tradeUnit;
                     vm.displayedProduct.minBlockSize = product.minBlockSize;
 
-
-
                     vm.displayedProduct.futuresMaturityPrices = null;
                     vm.displayedProduct.putMaturityPrices = null;
                     vm.displayedProduct.callMaturityPrices = null;
-
 
                     vm.displayedProduct.center = initCenter();
                     vm.displayedProduct.strikesNumber = 10;
