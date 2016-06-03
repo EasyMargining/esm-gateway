@@ -521,7 +521,7 @@
                     vm.displayedProduct.effectiveDate = product.effectiveDate;
                     vm.displayedProduct.versionNumber = product.versionNumber;
                     vm.displayedProduct.instrumentType = product.instrumentType;
-                    vm.displayedProduct.settlementType = product.settlementType;
+                    vm.displayedProduct.productSettlementType = product.productSettlementType;
                     vm.displayedProduct.exerciseStyleFlag = product.exerciseStyleFlag;
                     vm.displayedProduct.tradeUnit = product.tradeUnit;
                     vm.displayedProduct.minBlockSize = product.minBlockSize;
