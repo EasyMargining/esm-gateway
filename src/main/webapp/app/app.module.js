@@ -18,9 +18,10 @@
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
             'mgo-angular-wizard',
-            'ngAnimate',
+            //'ngAnimate',
             'ngDialog',
-            'angularSpinner'
+            'angularSpinner',
+            'treeGrid'
         ])
         .run(run);
 

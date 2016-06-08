@@ -570,3 +570,25 @@ label {
 .modal-footer {
     border-top: none;
 }
+
+#tree-grid-marginResult table > thead > tr > th,
+#tree-grid-marginResult table > thead > tr > td,
+#tree-grid-marginResult table > tbody > tr > th,
+#tree-grid-marginResult table > tbody > tr > td,
+#tree-grid-marginResult table > tfoot > tr > th,
+#tree-grid-marginResult table > tfoot > tr > td {
+    padding: 4px !important;
+}
+
+#tree-grid-marginResult table  td:nth-child(1){
+    text-align: left;
+    width: 80%;
+}
+
+#tree-grid-marginResult table  td:nth-child(2){
+    width: 5%;
+}
+
+#tree-grid-marginResult table  td:nth-child(3){
+    width: 15%;
+}

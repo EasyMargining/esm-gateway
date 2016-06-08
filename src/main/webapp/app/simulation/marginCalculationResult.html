@@ -1,7 +1,10 @@
 <div class="row portfolioSummary" ng-controller="MarginController as marginCtrl">
-    <div ng-repeat="result in simulationCtrl.marginResult">
-        imResult = {{result.imResult}}
+    <div class="col-md-1">
+        <i  wz-previous class="glyphicon glyphicon-menu-left"></i>
+    </div>
+    <div class="col-md-10">
+        <tree-grid id="tree-grid-marginResult" tree-data="marginCtrl.tree_data" col-defs="marginCtrl.col_defs"
+                   expand-on="marginCtrl.expanding_property" icon-leaf= "none" expand-level="3"></tree-grid>
     </div>
 
-    <input type="submit" wz-previous value="Page Precedente" />
 </div>

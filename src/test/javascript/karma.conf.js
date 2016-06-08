@@ -30,6 +30,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/stomp-websocket/lib/stomp.min.js',
             'src/main/webapp/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
             'src/main/webapp/bower_components/spin.js/spin.js',
+            'src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js',
             'src/main/webapp/bower_components/angular/angular.js',
             'src/main/webapp/bower_components/angular-aria/angular-aria.js',
             'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
@@ -52,6 +53,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/angular-animate/angular-animate.js',
             'src/main/webapp/bower_components/ng-dialog/js/ngDialog.js',
             'src/main/webapp/bower_components/angular-spinner/angular-spinner.js',
+            'src/main/webapp/bower_components/angular-bootstrap-grid-tree/src/tree-grid-directive.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

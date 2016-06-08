@@ -126,11 +126,12 @@
             console.log("trades")
             console.log(trades);
 
-            var marginResult = MarginResult.save({}, trades, function() {
+            /*var marginResult = MarginResult.save({valuationDate: vm.valuationDateFormated}, trades, function() {
                 vm.marginResult = marginResult.portfolioMarginResults;
                 console.log("margin result")
                 console.log(vm.marginResult)
-            });
+            });*/
+
         };
     };
 
@@ -713,6 +714,271 @@
     function MarginController($scope) {
 
         var vm = this;
+
+        vm.marginResult = {
+            "portfolioMarginResults": [
+                {
+                    "imResult": 2568.36,
+                    "currency": "EUR",
+                    "liquidationGroupIMResults": [
+                        {
+                            "imGroupResult": 1246.12,
+                            "liquidationGroup": "GROUP1",
+                            "liquidationGroupSplitMarginResult": [
+                                {
+                                    "imLiquidationGroupSplit": 1,
+                                    "liquidationGroupSplitName": "SPLI1",
+                                    "liquidityRiskAdjustmentResult": {
+                                        "etdliquidityRiskAdjustmentAddOnPart": 12,
+                                        "longOptionCreditAddOn": 35,
+                                        "otcliquidityRiskAdjustmentAddOnPart": 54,
+                                        "totalLiquidityRiskAdjustmentAddOn": 125
+                                    },
+                                    "marketRiskIMResult": {
+                                        "filteredHistoricalVar": 96,
+                                        "marketRiskIM": 15,
+                                        "stressVaR": 152
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "portfolioName": "portfolio1"
+                },
+                {
+                    "currency": "EUR",
+                    "imResult": 21387.36,
+                    "liquidationGroupIMResults": [
+                        {
+                            "imGroupResult": 1246.1221,
+                            "liquidationGroup": "GROUP100",
+                            "liquidationGroupSplitMarginResult": [
+                                {
+                                    "imLiquidationGroupSplit": 1,
+                                    "liquidationGroupSplitName": "SPLI100",
+                                    "liquidityRiskAdjustmentResult": {
+                                        "etdliquidityRiskAdjustmentAddOnPart": 12,
+                                        "longOptionCreditAddOn": 35,
+                                        "otcliquidityRiskAdjustmentAddOnPart": 54,
+                                        "totalLiquidityRiskAdjustmentAddOn": 125
+                                    },
+                                    "marketRiskIMResult": {
+                                        "filteredHistoricalVar": 96,
+                                        "marketRiskIM": 15,
+                                        "stressVaR": 152
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "imGroupResult": 12.1221,
+                            "liquidationGroup": "GROUP101",
+                            "liquidationGroupSplitMarginResult": [
+                                {
+                                    "imLiquidationGroupSplit": 1,
+                                    "liquidationGroupSplitName": "SPLI101",
+                                    "liquidityRiskAdjustmentResult": {
+                                        "etdliquidityRiskAdjustmentAddOnPart": 12,
+                                        "longOptionCreditAddOn": 35,
+                                        "otcliquidityRiskAdjustmentAddOnPart": 54,
+                                        "totalLiquidityRiskAdjustmentAddOn": 125
+                                    },
+                                    "marketRiskIMResult": {
+                                        "filteredHistoricalVar": 96,
+                                        "marketRiskIM": 15,
+                                        "stressVaR": 152
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "portfolioName": "portfolio2"
+                }
+            ]
+        }
+
+        vm.pushMarginObject = function(id, name, currency, imResult, parentId) {
+            vm.marginResultTransformed.push({
+                id : id,
+                name : name,
+                currency : currency,
+                imResult : imResult,
+                parentId : parentId
+            });
+        }
+
+        vm.transformFormTreeGrid = function(marginResult) {
+            vm.marginResultTransformed = [];
+            var i = 0;
+            for (var portfolioMarginResultIndex in marginResult.portfolioMarginResults) {
+                var portfolioMarginResult = marginResult.portfolioMarginResults[portfolioMarginResultIndex];
+                i++;
+                vm.pushMarginObject(
+                    i,
+                    portfolioMarginResult.portfolioName,
+                    portfolioMarginResult.currency,
+                    portfolioMarginResult.imResult,
+                    null);
+                var parentPortfolio = i;
+                for (var liquidationGroupIMResultIndex in portfolioMarginResult.liquidationGroupIMResults) {
+                    var liquidationGroupIMResult = portfolioMarginResult.liquidationGroupIMResults[liquidationGroupIMResultIndex];
+                    i++;
+                    vm.pushMarginObject(
+                        i,
+                        liquidationGroupIMResult.liquidationGroup,
+                        portfolioMarginResult.currency,
+                        liquidationGroupIMResult.imGroupResult,
+                        parentPortfolio);
+
+                    var parentGroup = i;
+                    for (var liquidationGroupSplitMarginResultIndex in liquidationGroupIMResult.liquidationGroupSplitMarginResult) {
+                        var liquidationGroupSplitMarginResult = liquidationGroupIMResult.liquidationGroupSplitMarginResult[liquidationGroupSplitMarginResultIndex];
+                        i++;
+                        vm.pushMarginObject(
+                            i,
+                            liquidationGroupSplitMarginResult.liquidationGroupSplitName,
+                            portfolioMarginResult.currency,
+                            liquidationGroupSplitMarginResult.imLiquidationGroupSplit,
+                            parentGroup);
+                        var parentSplit = i;
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "Liquidity Risk Adjustment Result",
+                            currency : null,
+                            imResult :  null,
+                            parentId : parentSplit
+                        });
+                        var parentLiquidityRiskAdjustment = i;
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "ETD Liquidity Risk Adjustment Add On Part",
+                            currency : portfolioMarginResult.currency,
+                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.etdliquidityRiskAdjustmentAddOnPart,
+                            parentId : parentLiquidityRiskAdjustment
+                        });
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "Long Option Credit Add On",
+                            currency : portfolioMarginResult.currency,
+                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.longOptionCreditAddOn,
+                            parentId : parentLiquidityRiskAdjustment
+                        });
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "OTC Liquidity Risk Adjustment Add On Part",
+                            currency : portfolioMarginResult.currency,
+                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.otcliquidityRiskAdjustmentAddOnPart,
+                            parentId : parentLiquidityRiskAdjustment
+                        });
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "Total Liquidity Risk Adjustment Add On",
+                            currency : portfolioMarginResult.currency,
+                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.totalLiquidityRiskAdjustmentAddOn,
+                            parentId : parentLiquidityRiskAdjustment
+                        });
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "Market Risk IM Result",
+                            currency : null,
+                            imResult :  null,
+                            parentId : parentSplit
+                        });
+                        var parentmarketRiskIMResult = i;
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "Filtered Historical VaR",
+                            currency : portfolioMarginResult.currency,
+                            imResult :  liquidationGroupSplitMarginResult.marketRiskIMResult.filteredHistoricalVar,
+                            parentId : parentmarketRiskIMResult
+                        });
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "Market Risk IM",
+                            currency : portfolioMarginResult.currency,
+                            imResult :  liquidationGroupSplitMarginResult.marketRiskIMResult.marketRiskIM,
+                            parentId : parentmarketRiskIMResult
+                        });
+                        i++;
+                        vm.marginResultTransformed.push({
+                            id : i,
+                            name : "Stress VaR",
+                            currency : portfolioMarginResult.currency,
+                            imResult :  liquidationGroupSplitMarginResult.marketRiskIMResult.stressVaR,
+                            parentId : parentmarketRiskIMResult
+                        });
+                    }
+                }
+            }
+        }
+
+        vm.transformFormTreeGrid(vm.marginResult);
+
+        vm.tree_data = getTree(vm.marginResultTransformed, 'id', 'parentId');
+
+        vm.expanding_property = {
+            field: "name",
+            displayName: "Margin on"
+        };
+        vm.col_defs = [
+                {
+                    field: "currency",
+                    displayName : "Currency"
+                },
+                {
+                    field : "imResult",
+                    displayName: "Amount"
+                }
+            ];
+
+        function getTree(data, primaryIdName, parentIdName) {
+            if (!data || data.length == 0 || !primaryIdName || !parentIdName)
+                return [];
+
+            var tree = [],
+                rootIds = [],
+                item = data[0],
+                primaryKey = item[primaryIdName],
+                treeObjs = {},
+                parentId,
+                parent,
+                len = data.length,
+                i = 0;
+
+            while (i < len) {
+                item = data[i++];
+                primaryKey = item[primaryIdName];
+                treeObjs[primaryKey] = item;
+                parentId = item[parentIdName];
+
+                if (parentId) {
+                    parent = treeObjs[parentId];
+
+                    if (parent.children) {
+                        parent.children.push(item);
+                    } else {
+                        parent.children = [item];
+                    }
+                } else {
+                    rootIds.push(primaryKey);
+                }
+            }
+
+            for (var i = 0; i < rootIds.length; i++) {
+                tree.push(treeObjs[rootIds[i]]);
+            }
+            ;
+
+            return tree;
+        }
 
     }
 })();
