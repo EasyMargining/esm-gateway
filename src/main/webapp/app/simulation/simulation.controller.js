@@ -9,13 +9,13 @@
         .controller('AddPositionController', AddPositionController)
         .controller('MarginController', MarginController);
 
-    SimulationController.$inject = ['$scope', '$filter', 'Principal', 'LoginService', 'PositionsByPortfolio', 'Product', 'MarginResult'];
+    SimulationController.$inject = ['$scope', '$filter', '$state', 'Principal', 'LoginService', 'PositionsByPortfolio', 'Product', 'MarginResult'];
     SelectionController.$inject = ['$scope', 'Account', 'User', 'Portfolio', 'ngDialog'];
     SummaryController.$inject = ['$scope', 'Position', 'ngDialog', '$filter'];
     AddPositionController.$inject = ['$scope', 'ProductsByInstrumentType', 'ProductInformation', 'usSpinnerService', 'Position', '$filter'];
     MarginController.$inject = ['$scope'];
 
-    function SimulationController ($scope, $filter, Principal, LoginService, PositionsByPortfolio, Product, MarginResult) {
+    function SimulationController ($scope, $filter, $state, Principal, LoginService, PositionsByPortfolio, Product, MarginResult) {
 
         var vm = this;
         vm.account = null;
@@ -105,32 +105,40 @@
 
             for (var i in vm.aggregatedPositions) {
                 var aggregatedPosition = vm.aggregatedPositions[i];
-                var trade = {
-                    "exercisePrice": aggregatedPosition.product.exercisePrice,
-                    "exerciseStyleFlag": aggregatedPosition.product.exerciseStyleFlag,
-                    "expiryDate": {
-                        "contractMonth": parseInt(aggregatedPosition.product.maturityDate.substring(5, 7)),
-                        "contractYear": parseInt(aggregatedPosition.product.maturityDate.substring(0, 4))
-                    },
-                    "instrumentType": aggregatedPosition.product.instrumentType,
-                    "optionType": aggregatedPosition.product.optionType[0],
-                    "portfolioId": aggregatedPosition.portfolioId,
-                    "productId": aggregatedPosition.product.productDefinitionId,
-                    "productSettlementType": aggregatedPosition.product.productSettlementType,
-                    "quantity": aggregatedPosition.quantity,
-                    "versionNumber": "0"
-                };
-                trades.push(trade);
+                if (aggregatedPosition.quantity !== 0) {
+                    var trade = {
+                        "exercisePrice": aggregatedPosition.product.exercisePrice,
+                        "exerciseStyleFlag": aggregatedPosition.product.exerciseStyleFlag,
+                        "expiryDate": {
+                            "contractMonth": parseInt(aggregatedPosition.product.maturityDate.substring(5, 7)),
+                            "contractYear": parseInt(aggregatedPosition.product.maturityDate.substring(0, 4))
+                        },
+                        "instrumentType": aggregatedPosition.product.instrumentType,
+                        "optionType": aggregatedPosition.product.optionType[0],
+                        "portfolioId": aggregatedPosition.portfolioId,
+                        "productId": aggregatedPosition.product.productDefinitionId,
+                        "productSettlementType": aggregatedPosition.product.productSettlementType,
+                        "quantity": aggregatedPosition.quantity,
+                        "versionNumber": "0"
+                    };
+                    trades.push(trade);
+                }
             }
 
             console.log("trades")
             console.log(trades);
 
-            /*var marginResult = MarginResult.save({valuationDate: vm.valuationDateFormated}, trades, function() {
-                vm.marginResult = marginResult.portfolioMarginResults;
+            var marginResult = MarginResult.save({}, trades, function() {
                 console.log("margin result")
-                console.log(vm.marginResult)
-            });*/
+                console.log(marginResult)
+
+                //Broadcast the marginResult
+                $scope.$broadcast('marginResultFind', {marginResult: marginResult});
+
+            }, function (error) {
+                console.log(error.data.description)
+                $state.go('error', {errorMessage: error.data.description});
+            });
 
         };
     };
@@ -715,88 +723,6 @@
 
         var vm = this;
 
-        vm.marginResult = {
-            "portfolioMarginResults": [
-                {
-                    "imResult": 2568.36,
-                    "currency": "EUR",
-                    "liquidationGroupIMResults": [
-                        {
-                            "imGroupResult": 1246.12,
-                            "liquidationGroup": "GROUP1",
-                            "liquidationGroupSplitMarginResult": [
-                                {
-                                    "imLiquidationGroupSplit": 1,
-                                    "liquidationGroupSplitName": "SPLI1",
-                                    "liquidityRiskAdjustmentResult": {
-                                        "etdliquidityRiskAdjustmentAddOnPart": 12,
-                                        "longOptionCreditAddOn": 35,
-                                        "otcliquidityRiskAdjustmentAddOnPart": 54,
-                                        "totalLiquidityRiskAdjustmentAddOn": 125
-                                    },
-                                    "marketRiskIMResult": {
-                                        "filteredHistoricalVar": 96,
-                                        "marketRiskIM": 15,
-                                        "stressVaR": 152
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    "portfolioName": "portfolio1"
-                },
-                {
-                    "currency": "EUR",
-                    "imResult": 21387.36,
-                    "liquidationGroupIMResults": [
-                        {
-                            "imGroupResult": 1246.1221,
-                            "liquidationGroup": "GROUP100",
-                            "liquidationGroupSplitMarginResult": [
-                                {
-                                    "imLiquidationGroupSplit": 1,
-                                    "liquidationGroupSplitName": "SPLI100",
-                                    "liquidityRiskAdjustmentResult": {
-                                        "etdliquidityRiskAdjustmentAddOnPart": 12,
-                                        "longOptionCreditAddOn": 35,
-                                        "otcliquidityRiskAdjustmentAddOnPart": 54,
-                                        "totalLiquidityRiskAdjustmentAddOn": 125
-                                    },
-                                    "marketRiskIMResult": {
-                                        "filteredHistoricalVar": 96,
-                                        "marketRiskIM": 15,
-                                        "stressVaR": 152
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "imGroupResult": 12.1221,
-                            "liquidationGroup": "GROUP101",
-                            "liquidationGroupSplitMarginResult": [
-                                {
-                                    "imLiquidationGroupSplit": 1,
-                                    "liquidationGroupSplitName": "SPLI101",
-                                    "liquidityRiskAdjustmentResult": {
-                                        "etdliquidityRiskAdjustmentAddOnPart": 12,
-                                        "longOptionCreditAddOn": 35,
-                                        "otcliquidityRiskAdjustmentAddOnPart": 54,
-                                        "totalLiquidityRiskAdjustmentAddOn": 125
-                                    },
-                                    "marketRiskIMResult": {
-                                        "filteredHistoricalVar": 96,
-                                        "marketRiskIM": 15,
-                                        "stressVaR": 152
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    "portfolioName": "portfolio2"
-                }
-            ]
-        }
-
         vm.pushMarginObject = function(id, name, currency, imResult, parentId) {
             vm.marginResultTransformed.push({
                 id : id,
@@ -855,7 +781,8 @@
                             id : i,
                             name : "ETD Liquidity Risk Adjustment Add On Part",
                             currency : portfolioMarginResult.currency,
-                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.etdliquidityRiskAdjustmentAddOnPart,
+                            imResult :  typeof liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.etdliquidityRiskAdjustmentAddOnPart == 'number' ?
+                                liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.etdliquidityRiskAdjustmentAddOnPart : "No Data",
                             parentId : parentLiquidityRiskAdjustment
                         });
                         i++;
@@ -863,7 +790,8 @@
                             id : i,
                             name : "Long Option Credit Add On",
                             currency : portfolioMarginResult.currency,
-                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.longOptionCreditAddOn,
+                            imResult : typeof liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.longOptionCreditAddOn == 'number' ?
+                                liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.longOptionCreditAddOn : "No Data",
                             parentId : parentLiquidityRiskAdjustment
                         });
                         i++;
@@ -871,7 +799,8 @@
                             id : i,
                             name : "OTC Liquidity Risk Adjustment Add On Part",
                             currency : portfolioMarginResult.currency,
-                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.otcliquidityRiskAdjustmentAddOnPart,
+                            imResult :  typeof liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.otcliquidityRiskAdjustmentAddOnPart == 'number' ?
+                                liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.otcliquidityRiskAdjustmentAddOnPart : "No Data",
                             parentId : parentLiquidityRiskAdjustment
                         });
                         i++;
@@ -879,7 +808,8 @@
                             id : i,
                             name : "Total Liquidity Risk Adjustment Add On",
                             currency : portfolioMarginResult.currency,
-                            imResult :  liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.totalLiquidityRiskAdjustmentAddOn,
+                            imResult :  typeof liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.totalLiquidityRiskAdjustmentAddOn == 'number' ?
+                                liquidationGroupSplitMarginResult.liquidityRiskAdjustmentResult.totalLiquidityRiskAdjustmentAddOn : "No Data",
                             parentId : parentLiquidityRiskAdjustment
                         });
                         i++;
@@ -896,7 +826,8 @@
                             id : i,
                             name : "Filtered Historical VaR",
                             currency : portfolioMarginResult.currency,
-                            imResult :  liquidationGroupSplitMarginResult.marketRiskIMResult.filteredHistoricalVar,
+                            imResult :  typeof liquidationGroupSplitMarginResult.marketRiskIMResult.filteredHistoricalVar == 'number' ?
+                                liquidationGroupSplitMarginResult.marketRiskIMResult.filteredHistoricalVar : "No Data",
                             parentId : parentmarketRiskIMResult
                         });
                         i++;
@@ -904,7 +835,8 @@
                             id : i,
                             name : "Market Risk IM",
                             currency : portfolioMarginResult.currency,
-                            imResult :  liquidationGroupSplitMarginResult.marketRiskIMResult.marketRiskIM,
+                            imResult :  typeof liquidationGroupSplitMarginResult.marketRiskIMResult.marketRiskIM == 'number :' ?
+                                liquidationGroupSplitMarginResult.marketRiskIMResult.marketRiskIM : "No Data",
                             parentId : parentmarketRiskIMResult
                         });
                         i++;
@@ -912,7 +844,8 @@
                             id : i,
                             name : "Stress VaR",
                             currency : portfolioMarginResult.currency,
-                            imResult :  liquidationGroupSplitMarginResult.marketRiskIMResult.stressVaR,
+                            imResult :  typeof liquidationGroupSplitMarginResult.marketRiskIMResult.stressVaR == 'number' ?
+                                liquidationGroupSplitMarginResult.marketRiskIMResult.stressVaR : "No Data",
                             parentId : parentmarketRiskIMResult
                         });
                     }
@@ -920,9 +853,12 @@
             }
         }
 
-        vm.transformFormTreeGrid(vm.marginResult);
-
-        vm.tree_data = getTree(vm.marginResultTransformed, 'id', 'parentId');
+        $scope.$on('marginResultFind', function(event, obj) {
+            console.log("j'ai recu ton message gros")
+            vm.marginResult = obj.marginResult;
+            vm.transformFormTreeGrid(vm.marginResult);
+            vm.tree_data = getTree(vm.marginResultTransformed, 'id', 'parentId');
+        })
 
         vm.expanding_property = {
             field: "name",
